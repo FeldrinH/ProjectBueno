@@ -73,9 +73,11 @@ namespace ProjectBueno.Engine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+			GraphicsDevice.Clear(Color.CornflowerBlue);
+			spriteBatch.Begin();
 			spriteBatch.Draw(test.texture, new Vector2(2.0F, 2.0F), Color.White);
-            // TODO: Add your drawing code here
-        }
-    }
+			spriteBatch.End();
+			// TODO: Add your drawing code here
+		}
+	}
 }

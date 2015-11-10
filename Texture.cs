@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectBueno.Engine;
+using System;
+using System.Diagnostics;
 
 namespace ProjectBueno.Game.Entities
 {
@@ -29,6 +31,9 @@ namespace ProjectBueno.Game.Entities
 		public AnimatedTexture(Texture2D[] textures, float[] maxFrame, int length, int maxState, float xOffset, float yOffset, int w, int h)
 			: base(new RenderTarget2D(Main.graphics.GraphicsDevice,w*length,h*maxState),xOffset,yOffset,w,h)
 		{
+			//Stopwatch check = new Stopwatch();
+			//check.Start();
+			
 			//Stitch textures together for memory conservation
 			Main.graphics.GraphicsDevice.SetRenderTarget((RenderTarget2D)texture);
 			SpriteBatch batch = new SpriteBatch(Main.graphics.GraphicsDevice);
@@ -40,9 +45,13 @@ namespace ProjectBueno.Game.Entities
 				i += h;
 			}
 			batch.End();
+			Main.graphics.GraphicsDevice.SetRenderTarget(null);
 
 			this.maxFrame = maxFrame;
 			this.maxState = maxState;
+
+			//check.Stop();
+			//Console.WriteLine(check.ElapsedMilliseconds);
 		}
 		protected float curFrame; //Current frame (Float to allow incrementing every frame)
 		protected readonly float[] maxFrame; //Maximum frame (Float to avoid casting)

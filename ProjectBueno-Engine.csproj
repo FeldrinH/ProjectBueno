@@ -38,7 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="StaticTexture.cs" />
+    <Compile Include="Texture.cs" />
     <Compile Include="IHandler.cs" />
     <Compile Include="GameHandler.cs" />
     <Compile Include="Main.cs" />
