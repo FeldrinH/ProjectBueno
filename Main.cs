@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace ProjectBueno.Engine
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
-    public class Main : Game
+	/// <summary>
+	/// This is the main type for your game.
+	/// </summary>
+	public class Main : Microsoft.Xna.Framework.Game
     {
         public static GraphicsDeviceManager graphics { get; private set; }
         public static SpriteBatch spriteBatch { get; private set; }

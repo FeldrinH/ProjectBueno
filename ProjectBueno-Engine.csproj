@@ -39,8 +39,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IHandler.cs" />
-    <Compile Include="LogicHandler.cs" />
+    <Compile Include="GameHandler.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
