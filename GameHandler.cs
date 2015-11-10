@@ -1,4 +1,4 @@
-﻿using ProjectBueno.Game;
+﻿using ProjectBueno.Game.Entities;
 using System;
 
 namespace ProjectBueno.Engine

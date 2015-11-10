@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectBueno.Game.Entities;
 
 namespace ProjectBueno.Engine
 {
@@ -12,6 +13,8 @@ namespace ProjectBueno.Engine
         public static SpriteBatch spriteBatch { get; private set; }
 
         public static IHandler logicHandler { get; private set; }
+
+		public StaticTexture test;
 
         public Main()
         {
@@ -41,6 +44,7 @@ namespace ProjectBueno.Engine
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+			test = new AnimatedTexture(new[] {Content.Load<Texture2D>("test1"), Content.Load<Texture2D>("test2"),Content.Load<Texture2D>("test3")},new[] {2.0F,3.0F,1.0F},5,3,0.0F,0.0F,16,16);
             // TODO: use this.Content to load your game content here
         }
 
@@ -70,7 +74,7 @@ namespace ProjectBueno.Engine
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+			spriteBatch.Draw(test.texture, new Vector2(2.0F, 2.0F), Color.White);
             // TODO: Add your drawing code here
         }
     }
