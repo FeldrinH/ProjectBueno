@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProjectBueno_Engine
+namespace ProjectBueno.Engine
 {
 #if WINDOWS || LINUX
     /// <summary>
@@ -14,7 +14,7 @@ namespace ProjectBueno_Engine
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            using (var game = new Main())
                 game.Run();
         }
     }

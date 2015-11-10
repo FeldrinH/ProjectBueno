@@ -2,17 +2,19 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace ProjectBueno_Engine
+namespace ProjectBueno.Engine
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Main : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public static GraphicsDeviceManager graphics { get; private set; }
+        public static SpriteBatch spriteBatch { get; private set; }
 
-        public Game1()
+        public static IHandler logicHandler { get; private set; }
+
+        public Main()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -49,7 +51,6 @@ namespace ProjectBueno_Engine
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -59,12 +60,8 @@ namespace ProjectBueno_Engine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
             // TODO: Add your update logic here
 
-            base.Update(gameTime);
         }
 
         /// <summary>
@@ -76,8 +73,6 @@ namespace ProjectBueno_Engine
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
-            base.Draw(gameTime);
         }
     }
 }
