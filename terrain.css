@@ -1,17 +1,22 @@
 .terrain { margin:1em auto; border-collapse:collapse }
 .terrain td {
-    width:5px; height:5px;
+    width:6px; 
+    height:6px;
     border:1px solid #ddd;
 }
 .terrain td.forest {
     background-color:#00e600;
+    border:0px;
 }
 .terrain td.cold {
     background-color:#00ffff;
+    border:0px;
 }
 .terrain td.desert {
     background-color:#ffff00;
+    border:0px;
 }
 .sea td {
     background-color:#0000cc;
+    border:0px;
 }
