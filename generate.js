@@ -148,12 +148,22 @@ function processTile(x,y)
     {
         return;
     }
-    var exclude = Math.floor(Math.random()*8);
-    for(var i=0;i<8;i++)
+    
+    var excludeCount = 5;
+    var remove;
+    for(var r=0;r<excludeCount)
     {
-        if(i != exclude && emptyTile(x+xShift[i],y+yShift[i]))
+        remove = Math.floor(Math.random()*xShift.length);
+        xShift.splice(remove,1);
+        yShift.splice(remove,1);
+    }
+    for(var i=0;i<xShift.length;i++)
+    {
+        if(emptyTile(x+xShift[i],y+yShift[i]))
         {
             generateTile(x+xShift[i],y+yShift[i],type);
         }
     }
+    xShift = [-1,0,1,-1,1,-1,0,1];
+    yShift = [-1,-1,-1,0,0,1,1,1];
 }
