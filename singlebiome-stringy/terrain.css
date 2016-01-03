@@ -4,7 +4,11 @@
     height:5px;
     border:1px solid #ddd;
 }
-.terrain.sea td {
+.terrain.filledsea td {
+    background-color:#00e600;
+    border-color:#00e600;
+}
+.terrain td.sea {
     background-color:#0000cc;
     border-color:#0000cc;
 }
