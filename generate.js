@@ -26,7 +26,7 @@ function setTile(x,y,type)
 }
 function generateTile(x,y,type)
 {
-    if(Math.floor(Math.random()*5000) == 0)
+    if(Math.floor(Math.random()*10000) == 0)
     {
         switch(type)
         {
@@ -83,8 +83,8 @@ function emptyTile(x,y)
 
 function startGenerate()
 {
-    var rows = 200;
-    var cols = 200;
+    var rows = 500;
+    var cols = 500;
     terrain.className = "terrain";
     for (var r=0;r<rows;++r)
     {
@@ -94,8 +94,7 @@ function startGenerate()
             var cell = tr.appendChild(document.createElement('td'));
         }
     }
-    setTile(100,100,"desert");
-    callqueue.push("processTile(100,100)")
+    setTile(250,250,"desert");
     callqueue.push("");
 }
 
@@ -132,7 +131,7 @@ function generateNext(e)
 function processTile(x,y)
 {
     var type = terrain.rows[x].cells[y].className;
-    if(x < 1 || x > 198 || y < 1 || y > 198)
+    if(x < 1 || x > 498 || y < 1 || y > 498)
     {
         return;
     }
