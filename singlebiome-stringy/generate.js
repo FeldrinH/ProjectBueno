@@ -101,7 +101,8 @@ function generateNext(e)
         callqueue.push( "processSea(0,0)" );
         while(callqueue.length > 0)
         {
-            
+            eval(callqueue[0]);
+            callqueue.splice(0,1);
         }
         terrain.className = "terrain filledsea";
         //}
