@@ -151,7 +151,7 @@ function processTile(x,y)
     
     var excludeCount = 5;
     var remove;
-    for(var r=0;r<excludeCount)
+    for(var r=0;r<excludeCount;r++)
     {
         remove = Math.floor(Math.random()*xShift.length);
         xShift.splice(remove,1);
