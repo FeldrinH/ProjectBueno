@@ -94,7 +94,7 @@ function processTile(x,y)
         return;
     }*/
     
-    var excludeCount = Math.random() < 0.1 ? 6 : 7;
+    var excludeCount = Math.random() < 0.01 ? 6 : 7;
     var remove;
     for(var r=0;r<excludeCount;r++)
     {
