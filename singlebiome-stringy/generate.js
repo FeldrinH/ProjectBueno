@@ -65,10 +65,10 @@ function generateNext(e)
         callqueue.splice(0,1);
         callqueue.push("");
         }
-        if(checkgenerate)
-        {
+        //if(checkgenerate)
+        //{
             terrain.className = "terrain sea";
-        }
+        //}
         isLock = false;
     }
 }
