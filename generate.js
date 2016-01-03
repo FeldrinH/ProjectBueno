@@ -150,22 +150,22 @@ function processTile(x,y)
         return;
     }
     
-    /*var excludeCount = 7;
+    var excludeCount = 6;
     var remove;
     for(var r=0;r<excludeCount;r++)
     {
         remove = Math.floor(Math.random()*xShift.length);
         xShift.splice(remove,1);
         yShift.splice(remove,1);
-    }*/
-    //for(var i=0;i<xShift.length;i++)
-    //{
-        //if(emptyTile(x+xShift[i],y+yShift[i]))
-        //{
-            var i = Math.floor(Math.random()*xShift.length);
+    }
+    for(var i=0;i<xShift.length;i++)
+    {
+        if(emptyTile(x+xShift[i],y+yShift[i]))
+        {
+            //var i = Math.floor(Math.random()*xShift.length);
             generateTile(x+xShift[i],y+yShift[i],type);
-        //}
-    //}
+        }
+    }
     xShift = [-1,0,1,-1,1,-1,0,1];
     yShift = [-1,-1,-1,0,0,1,1,1];
 }
