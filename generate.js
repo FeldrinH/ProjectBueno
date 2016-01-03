@@ -94,7 +94,7 @@ function startGenerate()
             var cell = tr.appendChild(document.createElement('td'));
         }
     }
-    setTile(250,250,"desert");
+    setTile(250,250,"forest");
     callqueue.push("");
 }
 
