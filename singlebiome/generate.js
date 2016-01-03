@@ -14,7 +14,7 @@ function setTile(x,y,type)
 }
 function generateTile(x,y,type)
 {
-    if(Math.floor(Math.random()*10000) < 3)
+    if(Math.floor(Math.random()*100000) < 3)
     {
         isgenerate = true;
     }
