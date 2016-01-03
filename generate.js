@@ -171,4 +171,5 @@ function processTile(x,y)
     }
     xShift = [-1,0,1,-1,1,-1,0,1];
     yShift = [-1,-1,-1,0,0,1,1,1];
+    callqueue.push( "processTile("+x+","+y+")" );
 }
