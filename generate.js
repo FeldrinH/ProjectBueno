@@ -150,7 +150,7 @@ function processTile(x,y)
         return;
     }
     
-    var excludeCount = 2;
+    var excludeCount = 4;
     var remove;
     for(var r=0;r<excludeCount;r++)
     {
