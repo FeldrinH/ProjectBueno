@@ -68,9 +68,9 @@ function generateNext(e)
         //if(checkgenerate)
         //{
         var fillSea;
-        for (var x=0;x<rows;++x)
+        for (var x=1;x<rows-1;++x)
         {
-            for (var y=0;y<cols;++y)
+            for (var y=1;y<cols-1;++y)
             {
                 fillSea = true;
                 for(var i=0;i<xShift.length;i++)
