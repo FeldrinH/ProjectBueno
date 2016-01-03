@@ -67,7 +67,6 @@ function generateNext(e)
         }
         //if(checkgenerate)
         //{
-        terrain.className = "terrain sea";
         var fillSea;
         for (var x=0;x<rows;++x)
         {
@@ -88,6 +87,7 @@ function generateNext(e)
                 }
             }
         }
+        terrain.className = "terrain sea";
         //}
         isLock = false;
     }
