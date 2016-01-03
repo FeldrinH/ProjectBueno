@@ -83,8 +83,8 @@ function emptyTile(x,y)
 
 function startGenerate()
 {
-    var rows = 500;
-    var cols = 500;
+    var rows = 300;
+    var cols = 300;
     terrain.className = "terrain";
     for (var r=0;r<rows;++r)
     {
@@ -135,7 +135,7 @@ function generateNext(e)
 function processTile(x,y)
 {
     var type = terrain.rows[x].cells[y].className;
-    if(x < 1 || x > 498 || y < 1 || y > 498)
+    if(x < 1 || x > 298 || y < 1 || y > 298)
     {
         return;
     }
