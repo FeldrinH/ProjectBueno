@@ -5,6 +5,8 @@ var checkgenerate = false;
 var isLock = false;
 var xShift = [-1,0,1,-1,1,-1,0,1];
 var yShift = [-1,-1,-1,0,0,1,1,1];
+var xSide = [0,0,-1,1];
+var ySide = [-1,1,0,0];
 var rows = 300;
 var cols = 300;
 
@@ -73,9 +75,9 @@ function generateNext(e)
             for (var y=1;y<cols-1;++y)
             {
                 fillSea = true;
-                for(var i=0;i<xShift.length;i++)
+                for(var i=0;i<xSide.length;i++)
                 {
-                    if(emptyTile(x+xShift[i],y+yShift[i]))
+                    if(emptyTile(x+xSide[i],y+ySide[i]))
                     {
                         fillSea = false;
                         break;
