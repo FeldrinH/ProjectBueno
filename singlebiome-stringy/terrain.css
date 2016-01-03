@@ -6,21 +6,21 @@
 }
 .terrain.filledsea td {
     background-color:#00e600;
-    border-color:#00e600;
+    border:0;
 }
 .terrain td.sea {
     background-color:#0000cc;
-    border-color:#0000cc;
+    border:0;
 }
 .terrain td.forest {
     background-color:#00e600;
-    border-color:#00e600;
+    border:0;
 }
 .terrain td.cold {
     background-color:#00ffff;
-    border-color:#00ffff;
+    border:0;
 }
 .terrain td.desert {
     background-color:#ffff00;
-    border-color:#ffff00;
+    border:0;
 }
