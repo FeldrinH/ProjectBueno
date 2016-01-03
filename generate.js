@@ -161,20 +161,22 @@ function processTile(x,y)
         xShift.splice(remove,1);
         yShift.splice(remove,1);
     }
-    var procCount = 0;
     for(var i=0;i<xShift.length;i++)
     {
         if(emptyTile(x+xShift[i],y+yShift[i]))
         {
             //var i = Math.floor(Math.random()*xShift.length);
             generateTile(x+xShift[i],y+yShift[i],type);
-            procCount++;
         }
     }
     xShift = [-1,0,1,-1,1,-1,0,1];
     yShift = [-1,-1,-1,0,0,1,1,1];
-    if(procCount > 0)
+    for(var i=0;i<xShift.length;i++)
     {
-        callqueue.push( "processTile("+x+","+y+")" );
+        if(emptyTile(x+xShift[i],y+yShift[i]))
+        {
+            callqueue.push( "processTile("+x+","+y+")" );
+            return;
+        }
     }
 }
