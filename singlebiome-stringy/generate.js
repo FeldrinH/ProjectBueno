@@ -159,7 +159,7 @@ function processTile(x,y)
     }*/
 }
 
-function procesSea(x,y)
+function processSea(x,y)
 {
     for(var i=0;i<xSide.length;i++)
     {
