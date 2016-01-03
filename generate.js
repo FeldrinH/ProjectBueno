@@ -95,7 +95,7 @@ function startGenerate()
         }
     }
     var startTerrain = ["forest","desert","cold"];
-    setTile(250,250,startTerrain[Math.floor(Math.random()*3)]);
+    setTile(150,150,startTerrain[Math.floor(Math.random()*3)]);
     callqueue.push("");
 }
 
