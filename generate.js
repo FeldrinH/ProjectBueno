@@ -153,7 +153,7 @@ function processTile(x,y)
         return;
     }
     
-    var excludeCount = Math.random() < 0.5 ? 6 : 7;
+    var excludeCount = Math.random() < 0.3 ? 6 : 7;
     var remove;
     for(var r=0;r<excludeCount;r++)
     {
