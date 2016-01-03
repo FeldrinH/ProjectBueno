@@ -110,6 +110,8 @@ function generateNext(e)
             window.alert("CallQueue empty! (Should not happen)");
             return;
         }
+        while(callqueue.length > 1)
+        {
         while(callqueue[0] != "" && callqueue.length > 0)
         {
             eval(callqueue[0]);
@@ -121,10 +123,11 @@ function generateNext(e)
         checkgenerate["forestcold"] = isgenerate["forestcold"];
         callqueue.splice(0,1);
         callqueue.push("");
-        if(callqueue.length == 1)
-        {
-            terrain.className = "terrain sea";
         }
+        //if(callqueue.length == 1)
+        //{
+            terrain.className = "terrain sea";
+        //}
         isLock = false;
     }
 }
