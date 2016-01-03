@@ -16,10 +16,10 @@ function setTile(x,y,type)
 }
 function generateTile(x,y,type)
 {
-    if(Math.floor(Math.random()*100000) < 1)
-    {
-        isgenerate = true;
-    }
+    //if(Math.floor(Math.random()*100000) < 1)
+    //{
+    //    isgenerate = true;
+    //}
     setTile(x,y,type);
 }
 function emptyTile(x,y)
