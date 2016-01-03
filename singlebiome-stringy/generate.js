@@ -5,6 +5,8 @@ var checkgenerate = false;
 var isLock = false;
 var xShift = [-1,0,1,-1,1,-1,0,1];
 var yShift = [-1,-1,-1,0,0,1,1,1];
+var rows = 300;
+var cols = 300;
 
 function setTile(x,y,type)
 {
@@ -27,8 +29,6 @@ function emptyTile(x,y)
 
 function startGenerate()
 {
-    var rows = 300;
-    var cols = 300;
     terrain.className = "terrain";
     for (var r=0;r<rows;++r)
     {
@@ -67,7 +67,27 @@ function generateNext(e)
         }
         //if(checkgenerate)
         //{
-            terrain.className = "terrain sea";
+        terrain.className = "terrain sea";
+        var fillSea;
+        for (var x=0;x<rows;++x)
+        {
+            for (var y=0;y<cols;++y)
+            {
+                fillSea = true;
+                for(var i=0;i<xShift.length;i++)
+                {
+                    if(emptyTile(x+xShift[i],y+yShift[i]))
+                    {
+                        fillSea = false;
+                        break;
+                    }
+                }
+                if(fillSea)
+                {
+                    terrain.rows[x].cells[y].className = "forest";
+                }
+            }
+        }
         //}
         isLock = false;
     }
