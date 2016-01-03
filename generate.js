@@ -1,13 +1,19 @@
 var terrain = document.getElementById("terrain");
 var callqueue = [];
-var isterrain = [];
+var isterrain = {};
 isterrain["forest"] = false;
 isterrain["cold"] = false;
 isterrain["desert"] = false;
-var checkterrain = []
-checkterrain["forest"] = false;
-checkterrain["cold"] = false;
-checkterrain["desert"] = false;
+var isgenerate = {}
+isgenerate["cold"] = false;
+isgenerate["desert"] = false;
+isgenerate["forestdesert"] = false;
+isgenerate["forestcold"] = false;
+var checkgenerate = {}
+checkgenerate["cold"] = false;
+checkgenerate["desert"] = false;
+checkgenerate["forestdesert"] = false;
+checkgenerate["forestcold"] = false;
 var isLock = false;
 var xShift = [-1,0,1,-1,1,-1,0,1];
 var yShift = [-1,-1,-1,0,0,1,1,1];
@@ -16,45 +22,52 @@ function setTile(x,y,type)
 {
     terrain.rows[x].cells[y].className = type;
     isterrain[type] = true;
+    callqueue.push( "processTile("+x+","+y+")" );
 }
 function generateTile(x,y,type)
 {
-    if(Math.floor(Math.random()*10000) == 0)
+    if(Math.floor(Math.random()*5000) == 0)
     {
         switch(type)
         {
             case "forest":
-              if(!checkterrain["desert"] && !checkterrain["cold"])
+              if(!isterrain["desert"] && !isterrain["cold"])
               {
                   if(Math.random() < 0.5)
                   {
                       setTile(x,y,"cold");
+                      isgenerate["cold"] = true;
                   }
                   else
                   {
                       setTile(x,y,"desert");
+                      isgenerate["desert"] = true;
                   }
               }
-              else if(checkterrain["desert"])
+              else if(isterrain["desert"])
               {
                   setTile(x,y,"cold");
+                  isgenerate["cold"] = true;
               }
-              else if(checkterrain["cold"])
+              else if(isterrain["cold"])
               {
                   setTile(x,y,"desert");
+                  isgenerate["desert"] = true;
               }
               break;
             case "desert":
-              if(!checkterrain["forest"])
+              if(!isterrain["forest"])
               {
                   setTile(x,y,"forest");
               }
+              isgenerate["forestdesert"] = true;
               break;
             case "cold":
-              if(!checkterrain["forest"])
+              if(!isterrain["forest"])
               {
                   setTile(x,y,"forest");
               }
+              isgenerate["forestcold"] = true;
               break;
         }
     }
@@ -70,9 +83,9 @@ function emptyTile(x,y)
 
 function startGenerate()
 {
-    var rows = 100
-    var cols = 100
-    terrain.className = 'terrain';
+    var rows = 200;
+    var cols = 200;
+    terrain.className = "terrain";
     for (var r=0;r<rows;++r)
     {
         var tr = terrain.appendChild(document.createElement('tr'));
@@ -81,8 +94,8 @@ function startGenerate()
             var cell = tr.appendChild(document.createElement('td'));
         }
     }
-    setTile(50,50,"forest");
-    callqueue.push("processTile(50,50)")
+    setTile(100,100,"desert");
+    callqueue.push("processTile(100,100)")
     callqueue.push("");
 }
 
@@ -102,22 +115,37 @@ function generateNext(e)
             eval(callqueue[0]);
             callqueue.splice(0,1);
         }
-        checkterrain["forest"] = isterrain["forest"];
-        checkterrain["cold"] = isterrain["cold"];
-        checkterrain["desert"] = isterrain["desert"];
+        checkgenerate["cold"] = isgenerate["cold"];
+        checkgenerate["desert"] = isgenerate["desert"];
+        checkgenerate["forestdesert"] = isgenerate["forestdesert"];
+        checkgenerate["forestcold"] = isgenerate["forestcold"];
         callqueue.splice(0,1);
         callqueue.push("");
+        if(callqueue.length == 1)
+        {
+            terrain.className = "terrain sea";
+        }
         isLock = false;
     }
 }
 
 function processTile(x,y)
 {
-    if(x < 1 || x > 98 || y < 1 || y > 98)
+    var type = terrain.rows[x].cells[y].className;
+    if(x < 1 || x > 198 || y < 1 || y > 198)
     {
-       return;
+        return;
     }
-    if(terrain.rows[x].cells[y].className == "forest" && (checkterrain["cold"] || checkterrain["desert"]))
+    else if(type == "forest" && isterrain["cold"] && isterrain["desert"])
+    {
+        return;
+    }
+    else if(type == "forest" && ((isterrain["cold"] && !checkgenerate["forestcold"]) || (isterrain["desert"] && !checkgenerate["forestdesert"])))
+    {
+        callqueue.push( "processTile("+x+","+y+")" );
+        return;
+    }
+    else if((type == "cold" && checkgenerate["forestcold"]) || (type == "desert" && checkgenerate["forestdesert"]))
     {
         return;
     }
@@ -126,8 +154,7 @@ function processTile(x,y)
     {
         if(i != exclude && emptyTile(x+xShift[i],y+yShift[i]))
         {
-            generateTile(x+xShift[i],y+yShift[i],terrain.rows[x].cells[y].className);
-            callqueue.push( "processTile("+(x+xShift[i])+","+(y+yShift[i])+")" );
+            generateTile(x+xShift[i],y+yShift[i],type);
         }
     }
 }
