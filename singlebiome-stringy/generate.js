@@ -42,7 +42,7 @@ function startGenerate()
     }
     var startTerrain = ["forest","desert","cold"];
     setTile(150,150,"forest");
-    callqueue.push("");
+    //callqueue.push("");
 }
 
 function generateNext(e)
@@ -56,16 +56,16 @@ function generateNext(e)
             window.alert("CallQueue empty! (Should not happen)");
             return;
         }
-        while(callqueue.length > 1 && !checkgenerate)
+        while(callqueue.length > 0/* && !checkgenerate*/)
         {
-        while(callqueue[0] != "" && callqueue.length > 0)
-        {
-            eval(callqueue[0]);
-            callqueue.splice(0,1);
-        }
-        checkgenerate = isgenerate;
+        //while(callqueue[0] != "" && callqueue.length > 0)
+        //{
+        eval(callqueue[0]);
         callqueue.splice(0,1);
-        callqueue.push("");
+        //}
+        //checkgenerate = isgenerate;
+        //callqueue.splice(0,1);
+        //callqueue.push("");
         }
         //if(checkgenerate)
         //{
