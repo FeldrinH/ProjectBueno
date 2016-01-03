@@ -28,6 +28,14 @@ function emptyTile(x,y)
 {
     return terrain.rows[x].cells[y].className == "";
 }
+function generateSea(x,y)
+{
+    if (x>-1 && x<rows-1 && y>-1 && y<cols-1 && terrain.rows[x].cells[y].className == "")
+    {
+        terrain.rows[x].cells[y].className = "sea";
+        callqueue.push( "processSea("+x+","+y+")" );
+    }
+}
 
 function startGenerate()
 {
@@ -69,7 +77,7 @@ function generateNext(e)
         }
         //if(checkgenerate)
         //{
-        var fillSea;
+        /*var fillSea;
         for (var x=1;x<rows-1;++x)
         {
             for (var y=1;y<cols-1;++y)
@@ -88,8 +96,14 @@ function generateNext(e)
                     terrain.rows[x].cells[y].className = "forest";
                 }
             }
+        }*/
+        terrain.rows[0].cells[0].className = "sea";
+        callqueue.push( "processSea(0,0)" );
+        while(callqueue.length > 0)
+        {
+            
         }
-        terrain.className = "terrain sea";
+        terrain.className = "terrain filledsea";
         //}
         isLock = false;
     }
@@ -98,7 +112,7 @@ function generateNext(e)
 function processTile(x,y)
 {
     var type = "forest";//terrain.rows[x].cells[y].className;
-    if(x < 1 || x > 298 || y < 1 || y > 298)
+    if(x < 1 || x > rows-2 || y < 1 || y > cols-2)
     {
         return;
     }
@@ -142,4 +156,12 @@ function processTile(x,y)
             return;
         }
     }*/
+}
+
+function procesSea(x,y)
+{
+    for(var i=0;i<xSide.length;i++)
+    {
+        generateSea(x+xSide[i],y+ySide[i])
+    }
 }
