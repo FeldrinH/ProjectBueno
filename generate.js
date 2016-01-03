@@ -160,10 +160,10 @@ function processTile(x,y)
     }
     for(var i=0;i<xShift.length;i++)
     {
-        if(emptyTile(x+xShift[i],y+yShift[i]))
-        {
+        //if(emptyTile(x+xShift[i],y+yShift[i]))
+        //{
             generateTile(x+xShift[i],y+yShift[i],type);
-        }
+        //}
     }
     xShift = [-1,0,1,-1,1,-1,0,1];
     yShift = [-1,-1,-1,0,0,1,1,1];
