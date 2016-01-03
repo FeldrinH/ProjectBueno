@@ -94,7 +94,8 @@ function startGenerate()
             var cell = tr.appendChild(document.createElement('td'));
         }
     }
-    setTile(250,250,"forest");
+    var startTerrain = ["forest","desert","cold"];
+    setTile(250,250,startTerrain[Math.floor(Math.random()*3)]);
     callqueue.push("");
 }
 
