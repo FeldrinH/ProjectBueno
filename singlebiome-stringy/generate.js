@@ -104,20 +104,20 @@ function processTile(x,y)
     }
     for(var i=0;i<xShift.length;i++)
     {
-        if(emptyTile(x+xShift[i],y+yShift[i]))
-        {
+        //if(emptyTile(x+xShift[i],y+yShift[i]))
+        //{
             //var i = Math.floor(Math.random()*xShift.length);
             generateTile(x+xShift[i],y+yShift[i],type);
-        }
+        //}
     }
     xShift = [-1,0,1,-1,1,-1,0,1];
     yShift = [-1,-1,-1,0,0,1,1,1];
-    for(var i=0;i<xShift.length;i++)
+    /*for(var i=0;i<xShift.length;i++)
     {
         if(emptyTile(x+xShift[i],y+yShift[i]))
         {
             callqueue.push( "processTile("+x+","+y+")" );
             return;
         }
-    }
+    }*/
 }
