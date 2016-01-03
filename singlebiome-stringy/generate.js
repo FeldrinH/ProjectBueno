@@ -30,7 +30,7 @@ function emptyTile(x,y)
 }
 function generateSea(x,y)
 {
-    if (x>-1 && x<rows-1 && y>-1 && y<cols-1 && terrain.rows[x].cells[y].className == "")
+    if (x>-1 && x<rows && y>-1 && y<cols && terrain.rows[x].cells[y].className == "")
     {
         terrain.rows[x].cells[y].className = "sea";
         callqueue.push( "processSea("+x+","+y+")" );
