@@ -114,7 +114,7 @@ function generateNext(e)
         terrain.className = "terrain filledsea";
         //}
         isLock = false;
-        window.alert("Land count: "+tileCount+"\nFilled land count: "+(rows*cols-tileCount-seaCount));
+        window.alert("Total land count: "+(rows*cols-seaCount)+"\nLand count: "+tileCount+"\nFilled land count: "+(rows*cols-tileCount-seaCount));
     }
 }
 
