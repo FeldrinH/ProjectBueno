@@ -7,8 +7,8 @@ var xShift = [-1,0,1,-1,1,-1,0,1];
 var yShift = [-1,-1,-1,0,0,1,1,1];
 var xSide = [0,0,-1,1];
 var ySide = [-1,1,0,0];
-var rows = 300;
-var cols = 300;
+var rows = 1000;
+var cols = 1000;
 var tileCount = 0;
 var seaCount = 0;
 
