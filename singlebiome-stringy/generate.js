@@ -9,12 +9,18 @@ var xSide = [0,0,-1,1];
 var ySide = [-1,1,0,0];
 var rows = 300;
 var cols = 300;
+var tileCount = 0;
+var seaCount = 0;
 
 function setTile(x,y,type)
 {
+    if(emptyTile(x,y))
+    {
+        tileCount++; 
+    }
     terrain.rows[x].cells[y].className = type;
-    //isterrain[type] = true;
     callqueue.push( "processTile("+x+","+y+")" );
+    //isterrain[type] = true;
 }
 function generateTile(x,y,type)
 {
@@ -32,6 +38,7 @@ function generateSea(x,y)
 {
     if (x>-1 && x<rows && y>-1 && y<cols && terrain.rows[x].cells[y].className == "")
     {
+        seaCount++;
         terrain.rows[x].cells[y].className = "sea";
         callqueue.push( "processSea("+x+","+y+")" );
     }
@@ -64,7 +71,7 @@ function generateNext(e)
             window.alert("CallQueue empty! (Should not happen)");
             return;
         }
-        while(callqueue.length > 0/* && !checkgenerate*/)
+        while(callqueue.length > 0 && tileCount < 30000/* && !checkgenerate*/)
         {
         //while(callqueue[0] != "" && callqueue.length > 0)
         //{
@@ -107,6 +114,7 @@ function generateNext(e)
         terrain.className = "terrain filledsea";
         //}
         isLock = false;
+        window.alert("Land count: "+tileCount+"\nFilled land count: "+(rows*cols-tileCount-seaCount));
     }
 }
 
