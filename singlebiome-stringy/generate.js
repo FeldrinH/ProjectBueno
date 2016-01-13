@@ -56,7 +56,7 @@ function startGenerate()
         }
     }
     var startTerrain = ["forest","desert","cold"];
-    setTile(500,500,"forest");
+    setTile(150,150,"forest");
     //callqueue.push("");
 }
 
