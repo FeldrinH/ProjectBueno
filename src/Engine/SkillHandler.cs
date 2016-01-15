@@ -14,19 +14,35 @@ namespace ProjectBueno.Engine
 
 		protected Texture2D background;
 		protected Color backColor;
+		protected List<SkillButton> skillButtons;
+		public MouseState drawMouseState { get; protected set; }
+		public float downscale { get; protected set; }
+		protected Matrix sreenScale;
 
 		public SkillHandler(GameHandler game)
 		{
 			this.game = game;
 			background = Main.content.Load<Texture2D>("skillTree");
 			backColor = new Color(0, 0, 0);
+			skillButtons = new List<SkillButton>();
+			skillButtons.Add(new SkillButton(new Rectangle(2, 11, 10, 10), this));
+			skillButtons.Add(new SkillButton(new Rectangle(15, 10, 10, 10), this));
+			skillButtons.Add(new SkillButton(new Rectangle(15, 24, 10, 10), this));
+			skillButtons.Add(new SkillButton(new Rectangle(1, 24, 10, 10), this));
+			skillButtons.Add(new SkillButton(new Rectangle(1, 42, 10, 10), this));
+			skillButtons.Add(new SkillButton(new Rectangle(33, 10, 10, 10), this));
 		}
 
 		public void Draw()
 		{
-			Main.graphicsManager.GraphicsDevice.Clear(backColor);
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, null);
-			Main.spriteBatch.Draw(background, Main.window.ClientBounds, Color.White);
+			Main.graphicsManager.GraphicsDevice.Clear(Color.White);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, sreenScale);
+			Main.spriteBatch.Draw(background, Vector2.Zero, Color.White);
+			drawMouseState = Mouse.GetState();
+			foreach (SkillButton skillButton in skillButtons)
+			{
+				skillButton.Draw();
+            }
 			Main.spriteBatch.End();
 		}
 
@@ -37,17 +53,11 @@ namespace ProjectBueno.Engine
 				Main.handler = game;
 			}
 		}
-
+        
 		public void windowResize()
 		{
-			/*if ((double)Main.window.ClientBounds.Width / Main.window.ClientBounds.Height > targetRatio)
-			{
-				screenScale = Matrix.CreateScale((float)Main.window.ClientBounds.Height / background.Height); //* Matrix.CreateTranslation(new Vector3(((float)Main.window.ClientBounds.Width / Main.window.ClientBounds.Height - targetRatio) * Main.window.ClientBounds.Height * 0.5f, 0.0f, 0.0f));
-			}
-			else
-			{
-				screenScale = Matrix.CreateScale((float)Main.window.ClientBounds.Width / background.Width); //* Matrix.CreateTranslation(new Vector3(0.0f, ((float)Main.window.ClientBounds.Height / Main.window.ClientBounds.Width - 1/targetRatio) * Main.window.ClientBounds.Width * 0.5f, 0.0f));
-			}*/
+			sreenScale = Matrix.CreateScale((float)Main.window.ClientBounds.Width / Main.xRatio);
+			downscale = (float)Main.xRatio / Main.window.ClientBounds.Width ;
 		}
 	}
 }

@@ -30,6 +30,7 @@
   <ItemGroup>
     <Compile Include="src\Engine\ILoadable.cs" />
     <Compile Include="src\Engine\PauseHandler.cs" />
+    <Compile Include="src\Engine\SkillButton.cs" />
     <Compile Include="src\Engine\SkillHandler.cs" />
     <Compile Include="src\Game\TerrainGenerator.cs" />
     <Compile Include="src\Game\Entity.cs" />
@@ -61,6 +62,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="newtonsoft.json.8.0.2.nupkg" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

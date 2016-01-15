@@ -22,14 +22,18 @@ namespace ProjectBueno.Engine
 		public static MouseState oldMouseState { get; private set; }
 		public static MouseState newMouseState { get; private set; }
 
-		public const float widthMult = (float)143 / 107;
-		public const float heightMult = (float)107 / 143;
+		public const int xRatio = 143;
+		public const int yRatio = 107;
+        public const float widthMult = (float)xRatio / yRatio;
+		public const float heightMult = (float)yRatio / xRatio;
 
 		private static Rectangle oldClientBounds;
 
+		public static Texture2D boxel;
+
 		public Main()
         {
-			graphicsManager = new GraphicsDeviceManager(this); //{ SynchronizeWithVerticalRetrace = false };
+			graphicsManager = new GraphicsDeviceManager(this);// { SynchronizeWithVerticalRetrace = false };
 			content = Content;
 			content.RootDirectory = "Content";
 			window = Window;
@@ -38,11 +42,12 @@ namespace ProjectBueno.Engine
 			IsMouseVisible = true;
 			IsFixedTimeStep = true;
 			TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 30.0);
-			oldKeyState = Keyboard.GetState();
-
+			newKeyState = Keyboard.GetState();
+			newMouseState = Mouse.GetState();
 			graphicsManager.PreferredBackBufferWidth = 143 * 5;
 			graphicsManager.PreferredBackBufferHeight = 107 * 5;
 			oldClientBounds = Window.ClientBounds;
+			//IsFixedTimeStep = false;
 		}
 
 		private void WindowSizeChanged(object sender, EventArgs e)
@@ -93,6 +98,9 @@ namespace ProjectBueno.Engine
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+			boxel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+			boxel.SetData(new[] { Color.White });
 		}
 
         /// <summary>
@@ -110,9 +118,11 @@ namespace ProjectBueno.Engine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-			newKeyState = Keyboard.GetState();
-			handler.Update();
 			oldKeyState = newKeyState;
+			oldMouseState = newMouseState;
+			newKeyState = Keyboard.GetState();
+			newMouseState = Mouse.GetState();
+			handler.Update();
 		}
 
         /// <summary>

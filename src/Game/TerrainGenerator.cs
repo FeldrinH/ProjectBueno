@@ -124,7 +124,7 @@ namespace ProjectBueno.Game.Terrain
 		public static void processBiome()
 		{
 			bool desertLeft = random.NextDouble() < 0.5;
-            float mult = (startPoint.Y - endPoint.Y) / (startPoint.X - endPoint.X);
+			float mult = (startPoint.Y - endPoint.Y) / (startPoint.X - endPoint.X);
 			if (float.IsInfinity(mult))
 			{
 				for (int x = 0; x < xSize; x++)
