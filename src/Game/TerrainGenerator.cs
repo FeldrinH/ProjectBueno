@@ -35,6 +35,7 @@ namespace ProjectBueno.Game.Terrain
 		private static readonly int[] ySide = { -1, 1, 0, 0 };
 		public static int xSize = 500;
 		public static int ySize = 500;
+		public static int tileLimit = 30000;
 		public static List<List<Tiles>> terrain;
 		private static List<Coord> callqueue = new List<Coord>();
 		public static int tileCount;
@@ -96,7 +97,7 @@ namespace ProjectBueno.Game.Terrain
 			//Process land
 			int x = xSize/2;
 			int y = ySize/2;
-			while (tileCount < 30000)
+			while (tileCount < tileLimit)
 			{
 				Tiles type = Tiles.Forest;
 				if (x < 1 || x > xSize - 2 || y < 1 || y > ySize - 2)
