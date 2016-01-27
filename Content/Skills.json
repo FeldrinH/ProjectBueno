@@ -1,0 +1,174 @@
+[
+	{
+		"x" : 10,
+		"y" : 10,
+		"cost" : 0,
+		"id" : "PropMana",
+		"name" : "Mana",
+		"desc" : "Makes shape burst.",
+		"bought" : true,
+		"preqFor" : ["propHealing", "propControl", "propDestruction"]
+	},
+		{
+			"x" : 10,
+			"y" : 10,
+			"cost" : 50,
+			"id" : "PropDestruction",
+			"name" : "Destruction",
+			"desc" : "Inflict damage on your foes.",
+			"preqFor" : ["propShocking", "propBurning"]
+		},
+			{
+				"x" : 10,
+				"y" : 10,
+				"cost" : 200,
+				"id" : "PropBurning",
+				"name" : "Burning",
+				"desc" : "Deal more damage against living enemies.",
+				"preqFor" : ["propArcing"]
+			},
+				{
+					"x" : 10,
+					"y" : 10,
+					"cost" : 400,
+					"id" : "PropArcing",
+					"name" : "Arcing",
+					"desc" : "Make your spells arc three times.",
+					"preqFor" : ["propEradictation"]
+				},
+					{
+						"x" : 10,
+						"y" : 10,
+						"cost" : 900,
+						"id" : "PropEradication",
+						"name" : "Eradictation",
+						"desc" : "Deal massive damage.",
+					},
+			{
+				"x" : 10,
+				"y" : 10,
+				"cost" : 200,
+				"id" : "PropShocking",
+				"name" : "Shocking",
+				"desc" : "Deal more damage against machinery.",
+				"preqFor" : ["propArcing"]
+			},
+
+
+		{
+			"x" : 10,
+			"y" : 10,
+			"cost" : 50,
+			"id" : "PropControl",
+			"name" : "Control",
+			"desc" : "",
+			"preqFor" : ["propInfulence", "propTinkering"]
+		},
+			{
+				"x" : 10,
+				"y" : 10,
+				"cost" : 200,
+				"id" : "PropInfluence",
+				"name" : "Infulence",
+				"desc" : "Take control of flesh.",
+				"preqFor" : ["propTakeover"]
+			},
+				{
+					"x" : 10,
+					"y" : 10,
+					"cost" : 400,
+					"id" : "PropTakeover",
+					"name" : "Takeover",
+					"desc" : "Make your spells arc three times.",
+					"preqFor" : ["propSlavery"]
+				},
+					{
+						"x" : 10,
+						"y" : 10,
+						"cost" : 900,
+						"id" : "PropSlavery",
+						"name" : "Slavery",
+						"desc" : "Everything will serve you.",
+					},
+			{
+				"x" : 10,
+				"y" : 10,
+				"cost" : 200,
+				"id" : "PropTinkering",
+				"name" : "Tinkering",
+				"desc" : "Deal more damage against machinery.",
+				"preqFor" : ["propTakeover"]
+			},
+
+		{
+			"x" : 10,
+			"y" : 10,
+			"cost" : 50,
+			"id" : "PropHealing",
+			"name" : "Healing",
+			"desc" : "Heal your allies.",
+			"preqFor" : ["propMedic", "propEngineer"]
+		},
+			{
+				"x" : 10,
+				"y" : 10,
+				"cost" : 200,
+				"id" : "PropEngineer",
+				"name" : "Infulence",
+				"desc" : "More healing for machinery.",
+				"preqFor" : ["propRebound"]
+			},
+				{
+					"x" : 10,
+					"y" : 10,
+					"cost" : 400,
+					"id" : "PropRebound",
+					"name" : "Rebound",
+					"desc" : "Gain life based on effects granted.",
+					"preqFor" : ["propHarmony"]
+				},
+					{
+						"x" : 10,
+						"y" : 10,
+						"cost" : 900,
+						"id" : "PropHarmony",
+						"name" : "Harmony",
+						"desc" : "Effects of the spell affect all allies.",
+					},
+			{
+				"x" : 10,
+				"y" : 10,
+				"cost" : 200,
+				"id" : "PropMedic",
+				"name" : "Medic",
+				"desc" : "More healing for living allies.",
+				"preqFor" : ["propRebound"]
+			},
+	{
+		"x" : 10,
+		"y" : 10,	
+		"cost" : 200,
+		"id" : "ShapeBall",
+		"name" : "Medic",
+		"desc" : "More healing for living allies.",
+		"preqFor" : ["propRebound"]
+	},
+		{
+			"x" : 10,
+			"y" : 10,
+			"cost" : 200,
+			"id" : "ShapeBurst",
+			"name" : "Medic",
+			"desc" : "More healing for living allies.",
+			"preqFor" : ["propRebound"]
+		},
+		{
+			"x" : 10,
+			"y" : 10,
+			"cost" : 200,
+			"id" : "ShapeStream",
+			"name" : "Medic",
+			"desc" : "More healing for living allies.",
+			"preqFor" : ["propRebound"]
+		}
+]

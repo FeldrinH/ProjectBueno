@@ -63,9 +63,9 @@ namespace ProjectBueno.Engine
 			}
 			//Main.spriteBatch.DrawLine(TerrainGenerator.startPoint*Tile.TILESIZE,TerrainGenerator.endPoint*Tile.TILESIZE,Color.Black,1.0f);
 			player.Draw();
-			foreach (var proj in projectiles)
+			for (int i = 0; i < projectiles.Count; i++)
 			{
-				proj.Draw();
+				projectiles[i].Draw();
 			}
 			foreach (var ent in entities)
 			{
@@ -94,9 +94,9 @@ namespace ProjectBueno.Engine
 				TerrainGenerator.endPoint = TerrainGenerator.getRandomForest();
 				TerrainGenerator.processBiome();
 			}
-			foreach( var proj in projectiles )
-            {
-				proj.Update();
+			for (int i = 0; i < projectiles.Count; i++)
+			{
+				projectiles[i].Update();
 			}
 			foreach (var ent in entities)
 			{
@@ -107,7 +107,7 @@ namespace ProjectBueno.Engine
 			entities.RemoveAll(item => item.health == 0.0f);
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{
-				Main.handler = new SkillHandler(this);
+				Main.handler = new SkillHandler(this,player.skills);
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
 			{

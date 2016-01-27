@@ -1,0 +1,38 @@
+{
+  "PropMana": {
+    "PropDestruction": {
+      "PropBurning": {
+        "PropArcing": {
+          "PropEradication": {}
+        }
+      },
+      "PropShocking": {
+        "PropArcing": {}
+      }
+    },
+    "PropControl": {
+      "PropInfluence": {
+        "PropTakeover": {
+          "PropSlavery": {}
+        }
+      },
+      "PropTinkering": {
+        "PropTakeover": {}
+      }
+    },
+    "PropHealing": {
+      "PropMedic": {
+        "PropRebound": {
+          "PropHarmony": {}
+        }
+      },
+      "PropEngineer": {
+        "PropRebound": {}
+      }
+    }
+  },
+  "ShapeBall": {
+    "ShapeBurst": {},
+    "ShapeStream": {}
+  }
+}

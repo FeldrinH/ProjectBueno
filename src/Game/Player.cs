@@ -6,6 +6,8 @@ using ProjectBueno.Engine;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectBueno.Game.Entities
 {
@@ -35,9 +37,12 @@ namespace ProjectBueno.Game.Entities
 
 			state = (int)States.STANDING;
 			dir = Dir.DOWN;
+
+			loadSkills(JArray.Parse(File.ReadAllText("Content/Skills.json")),JObject.Parse(File.ReadAllText("Content/SkillTree.json")));
 		}
 
 		public bool moveHorizontal;
+		public List<Skill> skills { get; protected set; }
 
 		public override void Update()
 		{
@@ -132,6 +137,44 @@ namespace ProjectBueno.Game.Entities
 			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), Color.White);
 		}
 
+		public void loadSkills(JArray skillList, JObject skillTree)
+		{
+			Dictionary<string, Skill> skillMap = new Dictionary<string, Skill>();
+			foreach (var skill in skillList)
+			{
+				skillMap.Add((string)skill["id"],new Skill((JObject)skill));
+			}
+
+			bool lastUp = false;
+			JProperty skillPointer = (JProperty)skillTree.First;
+			while(true)
+			{
+				if (skillPointer.Value.HasValues && !lastUp)
+				{
+					skillPointer = (JProperty)skillPointer.Value.First;
+					continue;
+				}
+
+				skillMap[skillPointer.Name].populateDeps((JObject)skillPointer.Value,skillMap);
+				//Console.WriteLine(skillPointer.Path);
+
+				lastUp = false;
+				if (skillPointer.Next != null)
+				{
+					skillPointer = (JProperty)skillPointer.Next;
+				}
+				else if (skillPointer.Parent != skillPointer.Root)
+				{
+					skillPointer = (JProperty)skillPointer.Parent.Parent;
+					lastUp = true;
+				}
+				else
+				{
+					break;
+				}
+			}
+			skills = skillMap.Values.ToList();
+		}
 		public override void loadTextures(JObject animData)
 		{
 			foreach (States st in Enum.GetValues(typeof(States)))

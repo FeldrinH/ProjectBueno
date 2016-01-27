@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="src\Engine\ILoadable.cs" />
     <Compile Include="src\Engine\PauseHandler.cs" />
-    <Compile Include="src\Engine\SkillButton.cs" />
+    <Compile Include="src\Engine\Skill.cs" />
     <Compile Include="src\Engine\SkillHandler.cs" />
     <Compile Include="src\Game\TerrainGenerator.cs" />
     <Compile Include="src\Game\Entity.cs" />
@@ -93,6 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Player.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Skills.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\SkillTree.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="newtonsoft.json.8.0.2.nupkg" />
