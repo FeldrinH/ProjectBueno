@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ProjectBueno.Engine;
 
-namespace ProjectBueno.Game.Entities
+namespace ProjectBueno.Engine
 {
 	//Animated Entity Texture with frames(horizontal)
 	public class AnimatedTexture

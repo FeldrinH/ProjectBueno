@@ -8,6 +8,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
+using ProjectBueno.Game.Spells;
 
 namespace ProjectBueno.Game.Entities
 {

@@ -1,0 +1,2 @@
+﻿Add "textureNum" property to Skills.json
+Spell drawing and bounds

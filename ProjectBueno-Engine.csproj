@@ -45,12 +45,15 @@
   <ItemGroup>
     <Compile Include="src\Engine\ILoadable.cs" />
     <Compile Include="src\Engine\PauseHandler.cs" />
-    <Compile Include="src\Engine\Skill.cs" />
+    <Compile Include="src\Game\Skill.cs" />
     <Compile Include="src\Engine\SkillHandler.cs" />
+    <Compile Include="src\Game\SkillProp.cs" />
+    <Compile Include="src\Game\SkillShape.cs" />
+    <Compile Include="src\Game\Spell.cs" />
     <Compile Include="src\Game\TerrainGenerator.cs" />
     <Compile Include="src\Game\Entity.cs" />
     <Compile Include="src\Game\Projectile.cs" />
-    <Compile Include="src\Game\Texture.cs" />
+    <Compile Include="src\Engine\AnimatedTexture.cs" />
     <Compile Include="src\Engine\IHandler.cs" />
     <Compile Include="src\Engine\GameHandler.cs" />
     <Compile Include="src\Engine\Main.cs" />
@@ -83,10 +86,12 @@
     <Content Include="Content\plWalk.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Skills.png" />
     <Content Include="Content\skillTree.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
+    <Content Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
