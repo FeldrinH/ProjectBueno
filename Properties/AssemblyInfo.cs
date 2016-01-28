@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ProjectBueno-Engine")]
 [assembly: AssemblyProduct("ProjectBueno-Engine")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("Project Bueno Engine Standalone")]
+[assembly: AssemblyDescription("Project Buenche (née Bueno) Engine Standalone")]
 [assembly: AssemblyCompany("Not Affiliated Inc. (A Joke)")]
 [assembly: AssemblyCopyright("Copyright © Juhan Oskar Hennoste 2015")]
 [assembly: AssemblyTrademark("")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.1.1.*")]
-[assembly: AssemblyFileVersion("0.1.1.*")]
+[assembly: AssemblyVersion("0.2.0.0")]
+[assembly: AssemblyFileVersion("0.2.0.0")]

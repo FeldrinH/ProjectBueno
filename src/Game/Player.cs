@@ -44,6 +44,9 @@ namespace ProjectBueno.Game.Entities
 
 		public bool moveHorizontal;
 		public List<Skill> skills { get; protected set; }
+		protected List<Spell> spells;
+
+		public Spell curSpell { get; protected set; }
 
 		public override void Update()
 		{
@@ -138,6 +141,11 @@ namespace ProjectBueno.Game.Entities
 			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), Color.White);
 		}
 
+		public void setCurSpell(int index)
+		{
+			curSpell = spells[index];
+		}
+
 		public void loadSkills(JArray skillList, JObject skillTree)
 		{
 			Dictionary<string, Skill> skillMap = new Dictionary<string, Skill>();
@@ -175,6 +183,9 @@ namespace ProjectBueno.Game.Entities
 				}
 			}
 			skills = skillMap.Values.ToList();
+
+			spells = new List<Spell>() { new Spell(), new Spell(), new Spell(), new Spell(), new Spell() };
+			setCurSpell(0);
 		}
 		public override void loadTextures(JObject animData)
 		{

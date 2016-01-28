@@ -12,7 +12,7 @@ namespace ProjectBueno.Game.Spells
 		public Skill(JObject skill)
 		{
 			buttonBounds = new Rectangle((int)skill["x"], (int)skill["y"], buttonSize, buttonSize);
-			textureSource = new Rectangle((int)skill["textureNum"] * buttonSize, 0, buttonSize, buttonSize);
+			textureSource = new Rectangle(0, (int)skill["textureNum"] * buttonSize, buttonSize, buttonSize);
 			texture = Main.content.Load<Texture2D>("Skills");
 
 			name = (string)skill["name"];
@@ -28,7 +28,7 @@ namespace ProjectBueno.Game.Spells
 			dependants = new List<Skill>();
 		}
 
-		protected const int buttonSize = 16;
+		protected const int buttonSize = 10;
 		public Rectangle buttonBounds { get; protected set; }
 		protected Rectangle textureSource;
 		protected Texture2D texture;
@@ -59,10 +59,15 @@ namespace ProjectBueno.Game.Spells
 		//Button Specialized Draw
 		public void DrawButton(float downscale)
 		{
-			Main.spriteBatch.Draw(texture, buttonBounds, textureSource, Color.White);
-			if (buttonBounds.Contains(Main.newMouseState.X*downscale, Main.newMouseState.Y*downscale))
+			if (buttonBounds.Contains(Main.newMouseState.X * downscale, Main.newMouseState.Y * downscale))
 			{
-				Main.spriteBatch.Draw(Main.boxel,buttonBounds,Color.White*0.5f);
+				textureSource.X = buttonSize;
+				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, Color.White);
+				textureSource.X = 0;
+			}
+			else
+			{
+				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, Color.White);
 			}
 		}
 
@@ -72,6 +77,7 @@ namespace ProjectBueno.Game.Spells
 			Rectangle posBounds = buttonBounds;
 			posBounds.X = pos.X;
 			posBounds.Y = pos.Y;
+
 			Main.spriteBatch.Draw(texture, posBounds, textureSource, Color.White);
 		}
 		public void DrawHightlight(Point pos, float downscale)
@@ -79,10 +85,16 @@ namespace ProjectBueno.Game.Spells
 			Rectangle posBounds = buttonBounds;
 			posBounds.X = pos.X;
 			posBounds.Y = pos.Y;
-			Main.spriteBatch.Draw(texture, posBounds, textureSource, Color.White);
+
 			if (posBounds.Contains(Main.newMouseState.X * downscale, Main.newMouseState.Y * downscale))
 			{
-				Main.spriteBatch.Draw(Main.boxel, posBounds, Color.White * 0.5f);
+				textureSource.X = buttonSize;
+				Main.spriteBatch.Draw(texture, posBounds, textureSource, Color.White);
+				textureSource.X = 0;
+			}
+			else
+			{
+				Main.spriteBatch.Draw(texture, posBounds, textureSource, Color.White);
 			}
 		}
 	}
