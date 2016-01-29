@@ -8,7 +8,7 @@ namespace ProjectBueno.Game.Spells
 {
     public class Spell
     {
-		public SkillShape shape;
+		public ShapeBall shape;
 		public SkillProp prop;
 		public SkillProp modpTop;
 		public SkillProp modBottom;

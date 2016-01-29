@@ -5,10 +5,10 @@ using Microsoft.Xna.Framework.Input;
 using ProjectBueno.Engine;
 using Newtonsoft.Json.Linq;
 using System.IO;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using ProjectBueno.Game.Spells;
+using System.Reflection;
 
 namespace ProjectBueno.Game.Entities
 {
@@ -148,10 +148,18 @@ namespace ProjectBueno.Game.Entities
 
 		public void loadSkills(JArray skillList, JObject skillTree)
 		{
-			Dictionary<string, Skill> skillMap = new Dictionary<string, Skill>();
-			foreach (var skill in skillList)
+			#region AlternativeReflection
+			/*for (int i = 0; i < 100000; i++)
 			{
-				skillMap.Add((string)skill["id"],new Skill((JObject)skill));
+				skillMap.Add((string)skill["id"],(Skill)Activator.CreateInstance(null, "ProjectBueno.Game.Spells." + skill["class"],false,0,null,new object[1] { (JObject)skill },null,null).Unwrap());
+			}*/
+			#endregion
+
+			Dictionary<string, Skill> skillMap = new Dictionary<string, Skill>();
+		
+			foreach (JObject skill in skillList)
+			{
+				skillMap.Add((string)skill["id"],(Skill)Type.GetType("ProjectBueno.Game.Spells."+(string)skill["class"]).GetConstructor(new Type[1] { typeof(JObject) }).Invoke(new object[1] { skill }));
 			}
 
 			bool lastUp = false;

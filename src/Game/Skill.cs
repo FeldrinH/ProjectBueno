@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace ProjectBueno.Game.Spells
 {
-	public class Skill
+    public abstract class Skill
 	{
-		public Skill(JObject skill)
+		protected Skill(JObject skill)
 		{
 			buttonBounds = new Rectangle((int)skill["x"], (int)skill["y"], buttonSize, buttonSize);
 			textureSource = new Rectangle(0, (int)skill["textureNum"] * buttonSize, buttonSize, buttonSize);

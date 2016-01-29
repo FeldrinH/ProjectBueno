@@ -1,12 +1,20 @@
 ﻿using Newtonsoft.Json.Linq;
+using ProjectBueno.Game.Entities;
 
 namespace ProjectBueno.Game.Spells
 {
-	//Skill for properties and modifiers
-	public class SkillProp : Skill
+	//Base Skill for Properties and Modifiers
+	public /*abstract*/ class SkillProp : Skill
 	{
-		public SkillProp(JObject skill) : base(skill)
+		/*protected*/ public SkillProp(JObject skill) : base(skill)
 		{
 		}
+		public /*abstract*/ bool isProperty { get; }
+		public /*abstract*/ void setProperties()
+		{}
+        public /*abstract*/ void onContact(Entity target)
+		{}
 	}
+
+	//Concrete Properties and Modifiers
 }

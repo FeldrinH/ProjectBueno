@@ -1,14 +1,14 @@
-﻿    using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ProjectBueno-Engine")]
-[assembly: AssemblyProduct("ProjectBueno-Engine")]
+[assembly: AssemblyTitle("Project Bueno")]
+[assembly: AssemblyProduct("Project Bueno Engine")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("Project Buenche (née Bueno) Engine Standalone")]
+[assembly: AssemblyDescription("Project Buenche (née Bueno)")]
 [assembly: AssemblyCompany("Not Affiliated Inc. (A Joke)")]
 [assembly: AssemblyCopyright("Copyright © Juhan Oskar Hennoste 2015")]
 [assembly: AssemblyTrademark("")]
@@ -29,5 +29,11 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.2.0.0")]
-[assembly: AssemblyFileVersion("0.2.0.0")]
+[assembly: AssemblyVersion(PB.VERSION)]
+[assembly: AssemblyFileVersion(PB.VERSION)]
+
+internal static class PB
+{
+	public const string VERSION = "0.2.0.0";
+	public const string VERSION_NAME = "Adelost";
+}
