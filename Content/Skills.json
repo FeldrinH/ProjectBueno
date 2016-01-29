@@ -162,35 +162,35 @@
 				"textureNum" : 1
 			},
 	{
-		"x" : 10,
-		"y" : 10,	
-		"cost" : 200,
+		"x" : 24,
+		"y" : 73,	
+		"cost" : 0,
 		"id" : "ShapeBall",
 		"class" : "ShapeBall",
 		"name" : "Ball",
-		"desc" : "More healing for living allies.",
-		"textureNum" : 1
+		"desc" : "TODO",
+		"textureNum" : 13
 	},
 		{
-			"x" : 10,
-			"y" : 10,
-			"cost" : 200,
+			"x" : 28,
+			"y" : 85,
+			"cost" : 100,
 			"id" : "ShapeBurst",
 			"class" : "ShapeBurst",	
 			"partCount" : 1000,
-			"name" : "Medic",
-			"desc" : "More healing for living allies.",
-			"textureNum" : 1
+			"name" : "Burst",
+			"desc" : "TODO",
+			"textureNum" : 12
 		},
 		{
-			"x" : 10,
-			"y" : 10,
-			"cost" : 200,
+			"x" : 36,
+			"y" : 72,
+			"cost" : 100,
 			"id" : "ShapeStream",
 			"class" : "ShapeStream",
 			"partCount" : 1000,
-			"name" : "Medic",
-			"desc" : "More healing for living allies.",
-			"textureNum" : 1
+			"name" : "Stream",
+			"desc" : "TODO",
+			"textureNum" : 11
 		}
 ]

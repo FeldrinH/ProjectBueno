@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using ProjectBueno.Engine;
+using ProjectBueno.Game.Entities;
 using System;
 using System.Collections.Generic;
 
 namespace ProjectBueno.Game.Spells
 {
-    public abstract class Skill
+	public abstract class Skill
 	{
 		protected Skill(JObject skill)
 		{
@@ -21,9 +22,14 @@ namespace ProjectBueno.Game.Spells
 			locked = true;
 
 			if ((bool?)skill["bought"] == true)
-			{ bought = true; }
+			{
+				bought = true;
+				locked = false;
+			}
 			else
-			{ bought = false; }
+			{
+				bought = false;
+			}
 
 			dependants = new List<Skill>();
 		}
@@ -34,11 +40,14 @@ namespace ProjectBueno.Game.Spells
 		protected Texture2D texture;
 
 		protected List<Skill> dependants;
-		protected bool locked;
-		protected bool bought;
+		public bool locked;
+		public bool bought;
 		protected string name;
 		protected string description;
 		protected int cost;
+
+		protected static readonly Color forsaleColor = Color.Gray;
+		protected static readonly Color lockedColor = new Color(25, 25, 25);
 
 		public void unlockDeps()
 		{
@@ -47,8 +56,7 @@ namespace ProjectBueno.Game.Spells
 				skill.locked = false;
 			}
 		}
-
-		public void populateDeps(JObject deps, Dictionary<string,Skill> skills)
+		public void populateDeps(JObject deps, Dictionary<string, Skill> skills)
 		{
 			foreach (var dep in deps)
 			{
@@ -56,18 +64,32 @@ namespace ProjectBueno.Game.Spells
 			}
 		}
 
+		public void onClick(float downscale, Player player)
+		{
+			if (buttonBounds.Contains(Main.newMouseState.X * downscale, Main.newMouseState.Y * downscale) && player.knowledgePoints >= cost)
+			{
+				player.knowledgePoints -= cost;
+				bought = true;
+				unlockDeps();
+			}
+		}
+
 		//Button Specialized Draw
 		public void DrawButton(float downscale)
 		{
-			if (buttonBounds.Contains(Main.newMouseState.X * downscale, Main.newMouseState.Y * downscale))
+			if (locked)
+			{
+				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, lockedColor);
+			}
+			else if (buttonBounds.Contains(Main.newMouseState.X * downscale, Main.newMouseState.Y * downscale))
 			{
 				textureSource.X = buttonSize;
-				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, Color.White);
+				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, bought ? Color.White : forsaleColor);
 				textureSource.X = 0;
 			}
 			else
 			{
-				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, Color.White);
+				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, bought ? Color.White : forsaleColor);
 			}
 		}
 

@@ -39,14 +39,18 @@ namespace ProjectBueno.Game.Entities
 			state = (int)States.STANDING;
 			dir = Dir.DOWN;
 
+			knowledgePoints = int.MaxValue; //FOR TESTING
+
 			loadSkills(JArray.Parse(File.ReadAllText("Content/Skills.json")),JObject.Parse(File.ReadAllText("Content/SkillTree.json")));
 		}
 
-		public bool moveHorizontal;
+		protected bool moveHorizontal;
 		public List<Skill> skills { get; protected set; }
-		protected List<Spell> spells;
+		public List<Spell> spells { get; protected set; }
 
 		public Spell curSpell { get; protected set; }
+
+		public int knowledgePoints;
 
 		public override void Update()
 		{
@@ -161,7 +165,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				skillMap.Add((string)skill["id"],(Skill)Type.GetType("ProjectBueno.Game.Spells."+(string)skill["class"]).GetConstructor(new Type[1] { typeof(JObject) }).Invoke(new object[1] { skill }));
 			}
-
+			
 			bool lastUp = false;
 			JProperty skillPointer = (JProperty)skillTree.First;
 			while(true)
@@ -190,6 +194,17 @@ namespace ProjectBueno.Game.Entities
 					break;
 				}
 			}
+			skillPointer = (JProperty)skillTree.First;
+			while (skillPointer != null)
+			{
+				skillMap[skillPointer.Name].locked = false;
+				if (skillMap[skillPointer.Name].bought)
+				{
+					skillMap[skillPointer.Name].unlockDeps();
+				}
+				skillPointer = (JProperty)skillPointer.Next;
+			}
+
 			skills = skillMap.Values.ToList();
 
 			spells = new List<Spell>() { new Spell(), new Spell(), new Spell(), new Spell(), new Spell() };

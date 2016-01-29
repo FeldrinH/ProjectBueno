@@ -4,20 +4,20 @@ using ProjectBueno.Engine;
 
 namespace ProjectBueno.Game.Entities
 {
-    public class Projectile
+    public struct Projectile
     {
 		public Projectile(Vector2 pos,Vector2 speed)
 		{
 			this.pos = pos;
 			this.speed = speed;
-			this.health = 10;
+			this.health = 1;
 			texture = new AnimatedTexture(Main.content.Load<Texture2D>("flyingProj"), 3, 0.5f, 4, 4);
 		}
 
-		protected Vector2 speed;
+		private Vector2 speed;
 		public Vector2 pos;
-		public int health;
-		public AnimatedTexture texture;
+		public byte health;
+		public AnimatedTexture projTexture;
 
 		public virtual void Update()
 		{

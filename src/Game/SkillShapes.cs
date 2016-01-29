@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
+using ProjectBueno.Engine;
 using ProjectBueno.Game.Entities;
 using System.Collections.Generic;
 
@@ -11,6 +12,7 @@ namespace ProjectBueno.Game.Spells
 		protected SkillShape(JObject skill) : base(skill)
 		{
 		}
+		public AnimatedTexture projTexture;
 		public abstract void generateProjectiles(Vector2 pos, List<Projectile> projectiles);
 	}
 

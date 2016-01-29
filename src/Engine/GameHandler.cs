@@ -32,7 +32,7 @@ namespace ProjectBueno.Engine
 
 		public List<Entity> entities;
 		public List<Projectile> projectiles;
-		public Player player { get; private set; }
+		public Player player { get; protected set; }
 
 		public void addTile(string id,Tile tile)
 		{
@@ -107,7 +107,7 @@ namespace ProjectBueno.Engine
 			entities.RemoveAll(item => item.health == 0.0f);
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{
-				Main.handler = new SkillHandler(this,player.skills);
+				Main.handler = new SkillHandler(this,player);
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
 			{
