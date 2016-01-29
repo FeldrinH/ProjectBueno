@@ -30,10 +30,10 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 [assembly: AssemblyVersion(PB.VERSION)]
-[assembly: AssemblyFileVersion(PB.VERSION)]
+[assembly: AssemblyFileVersion(PB.VERSION + " " + PB.VERSION_NAME)]
 
 internal static class PB
 {
-	public const string VERSION = "0.2.0.0";
-	public const string VERSION_NAME = "Adelost";
+	public const string VERSION = "0.2.0";
+	public const string VERSION_NAME = "Beaufort";
 }

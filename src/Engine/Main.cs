@@ -22,8 +22,8 @@ namespace ProjectBueno.Engine
 		public static MouseState oldMouseState { get; private set; }
 		public static MouseState newMouseState { get; private set; }
 
-		public const int xRatio = 143;
-		public const int yRatio = 107;
+		public const int xRatio = 140;
+		public const int yRatio = 105;
         public const float widthMult = (float)xRatio / yRatio;
 		public const float heightMult = (float)yRatio / xRatio;
 
@@ -44,8 +44,8 @@ namespace ProjectBueno.Engine
 			TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 30.0);
 			newKeyState = Keyboard.GetState();
 			newMouseState = Mouse.GetState();
-			graphicsManager.PreferredBackBufferWidth = 143 * 5;
-			graphicsManager.PreferredBackBufferHeight = 107 * 5;
+			graphicsManager.PreferredBackBufferWidth = xRatio * 5;
+			graphicsManager.PreferredBackBufferHeight = yRatio * 5;
 			oldClientBounds = Window.ClientBounds;
 			//IsFixedTimeStep = false;
 		}
@@ -54,10 +54,10 @@ namespace ProjectBueno.Engine
 		{
 			if (Window.ClientBounds.Width != 0)
 			{
-				if (Window.ClientBounds.Width < 143 || Window.ClientBounds.Height < 107)
+				if (Window.ClientBounds.Width < xRatio || Window.ClientBounds.Height < yRatio)
 				{
-					graphicsManager.PreferredBackBufferWidth = 143;
-					graphicsManager.PreferredBackBufferHeight = 107;
+					graphicsManager.PreferredBackBufferWidth = xRatio;
+					graphicsManager.PreferredBackBufferHeight = yRatio;
 				}
 				else if (oldClientBounds.Width != Window.ClientBounds.Width && graphicsManager.PreferredBackBufferWidth != Window.ClientBounds.Width)
 				{
