@@ -10,6 +10,7 @@ namespace ProjectBueno.Game.Spells
 {
 	public abstract class Skill
 	{
+		//Constructor for derived types
 		protected Skill(JObject skill)
 		{
 			buttonBounds = new Rectangle((int)skill["x"], (int)skill["y"], buttonSize, buttonSize);
@@ -34,7 +35,7 @@ namespace ProjectBueno.Game.Spells
 			dependants = new List<Skill>();
 		}
 
-		protected const int buttonSize = 10;
+		public const int buttonSize = 10;
 		public Rectangle buttonBounds { get; protected set; }
 		protected Rectangle textureSource;
 		protected Texture2D texture;
@@ -48,6 +49,8 @@ namespace ProjectBueno.Game.Spells
 
 		protected static readonly Color forsaleColor = Color.Gray;
 		protected static readonly Color lockedColor = new Color(25, 25, 25);
+
+		public static Skill Empty { get; private set; }
 
 		public void unlockDeps()
 		{
@@ -64,24 +67,32 @@ namespace ProjectBueno.Game.Spells
 			}
 		}
 
-		public void onClick(float downscale, Player player)
+		public void onClick(float mouseX, float mouseY, ref int knowledgePoints, ref Skill curHeld)
 		{
-			if (buttonBounds.Contains(Main.newMouseState.X * downscale, Main.newMouseState.Y * downscale) && player.knowledgePoints >= cost)
+			if (buttonBounds.Contains(mouseX, mouseY))
 			{
-				player.knowledgePoints -= cost;
-				bought = true;
-				unlockDeps();
+				if (bought)
+				{
+					curHeld = this;
+					Console.WriteLine("as");
+				}
+				else if (knowledgePoints >= cost)
+				{
+					knowledgePoints -= cost;
+					bought = true;
+					unlockDeps();
+				}
 			}
 		}
 
 		//Button Specialized Draw
-		public void DrawButton(float downscale)
+		public void DrawButton(float mouseX,float mouseY)
 		{
 			if (locked)
 			{
 				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, lockedColor);
 			}
-			else if (buttonBounds.Contains(Main.newMouseState.X * downscale, Main.newMouseState.Y * downscale))
+			else if (buttonBounds.Contains(mouseX, mouseY))
 			{
 				textureSource.X = buttonSize;
 				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, bought ? Color.White : forsaleColor);
@@ -94,29 +105,47 @@ namespace ProjectBueno.Game.Spells
 		}
 
 		//General Draw
-		public void Draw(Point pos)
+		public void Draw(Vector2 pos)
 		{
-			Rectangle posBounds = buttonBounds;
-			posBounds.X = pos.X;
-			posBounds.Y = pos.Y;
-
-			Main.spriteBatch.Draw(texture, posBounds, textureSource, Color.White);
+			Main.spriteBatch.Draw(texture, pos, textureSource, Color.White);
 		}
-		public void DrawHightlight(Point pos, float downscale)
+		public void DrawHightlight(Rectangle rect, float mouseX, float mouseY)
 		{
-			Rectangle posBounds = buttonBounds;
-			posBounds.X = pos.X;
-			posBounds.Y = pos.Y;
-
-			if (posBounds.Contains(Main.newMouseState.X * downscale, Main.newMouseState.Y * downscale))
+			if (rect.Contains(mouseX, mouseY))
 			{
 				textureSource.X = buttonSize;
-				Main.spriteBatch.Draw(texture, posBounds, textureSource, Color.White);
+				Main.spriteBatch.Draw(texture, rect, textureSource, Color.White);
 				textureSource.X = 0;
 			}
 			else
 			{
-				Main.spriteBatch.Draw(texture, posBounds, textureSource, Color.White);
+				Main.spriteBatch.Draw(texture, rect, textureSource, Color.White);
+			}
+		}
+	}
+
+	public static class EmptySkill
+	{
+		private static Rectangle textureSource;
+		private static Texture2D texture;
+
+		public static void initEmpty()
+		{
+			textureSource = new Rectangle(0, 0, Skill.buttonSize, Skill.buttonSize);
+			texture = Main.content.Load<Texture2D>("Skills");
+		}
+
+		public static void DrawHightlight(Rectangle rect, float mouseX, float mouseY)
+		{
+			if (rect.Contains(mouseX, mouseY))
+			{
+				textureSource.X = Skill.buttonSize;
+				Main.spriteBatch.Draw(texture, rect, textureSource, Color.White);
+				textureSource.X = 0;
+			}
+			else
+			{
+				Main.spriteBatch.Draw(texture, rect, textureSource, Color.White);
 			}
 		}
 	}

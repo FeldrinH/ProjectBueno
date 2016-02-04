@@ -19,6 +19,8 @@ namespace ProjectBueno.Engine
 		public float downscale { get; protected set; }
 		protected Matrix sreenScale;
 
+		protected Skill curHeld;
+
 		public SkillHandler(GameHandler game, Player player)
 		{
 			this.game = game;
@@ -28,24 +30,34 @@ namespace ProjectBueno.Engine
 
 		public void Draw()
 		{
+			float mouseX = Main.newMouseState.X * downscale;
+			float mouseY = Main.newMouseState.Y * downscale;
 			Main.graphicsManager.GraphicsDevice.Clear(Color.Gray);
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, sreenScale);
 			Main.spriteBatch.Draw(background, Vector2.Zero, Color.White);
 			foreach (Skill skillButton in player.skills)
 			{
-				skillButton.DrawButton(downscale);
+				skillButton.DrawButton(mouseX,mouseY);
             }
+			player.curSpell.DrawButtons(mouseX,mouseY);
+			if (curHeld != null)
+			{
+				curHeld.Draw(new Vector2(mouseX, mouseY));
+			}
 			Main.spriteBatch.End();
 		}
 
 		public void Update()
 		{
+			float mouseX = Main.newMouseState.X * downscale;
+			float mouseY = Main.newMouseState.Y * downscale;
 			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
 			{
 				foreach (Skill skill in player.skills)
                 {
-					skill.onClick(downscale, player);
+					skill.onClick(mouseX, mouseY, ref player.knowledgePoints, ref curHeld);
 				}
+				player.curSpell.onClick(mouseX, mouseY, ref curHeld);
             }
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{

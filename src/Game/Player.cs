@@ -135,7 +135,7 @@ namespace ProjectBueno.Game.Entities
 			
 			if (Main.newKeyState.IsKeyDown(Keys.V) && !Main.oldKeyState.IsKeyDown(Keys.V))
 			{
-				game.projectiles.Add(new Projectile(pos,dir.Vector()*2.0f));
+				game.projectiles.Add(new ProjectileSingle(pos,dir.Vector()*2.0f));
 			}
 			base.Update();
 		}

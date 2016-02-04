@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ProjectBueno.Engine;
 using ProjectBueno.Game.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,19 +16,23 @@ namespace ProjectBueno.Game.Spells
 		public SkillProp modTop;
 		public SkillProp modBottom;
 		public int cooldown;
-		public float damage;
-		protected Texture2D texture;
-		public static Point shapeBounds { get; protected set; }
-		public static Point propBounds { get; protected set; }
-		public static Point modTopBounds { get; protected set; }
-		public static Point modBottomBounds { get; protected set; }
+		public static Rectangle shapeBounds { get; protected set; }
+		public static Rectangle propBounds { get; protected set; }
+		public static Rectangle modTopBounds { get; protected set; }
+		public static Rectangle modBottomBounds { get; protected set; }
+
+		protected SkillHandler skillHandler;
 
 		public Spell()
 		{
-			shapeBounds = new Point(0, 0);
-			propBounds = new Point(0, 0);
-			modTopBounds = new Point(0, 0);
-			modBottomBounds = new Point(0, 0);
+		}
+
+		static Spell()
+		{
+			shapeBounds = new Rectangle(99,18, Skill.buttonSize, Skill.buttonSize);
+			propBounds = new Rectangle(114, 18, Skill.buttonSize, Skill.buttonSize);
+			modTopBounds = new Rectangle(128, 11, Skill.buttonSize, Skill.buttonSize);
+			modBottomBounds = new Rectangle(128, 25, Skill.buttonSize, Skill.buttonSize);
 		}
 
 		public void createProjectile(Vector2 pos, List<Projectile> projectiles)
@@ -34,20 +40,71 @@ namespace ProjectBueno.Game.Spells
 			shape.generateProjectiles(pos, projectiles);
 		}
 
-		public void onClick(float downscale)
+		public bool onClick(float mouseX, float mouseY, ref Skill curHeld)
 		{
+			if (shapeBounds.Contains(mouseX, mouseY) && (curHeld == null || curHeld is SkillShape))
+			{
+				shape = (SkillShape)curHeld;
+			}
+			else if (propBounds.Contains(mouseX, mouseY) && (curHeld == null || curHeld is SkillProp))
+			{
+				prop = (SkillProp)curHeld;
+			}
+			else if (modTopBounds.Contains(mouseX, mouseY) && (curHeld == null || curHeld is SkillProp))
+			{
+				modTop = (SkillProp)curHeld;
+			}
+			else if (modBottomBounds.Contains(mouseX, mouseY) && (curHeld == null || curHeld is SkillProp))
+			{
+				modBottom = (SkillProp)curHeld;
+			}
+			else
+			{
+				return false;
+			}
+			curHeld = null;
+			return true;
 		}
 
-		public void DrawButtons()
+		public Spell getCopy()
 		{
+			return (Spell)MemberwiseClone();
 		}
-	}
-	public class SkillData
-	{
-		public SkillProp prop;
-		public SkillProp modTop;
-		public SkillProp modBottom;
-		public Animated
-		public float damage;
+
+		public void DrawButtons(float mouseX, float mouseY)
+		{
+			if (shape != null)
+			{
+				shape.DrawHightlight(shapeBounds, mouseX, mouseY);
+			}
+			else
+			{
+				EmptySkill.DrawHightlight(shapeBounds, mouseX, mouseY);
+			}
+			if (prop != null)
+			{
+				prop.DrawHightlight(propBounds, mouseX, mouseY);
+			}
+			else
+			{
+				EmptySkill.DrawHightlight(propBounds, mouseX, mouseY);
+			}
+			if (modTop != null)
+			{
+				modTop.DrawHightlight(modTopBounds, mouseX, mouseY);
+			}
+			else
+			{
+				EmptySkill.DrawHightlight(modTopBounds, mouseX, mouseY);
+			}
+			if (modBottom != null)
+			{
+				modBottom.DrawHightlight(modBottomBounds, mouseX, mouseY);
+			}
+			else
+			{
+				EmptySkill.DrawHightlight(modBottomBounds, mouseX, mouseY);
+			}
+		}
 	}
 }

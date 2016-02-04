@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectBueno.Game.Spells;
 using System;
 
 namespace ProjectBueno.Engine
@@ -101,6 +102,8 @@ namespace ProjectBueno.Engine
 
 			boxel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			boxel.SetData(new[] { Color.White });
+
+			EmptySkill.initEmpty();
 		}
 
         /// <summary>
