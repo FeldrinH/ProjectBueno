@@ -62,6 +62,7 @@ namespace ProjectBueno.Engine
                 }
 			}
 			//Main.spriteBatch.DrawLine(TerrainGenerator.startPoint*Tile.TILESIZE,TerrainGenerator.endPoint*Tile.TILESIZE,Color.Black,1.0f);
+
 			player.Draw();
 			for (int i = 0; i < projectiles.Count; i++)
 			{

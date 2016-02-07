@@ -13,7 +13,7 @@ namespace ProjectBueno.Game.Entities
 			this.pos = pos;
 			this.speed = speed;
 			this.health = 450;
-			projTexture = new AnimatedTexture(Main.content.Load<Texture2D>("flyingProj"), 3, 0.5f, 4, 4);
+			projTexture = new AnimatedTexture(Main.content.Load<Texture2D>("flyingProj"), 3, 0.25f, 4, 4);
 		}
 
 		public AnimatedTexture projTexture;
