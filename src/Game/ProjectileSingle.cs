@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectBueno.Engine;
+using ProjectBueno.Game.Spells;
 
 namespace ProjectBueno.Game.Entities
 {
     public class ProjectileSingle : Projectile
     {
-		public ProjectileSingle(Vector2 pos,Vector2 speed)
+		public ProjectileSingle(Vector2 pos,Vector2 speed, Spell spell) : base(spell)
 		{
 			this.pos = pos;
 			this.speed = speed;

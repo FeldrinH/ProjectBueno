@@ -11,95 +11,132 @@ namespace ProjectBueno.Game.Spells
 {
 	public class Spell
 	{
-		public SkillShape shape;
-		public SkillProp prop;
-		public SkillProp modTop;
-		public SkillProp modBottom;
-		public int cooldown;
-		public static Rectangle shapeBounds { get; protected set; }
-		public static Rectangle propBounds { get; protected set; }
-		public static Rectangle modTopBounds { get; protected set; }
-		public static Rectangle modBottomBounds { get; protected set; }
-
-		protected SkillHandler skillHandler;
-
 		public Spell()
 		{
+			cooldown = -1; //Spell can't be used
 		}
 
-		static Spell()
+		public Spell(SkillShape shape,SkillProp prop,SkillProp modTop,SkillProp modBottom)
 		{
-			shapeBounds = new Rectangle(99,18, Skill.buttonSize, Skill.buttonSize);
+			this.shape = shape;
+			this.prop = prop;
+			this.modTop = modTop;
+			this.modBottom = modBottom;
+			cooldown = 30; //For testing
+		}
+
+		public readonly SkillShape shape;
+		public readonly SkillProp prop;
+		public readonly SkillProp modTop;
+		public readonly SkillProp modBottom;
+		public readonly int cooldown;
+	}
+	public sealed class SpellContainer
+	{
+		public SpellContainer()
+		{
+			spell = new Spell();
+		}
+
+		public Spell spell { get; private set; }
+
+		public static Rectangle shapeBounds { get; private set; }
+		public static Rectangle propBounds { get; private set; }
+		public static Rectangle modTopBounds { get; private set; }
+		public static Rectangle modBottomBounds { get; private set; }
+
+		static SpellContainer()
+		{
+			shapeBounds = new Rectangle(99, 18, Skill.buttonSize, Skill.buttonSize);
 			propBounds = new Rectangle(114, 18, Skill.buttonSize, Skill.buttonSize);
 			modTopBounds = new Rectangle(128, 11, Skill.buttonSize, Skill.buttonSize);
 			modBottomBounds = new Rectangle(128, 25, Skill.buttonSize, Skill.buttonSize);
 		}
 
-		public void createProjectile(Vector2 pos, List<Projectile> projectiles)
+		public Projectile createProjectile(Vector2 pos, Vector2 dir)
 		{
-			shape.generateProjectiles(pos, projectiles);
+			return spell.shape.generateProjectiles(pos, dir, spell);
 		}
 
-		public bool onClick(float mouseX, float mouseY, ref Skill curHeld)
+		public void onPlaceClick(float mouseX, float mouseY, ref Skill curHeld)
 		{
-			if (shapeBounds.Contains(mouseX, mouseY) && (curHeld == null || curHeld is SkillShape))
+			if (shapeBounds.Contains(mouseX, mouseY) && curHeld is SkillShape)
 			{
-				shape = (SkillShape)curHeld;
+				spell = new Spell((SkillShape)curHeld, spell.prop, spell.modTop, spell.modBottom);
 			}
-			else if (propBounds.Contains(mouseX, mouseY) && (curHeld == null || curHeld is SkillProp))
+			else if (propBounds.Contains(mouseX, mouseY) && curHeld is SkillProp)
 			{
-				prop = (SkillProp)curHeld;
+				spell = new Spell(spell.shape, (SkillProp)curHeld, spell.modTop, spell.modBottom);
 			}
-			else if (modTopBounds.Contains(mouseX, mouseY) && (curHeld == null || curHeld is SkillProp))
+			else if (modTopBounds.Contains(mouseX, mouseY) && curHeld is SkillProp)
 			{
-				modTop = (SkillProp)curHeld;
+				spell = new Spell(spell.shape, spell.prop, (SkillProp)curHeld, spell.modBottom);
 			}
-			else if (modBottomBounds.Contains(mouseX, mouseY) && (curHeld == null || curHeld is SkillProp))
+			else if (modBottomBounds.Contains(mouseX, mouseY) && curHeld is SkillProp)
 			{
-				modBottom = (SkillProp)curHeld;
+				spell = new Spell(spell.shape, spell.prop, spell.modTop, (SkillProp)curHeld);
 			}
 			else
 			{
-				return false;
+				return;
 			}
 			curHeld = null;
-			return true;
 		}
 
-		public Spell getCopy()
+		public bool onClearClick(float mouseX, float mouseY)
 		{
-			return (Spell)MemberwiseClone();
+			if (shapeBounds.Contains(mouseX, mouseY))
+			{
+				spell = new Spell(null, spell.prop, spell.modTop, spell.modBottom);
+			}
+			else if (propBounds.Contains(mouseX, mouseY))
+			{
+				spell = new Spell(spell.shape, null, spell.modTop, spell.modBottom);
+			}
+			else if (modTopBounds.Contains(mouseX, mouseY))
+			{
+				spell = new Spell(spell.shape, spell.prop, null, spell.modBottom);
+			}
+			else if (modBottomBounds.Contains(mouseX, mouseY))
+			{
+				spell = new Spell(spell.shape, spell.prop, spell.modTop, null);
+			}
+			else
+			{
+				return false; //Return false if nothing was changed
+			}
+			return true; //Return true if something was changed
 		}
 
 		public void DrawButtons(float mouseX, float mouseY)
 		{
-			if (shape != null)
+			if (spell.shape != null)
 			{
-				shape.DrawHightlight(shapeBounds, mouseX, mouseY);
+				spell.shape.DrawHightlight(shapeBounds, mouseX, mouseY);
 			}
 			else
 			{
 				EmptySkill.DrawHightlight(shapeBounds, mouseX, mouseY);
 			}
-			if (prop != null)
+			if (spell.prop != null)
 			{
-				prop.DrawHightlight(propBounds, mouseX, mouseY);
+				spell.prop.DrawHightlight(propBounds, mouseX, mouseY);
 			}
 			else
 			{
 				EmptySkill.DrawHightlight(propBounds, mouseX, mouseY);
 			}
-			if (modTop != null)
+			if (spell.modTop != null)
 			{
-				modTop.DrawHightlight(modTopBounds, mouseX, mouseY);
+				spell.modTop.DrawHightlight(modTopBounds, mouseX, mouseY);
 			}
 			else
 			{
 				EmptySkill.DrawHightlight(modTopBounds, mouseX, mouseY);
 			}
-			if (modBottom != null)
+			if (spell.modBottom != null)
 			{
-				modBottom.DrawHightlight(modBottomBounds, mouseX, mouseY);
+				spell.modBottom.DrawHightlight(modBottomBounds, mouseX, mouseY);
 			}
 			else
 			{

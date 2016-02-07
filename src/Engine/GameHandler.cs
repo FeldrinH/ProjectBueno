@@ -15,7 +15,7 @@ namespace ProjectBueno.Engine
         {
 			player = new Player(new Vector2(TerrainGenerator.xSize*0.5f*Tile.TILESIZE,TerrainGenerator.ySize*0.5f*Tile.TILESIZE), this);
 			screenScale = 2.0f;
-			projectiles = new List<ProjectileSingle>();
+			projectiles = new List<Projectile>();
 			entities = new List<Entity>();
 
 			TerrainGenerator.startGenerate();
@@ -31,7 +31,7 @@ namespace ProjectBueno.Engine
 		public Dictionary<string, Tile> tileRegistry;
 
 		public List<Entity> entities;
-		public List<ProjectileSingle> projectiles;
+		public List<Projectile> projectiles;
 		public Player player { get; protected set; }
 
 		public void addTile(string id,Tile tile)

@@ -74,9 +74,8 @@ namespace ProjectBueno.Game.Spells
 				if (bought)
 				{
 					curHeld = this;
-					Console.WriteLine("as");
 				}
-				else if (knowledgePoints >= cost)
+				else if (knowledgePoints >= cost && !locked)
 				{
 					knowledgePoints -= cost;
 					bought = true;

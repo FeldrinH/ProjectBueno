@@ -13,7 +13,7 @@ namespace ProjectBueno.Game.Spells
 		{
 		}
 		public AnimatedTexture projTexture;
-		public abstract void generateProjectiles(Vector2 pos, List<Projectile> projectiles);
+		public abstract Projectile generateProjectiles(Vector2 pos,Vector2 dir, Spell spell);
 	}
 
 	//Concrete Shapes
@@ -21,11 +21,14 @@ namespace ProjectBueno.Game.Spells
 	{
 		public ShapeBall(JObject skill) : base(skill)
 		{
+			speed = (float)skill["projSpeed"];
 		}
 
-		public override void generateProjectiles(Vector2 pos, List<Projectile> projectiles)
+		public float speed { get; protected set; }
+
+		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
 		{
-			//Add projectile
+			return new ProjectileSingle(pos,dir*speed,spell);
 		}
 	}
 	public class ShapeBurst : SkillShape
@@ -37,8 +40,9 @@ namespace ProjectBueno.Game.Spells
 
 		protected static int partCount;
 
-		public override void generateProjectiles(Vector2 pos, List<Projectile> projectiles)
+		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
 		{
+			return null; //Placeholder
 			for (int i = 0; i < partCount; i++)
 			{
 				//Add projectiles
@@ -54,8 +58,9 @@ namespace ProjectBueno.Game.Spells
 
 		protected static int partCount;
 
-		public override void generateProjectiles(Vector2 pos, List<Projectile> projectiles)
+		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
 		{
+			return null; //Placeholder
 			for (int i = 0; i < partCount; i++)
 			{
 				//Add projectiles

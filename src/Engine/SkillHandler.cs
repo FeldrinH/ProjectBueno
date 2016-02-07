@@ -39,7 +39,7 @@ namespace ProjectBueno.Engine
 			{
 				skillButton.DrawButton(mouseX,mouseY);
             }
-			player.curSpell.DrawButtons(mouseX,mouseY);
+			player.spells[player.selectedSpell].DrawButtons(mouseX,mouseY);
 			if (curHeld != null)
 			{
 				curHeld.Draw(new Vector2(mouseX, mouseY));
@@ -57,8 +57,15 @@ namespace ProjectBueno.Engine
                 {
 					skill.onClick(mouseX, mouseY, ref player.knowledgePoints, ref curHeld);
 				}
-				player.curSpell.onClick(mouseX, mouseY, ref curHeld);
+				player.spells[player.selectedSpell].onPlaceClick(mouseX, mouseY, ref curHeld);
             }
+			if (Main.newMouseState.RightButton == ButtonState.Pressed && Main.oldMouseState.RightButton == ButtonState.Released)
+			{
+				if (!player.spells[player.selectedSpell].onClearClick(mouseX, mouseY))
+				{
+					curHeld = null;
+				}
+			}
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{
 				Main.handler = game;

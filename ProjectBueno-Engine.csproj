@@ -61,6 +61,7 @@
     <Compile Include="src\Engine\ILoadable.cs" />
     <Compile Include="src\Engine\PauseHandler.cs" />
     <Compile Include="src\Game\Projectile.cs" />
+    <Compile Include="src\Game\ProjectileGroup.cs" />
     <Compile Include="src\Game\Skill.cs" />
     <Compile Include="src\Engine\SkillHandler.cs" />
     <Compile Include="src\Game\SkillProp.cs" />

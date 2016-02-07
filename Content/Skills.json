@@ -169,7 +169,9 @@
 		"class" : "ShapeBall",
 		"name" : "Ball",
 		"desc" : "TODO",
-		"textureNum" : 13
+		"bought" : true,
+		"textureNum" : 13,
+		"projSpeed" : 2.0
 	},
 		{
 			"x" : 28,

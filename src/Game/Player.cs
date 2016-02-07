@@ -46,9 +46,9 @@ namespace ProjectBueno.Game.Entities
 
 		protected bool moveHorizontal;
 		public List<Skill> skills { get; protected set; }
-		public List<Spell> spells { get; protected set; }
+		public List<SpellContainer> spells { get; protected set; }
 
-		public Spell curSpell { get; protected set; }
+		public int selectedSpell;
 
 		public int knowledgePoints;
 
@@ -133,9 +133,9 @@ namespace ProjectBueno.Game.Entities
 			pos += totalMove;
 
 			
-			if (Main.newKeyState.IsKeyDown(Keys.V) && !Main.oldKeyState.IsKeyDown(Keys.V))
+			if (Main.newKeyState.IsKeyDown(Keys.D1) && !Main.oldKeyState.IsKeyDown(Keys.D1))
 			{
-				game.projectiles.Add(new ProjectileSingle(pos,dir.Vector()*2.0f));
+				game.projectiles.Add(spells[selectedSpell].createProjectile(pos,dir.Vector()));
 			}
 			base.Update();
 		}
@@ -143,11 +143,6 @@ namespace ProjectBueno.Game.Entities
 		{
             curTexture.incrementAnimation();
 			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), Color.White);
-		}
-
-		public void setCurSpell(int index)
-		{
-			curSpell = spells[index];
 		}
 
 		public void loadSkills(JArray skillList, JObject skillTree)
@@ -207,8 +202,8 @@ namespace ProjectBueno.Game.Entities
 
 			skills = skillMap.Values.ToList();
 
-			spells = new List<Spell>() { new Spell(), new Spell(), new Spell(), new Spell(), new Spell() };
-			setCurSpell(0);
+			spells = new List<SpellContainer>() { new SpellContainer(), new SpellContainer(), new SpellContainer(), new SpellContainer(), new SpellContainer() };
+			selectedSpell = 0;
 		}
 		public override void loadTextures(JObject animData)
 		{
