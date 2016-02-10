@@ -179,7 +179,7 @@
 			"cost" : 100,
 			"id" : "ShapeBurst",
 			"class" : "ShapeBurst",	
-			"partCount" : 1000,
+			"projCount" : 5000,
 			"name" : "Burst",
 			"desc" : "TODO",
 			"textureNum" : 12
@@ -190,7 +190,7 @@
 			"cost" : 100,
 			"id" : "ShapeStream",
 			"class" : "ShapeStream",
-			"partCount" : 1000,
+			"projCount" : 200,
 			"name" : "Stream",
 			"desc" : "TODO",
 			"textureNum" : 11

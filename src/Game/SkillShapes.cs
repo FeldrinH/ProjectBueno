@@ -36,11 +36,11 @@ namespace ProjectBueno.Game.Spells
 	{
 		public ShapeBurst(JObject skill) : base(skill)
 		{
-			partCount = 5000;//For testing
+			partCount = (int)skill["projCount"];
 		}
 
 		protected static int partCount;
-		private Random random = new Random(); //For testing
+		private static Random random = new Random(); //For testing
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
 		{
@@ -60,18 +60,20 @@ namespace ProjectBueno.Game.Spells
 	{
 		public ShapeStream(JObject skill) : base(skill)
 		{
-			partCount = (int)skill["partCount"];
+			partCount = (int)skill["projCount"];
 		}
 
 		protected static int partCount;
+		private static Random random = new Random();
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
 		{
-			return null; //Placeholder
+			ProjectileGroup projReturn = new ProjectileGroup(spell);
 			for (int i = 0; i < partCount; i++)
 			{
-				//Add projectiles
+				projReturn.addProjectile(pos + new Vector2((float)(random.NextDouble() * 2.0 - 1.0), (float)(random.NextDouble() * 2.0 - 1.0)), dir * (float)(random.NextDouble() + 2.0));
 			}
+			return projReturn;
 		}
 	}
 }

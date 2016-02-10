@@ -43,7 +43,7 @@ namespace ProjectBueno.Game.Entities
 			Rectangle frameCache = projTexture.getCurFrame();
             for (int i = 0; i < projPos.Count; i++)
 			{
-				Main.spriteBatch.Draw(projTexture.texture, projPos[i], frameCache, Color.White);
+				Main.spriteBatch.Draw(projTexture.texture, projPos[i], frameCache, Color.White*0.5f);
 			}
 		}
 
