@@ -32,19 +32,22 @@ namespace ProjectBueno.Game.Spells
 			return new ProjectileSingle(pos,dir*speed,spell);
 		}
 	}
+
 	public class ShapeBurst : SkillShape
 	{
 		public ShapeBurst(JObject skill) : base(skill)
 		{
 			partCount = (int)skill["projCount"];
+			radSquared = 3000.0f; //For testing
 		}
 
-		protected static int partCount;
+		protected int partCount;
+		protected float radSquared;
 		private static Random random = new Random(); //For testing
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
 		{
-			ProjectileGroup projReturn = new ProjectileGroup(spell);
+			ProjectileGroup projReturn = new ProjectileBurst(spell,900,pos,radSquared);
 			Vector2 vecSpeed;
 			for (int i = 0; i < partCount; i++)
 			{
@@ -56,22 +59,27 @@ namespace ProjectBueno.Game.Spells
 			return projReturn;
 		}
 	}
+
 	public class ShapeStream : SkillShape
 	{
 		public ShapeStream(JObject skill) : base(skill)
 		{
 			partCount = (int)skill["projCount"];
+			duration = 10; //For testing
+			length = 100.0f; //For testing
 		}
 
-		protected static int partCount;
+		protected int partCount;
+		protected int duration;
+		protected float length;
 		private static Random random = new Random();
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
 		{
-			ProjectileGroup projReturn = new ProjectileGroup(spell);
+			ProjectileGroup projReturn = new ProjectileGroup(spell,duration);
 			for (int i = 0; i < partCount; i++)
 			{
-				projReturn.addProjectile(pos + new Vector2((float)(random.NextDouble() * 2.0 - 1.0), (float)(random.NextDouble() * 2.0 - 1.0)), dir * (float)(random.NextDouble() + 2.0));
+				projReturn.addProjectile(pos + dir * 5.0f + new Vector2((float)(random.NextDouble() * (2.0 + length * dir.X) - 1.0), (float)(random.NextDouble() * (2.0 + length * dir.Y) - 1.0)), Vector2.Zero );
 			}
 			return projReturn;
 		}

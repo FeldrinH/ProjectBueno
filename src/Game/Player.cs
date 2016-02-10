@@ -135,7 +135,10 @@ namespace ProjectBueno.Game.Entities
 			
 			if (Main.newKeyState.IsKeyDown(Keys.D1) && !Main.oldKeyState.IsKeyDown(Keys.D1))
 			{
-				game.projectiles.Add(spells[selectedSpell].createProjectile(pos,dir.Vector()));
+				if (spells[selectedSpell].spell.shape != null)
+				{
+					game.projectiles.Add(spells[selectedSpell].createProjectile(pos, dir.Vector()));
+				}
 			}
 			base.Update();
 		}
