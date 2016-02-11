@@ -38,7 +38,7 @@ namespace ProjectBueno.Game.Spells
 		public ShapeBurst(JObject skill) : base(skill)
 		{
 			partCount = (int)skill["projCount"];
-			radSquared = 3000.0f; //For testing
+			radSquared = (float)skill["radius"] * (float)skill["radius"];
 		}
 
 		protected int partCount;
@@ -65,8 +65,8 @@ namespace ProjectBueno.Game.Spells
 		public ShapeStream(JObject skill) : base(skill)
 		{
 			partCount = (int)skill["projCount"];
-			duration = 10; //For testing
-			length = 100.0f; //For testing
+			duration = (int)skill["duration"]; //For testing
+			length = (float)skill["length"]; //For testing
 		}
 
 		protected int partCount;

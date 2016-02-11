@@ -62,104 +62,105 @@
 
 
 		{
-			"x" : 10,
-			"y" : 10,
+			"x" : 15,
+			"y" : 27,
 			"cost" : 50,
 			"id" : "PropControl",
 			"class" : "SkillProp",
 			"name" : "Control",
 			"desc" : "",
-			"textureNum" : 1
+			"textureNum" : 3
 		},
 			{
-				"x" : 10,
-				"y" : 10,
+				"x" : 35,
+				"y" : 36,
 				"cost" : 200,
 				"id" : "PropInfluence",
 				"class" : "SkillProp",
 				"name" : "Infulence",
 				"desc" : "Take control of flesh.",
-				"textureNum" : 1
+				"textureNum" : 8
 			},
 				{
-					"x" : 10,
-					"y" : 10,
+					"x" : 40,
+					"y" : 52,
 					"cost" : 400,
 					"id" : "PropTakeover",
 					"class" : "SkillProp",
 					"name" : "Takeover",
-					"desc" : "Make your spells arc three times.",
-					"textureNum" : 1
+					"desc" : "Take control of everything.",
+					"textureNum" : 16
 				},
 					{
-						"x" : 10,
-						"y" : 10,
+						"x" : 53,
+						"y" : 65,
 						"cost" : 900,
 						"id" : "PropSlavery",
 						"class" : "SkillProp",
 						"name" : "Slavery",
-						"textureNum" : 1
+						"desc" : "Everything will serve you.",
+						"textureNum" : 18
 					},
 			{
-				"x" : 10,
-				"y" : 10,
+				"x" : 24,
+				"y" : 47,
 				"cost" : 200,
 				"id" : "PropTinkering",
 				"class" : "SkillProp",
 				"name" : "Tinkering",
 				"desc" : "Deal more damage against machinery.",
-				"textureNum" : 1
+				"textureNum" : 7
 			},
 
 		{
-			"x" : 13,
-			"y" : 15,
+			"x" : 15,
+			"y" : 13,
 			"cost" : 50,
 			"id" : "PropHealing",
 			"class" : "SkillProp",
 			"name" : "Healing",
 			"desc" : "Heal your allies.",
-			"textureNum" : 1
+			"textureNum" : 4
 		},
 			{
-				"x" : 10,
-				"y" : 10,
+				"x" : 33,
+				"y" : 24,
 				"cost" : 200,
 				"id" : "PropEngineer",
 				"class" : "SkillProp",
 				"name" : "Infulence",
 				"desc" : "More healing for machinery.",
-				"textureNum" : 1
+				"textureNum" : 9
 			},
 				{
-					"x" : 10,
-					"y" : 10,
+					"x" : 47,
+					"y" : 18,
 					"cost" : 400,
 					"id" : "PropRebound",
 					"class" : "SkillProp",
 					"name" : "Rebound",
 					"desc" : "Gain life based on effects granted.",
-					"textureNum" : 1
+					"textureNum" : 17
 				},
 					{
-						"x" : 10,
-						"y" : 10,
+						"x" : 61,
+						"y" : 18,
 						"cost" : 900,
 						"id" : "PropHarmony",
 						"class" : "SkillProp",
 						"name" : "Harmony",
 						"desc" : "Effects of the spell affect all allies.",
-						"textureNum" : 1
+						"textureNum" : 1 //Placeholder
 					},
 			{
-				"x" : 10,
-				"y" : 10,
+				"x" : 33,
+				"y" : 13,
 				"cost" : 200,
 				"id" : "PropMedic",
 				"class" : "SkillProp",
 				"name" : "Medic",
 				"desc" : "More healing for living allies.",
-				"textureNum" : 1
+				"textureNum" : 10
 			},
 	{
 		"x" : 24,
@@ -180,6 +181,7 @@
 			"id" : "ShapeBurst",
 			"class" : "ShapeBurst",	
 			"projCount" : 5000,
+			"radius" : 50,
 			"name" : "Burst",
 			"desc" : "TODO",
 			"textureNum" : 12
@@ -191,6 +193,8 @@
 			"id" : "ShapeStream",
 			"class" : "ShapeStream",
 			"projCount" : 200,
+			"duration" : 10,
+			"length" : 100,
 			"name" : "Stream",
 			"desc" : "TODO",
 			"textureNum" : 11
