@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace ProjectBueno.Game.Entities
 {
-	public static class Extensions
+	public static class DirExtensions
 	{
 		private static readonly Vector2[] dirVector = { new Vector2(0.0f, -1.0f), new Vector2(0.0f, 1.0f), new Vector2(-1.0f, 0.0f), new Vector2(1.0f, 0.0f) };
 		public static Vector2 Vector(this Dir index)
@@ -15,13 +15,21 @@ namespace ProjectBueno.Game.Entities
 			return dirVector[(int)index];
 		}
 	}
+	public static class VectorExtensions
+	{
+		public static Dir DirEnum(this Vector2 dir)
+		{
+			return Math.Abs(dir.X) > Math.Abs(dir.Y) ? (dir.X < 0.0f ? Dir.LEFT : Dir.RIGHT) : (dir.Y < 0.0f ? Dir.UP : Dir.DOWN);
+		}
+	}
 	public enum Dir : int
 	{
-		UP,
-		DOWN,
-		LEFT,
-		RIGHT
+		UP = 0,
+		DOWN = 1,
+		LEFT = 2,
+		RIGHT = 3
 	}
+
 	public abstract class Entity
     {
 		public Entity(Vector2 pos, GameHandler game)
