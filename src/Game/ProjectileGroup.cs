@@ -23,7 +23,7 @@ namespace ProjectBueno.Game.Entities
 		protected List<Vector2> projSpeed;
 		protected AnimatedTexture projTexture;
 		protected int lifetime;
-		private Random random = new Random(); //Random for testing with random removal
+		private static Random random = new Random(); //Random for testing with random removal
 
 		public void addProjectile(Vector2 pos, Vector2 speed)
 		{

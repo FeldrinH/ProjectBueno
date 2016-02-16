@@ -10,6 +10,8 @@ namespace ProjectBueno.Game.Entities
 			this.spell = spell;
 		}
 
+		public const int TIMEOUTLIFETIME = 450;
+
 		public abstract bool toRemove { get; }
 
 		public readonly Spell spell;

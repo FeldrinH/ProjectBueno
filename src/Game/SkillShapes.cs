@@ -47,7 +47,7 @@ namespace ProjectBueno.Game.Spells
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
 		{
-			ProjectileGroup projReturn = new ProjectileBurst(spell,900,pos,radSquared);
+			ProjectileGroup projReturn = new ProjectileBurst(spell,Projectile.TIMEOUTLIFETIME,pos,radSquared);
 			Vector2 vecSpeed;
 			for (int i = 0; i < partCount; i++)
 			{
@@ -65,8 +65,8 @@ namespace ProjectBueno.Game.Spells
 		public ShapeStream(JObject skill) : base(skill)
 		{
 			partCount = (int)skill["projCount"];
-			duration = (int)skill["duration"]; //For testing
-			length = (float)skill["length"]; //For testing
+			duration = (int)skill["duration"];
+			length = (float)skill["length"];
 		}
 
 		protected int partCount;

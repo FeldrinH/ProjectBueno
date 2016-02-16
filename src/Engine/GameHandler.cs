@@ -13,6 +13,8 @@ namespace ProjectBueno.Engine
     {
         public GameHandler()
         {
+			Main.exiting += onExitSave;
+
 			player = new Player(new Vector2(TerrainGenerator.xSize*0.5f*Tile.TILESIZE,TerrainGenerator.ySize*0.5f*Tile.TILESIZE), this);
 			screenScale = 2.0f;
 			projectiles = new List<Projectile>();
@@ -33,6 +35,16 @@ namespace ProjectBueno.Engine
 		public List<Entity> entities;
 		public List<Projectile> projectiles;
 		public Player player { get; protected set; }
+
+		private void onExitSave(object sender, EventArgs args)
+		{
+			Console.WriteLine("GOGOGO");
+		}
+
+		public void closeGameHandler()
+		{
+			Main.exiting -= onExitSave;
+		}
 
 		public void addTile(string id,Tile tile)
 		{

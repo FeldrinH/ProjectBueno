@@ -12,6 +12,7 @@ namespace ProjectBueno.Engine
 	/// </summary>
 	public sealed class Main : Microsoft.Xna.Framework.Game
     {
+		//All really bad workaround. Do not use static!
         public static GraphicsDeviceManager graphicsManager { get; private set; }
         public static SpriteBatch spriteBatch { get; private set; }
 		public static ContentManager content { get; private set; }
@@ -32,12 +33,14 @@ namespace ProjectBueno.Engine
 
 		public static Texture2D boxel;
 
+		public static event EventHandler<EventArgs> exiting;
+
 		public Main()
         {
-			graphicsManager = new GraphicsDeviceManager(this);// { SynchronizeWithVerticalRetrace = false };
-			content = Content;
+			graphicsManager = new GraphicsDeviceManager(this);// { SynchronizeWithVerticalRetrace = false }; //Bad workaround
+			content = Content; //Bad workaround
+			window = Window; //Bad workaround
 			content.RootDirectory = "Content";
-			window = Window;
 			window.AllowUserResizing = true;
 			window.ClientSizeChanged += new EventHandler<EventArgs>(WindowSizeChanged);
 			IsMouseVisible = true;
@@ -80,13 +83,23 @@ namespace ProjectBueno.Engine
 			}
 		}
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
+		//Call static workaround exiting event
+		protected override void OnExiting(object sender, EventArgs args)
+		{
+			//base.OnExiting(sender, args);
+			if (exiting != null)
+			{
+				exiting(sender, args);
+			}
+		}
+
+		/// <summary>
+		/// Allows the game to perform any initialization it needs to before starting to run.
+		/// This is where it can query for any required services and load any non-graphic
+		/// related content.  Calling base.Initialize will enumerate through any components
+		/// and initialize them as well.
+		/// </summary>
+		protected override void Initialize()
         {
 			base.Initialize();
 			handler = new GameHandler();
@@ -98,7 +111,7 @@ namespace ProjectBueno.Engine
         /// </summary>
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(GraphicsDevice); //Bad workaround
 
 			boxel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			boxel.SetData(new[] { Color.White });
