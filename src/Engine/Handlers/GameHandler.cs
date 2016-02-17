@@ -19,6 +19,7 @@ namespace ProjectBueno.Engine
 			screenScale = 2.0f;
 			projectiles = new List<Projectile>();
 			entities = new List<Entity>();
+			entities.Add(new Enemy(new Vector2((TerrainGenerator.xSize * 0.5f + 20.0f) * Tile.TILESIZE, (TerrainGenerator.ySize * 0.5f + 20.0f) * Tile.TILESIZE), this)); //Add enemy for testing
 
 			TerrainGenerator.startGenerate();
 			TerrainGenerator.startPoint = TerrainGenerator.getRandomForest();
@@ -38,7 +39,7 @@ namespace ProjectBueno.Engine
 
 		private void onExitSave(object sender, EventArgs args)
 		{
-			Console.WriteLine("GOGOGO");
+			Console.WriteLine("NOW PRETENDING TO SAVE GAME");
 		}
 
 		public void closeGameHandler()

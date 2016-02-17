@@ -59,11 +59,12 @@
   <PropertyGroup />
   <ItemGroup>
     <Compile Include="src\Engine\ILoadable.cs" />
-    <Compile Include="src\Engine\PauseHandler.cs" />
+    <Compile Include="src\Engine\Handlers\PauseHandler.cs" />
+    <Compile Include="src\Game\Enemy.cs" />
     <Compile Include="src\Game\Projectile.cs" />
     <Compile Include="src\Game\ProjectileGroup.cs" />
     <Compile Include="src\Game\Skill.cs" />
-    <Compile Include="src\Engine\SkillHandler.cs" />
+    <Compile Include="src\Engine\Handlers\SkillHandler.cs" />
     <Compile Include="src\Game\SkillProp.cs" />
     <Compile Include="src\Game\SkillShapes.cs" />
     <Compile Include="src\Game\Spell.cs" />
@@ -71,8 +72,8 @@
     <Compile Include="src\Game\Entity.cs" />
     <Compile Include="src\Game\ProjectileSingle.cs" />
     <Compile Include="src\Engine\AnimatedTexture.cs" />
-    <Compile Include="src\Engine\IHandler.cs" />
-    <Compile Include="src\Engine\GameHandler.cs" />
+    <Compile Include="src\Engine\Handlers\IHandler.cs" />
+    <Compile Include="src\Engine\Handlers\GameHandler.cs" />
     <Compile Include="src\Engine\Main.cs" />
     <Compile Include="src\Game\Player.cs" />
     <Compile Include="src\Engine\Program.cs" />
@@ -122,6 +123,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Content\EnemyTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\Player.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

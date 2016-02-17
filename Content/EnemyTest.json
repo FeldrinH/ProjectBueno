@@ -1,0 +1,28 @@
+{
+	"Stats" : {
+		"Width" : 5, //Collision box width
+		"Height" : 9, //Collision box height
+		"Health" : 100.0,
+		"Speed" : 0.5 //Speed in pixels/tick
+	},
+	"Animations" : {
+		"WALKING" : {
+			"Texture" : "plWalk",
+			"Width" : 5,
+			"Height" : 9,
+			"UP" : { "Frames" : 4, "Speed" : 0.15 },
+			"DOWN" : { "Frames" : 4, "Speed" : 0.15 },
+			"LEFT" : { "Frames" : 4, "Speed" : 0.15 },
+			"RIGHT" : { "Frames" : 4, "Speed" : 0.15 }
+		},
+		"STANDING" : {
+			"Texture" : "plStand",
+			"Width" : 5,
+			"Height" : 9,
+			"UP" : { "Frames" : 1, "Speed" : 0.0 },
+			"DOWN" : { "Frames" : 1, "Speed" : 0.0 },
+			"LEFT" : { "Frames" : 1, "Speed" : 0.0 },
+			"RIGHT" : { "Frames" : 1, "Speed" : 0.0 }
+		}
+	}
+}

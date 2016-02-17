@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using ProjectBueno.Engine;
 using ProjectBueno.Game.Tiles;
@@ -17,9 +18,9 @@ namespace ProjectBueno.Game.Entities
 	}
 	public static class VectorExtensions
 	{
-		public static Dir DirEnum(this Vector2 dir)
+		public static Dir DirEnum(this Vector2 vec)
 		{
-			return Math.Abs(dir.X) > Math.Abs(dir.Y) ? (dir.X < 0.0f ? Dir.LEFT : Dir.RIGHT) : (dir.Y < 0.0f ? Dir.UP : Dir.DOWN);
+			return Math.Abs(vec.X) > Math.Abs(vec.Y) ? (vec.X < 0.0f ? Dir.LEFT : Dir.RIGHT) : (vec.Y < 0.0f ? Dir.UP : Dir.DOWN);
 		}
 	}
 	public enum Dir : int
@@ -108,7 +109,44 @@ namespace ProjectBueno.Game.Entities
 				damageCooldown = DAMAGECOOLDOWN;
 			}
 		}
+		public void moveDir(Vector2 vec)
+		{
+			if (Math.Abs(vec.X) > Math.Abs(vec.Y) && vec != Vector2.Zero)
+			{
+				if (vec.X > 0.0f)
+				{
+					dir = Dir.RIGHT;
+				}
+				else
+				{
+					dir = Dir.LEFT;
+				}
+			}
+			else
+			{
+				if (vec.Y > 0.0f)
+				{
+					dir = Dir.DOWN;
+				}
+				else
+				{
+					dir = Dir.UP;
+				}
+			}
+		}
+
 		public abstract void loadTextures(JObject animData);
+		public virtual void loadTexture(JObject anim)
+		{
+			Texture2D loadedTex = Main.content.Load<Texture2D>((string)anim["Texture"]);
+			int w = (int)anim["Width"];
+			int h = (int)anim["Height"];
+			foreach (Dir dr in Enum.GetValues(typeof(Dir)))
+			{
+				textures.Add(new AnimatedTexture(loadedTex, (int)anim[dr.ToString()]["Frames"], (float)anim[dr.ToString()]["Speed"], w, h, 0, (int)dr * h));
+			}
+		}
+
 		public virtual void Update()
 		{
 			pos += knockback;
@@ -126,6 +164,10 @@ namespace ProjectBueno.Game.Entities
 				knockback = Vector2.Zero;
 			}
 		}
-		public abstract void Draw();
+		public virtual void Draw()
+		{
+			curTexture.incrementAnimation();
+			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), Color.White);
+		}
 	}
 }

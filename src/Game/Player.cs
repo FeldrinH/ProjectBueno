@@ -114,24 +114,8 @@ namespace ProjectBueno.Game.Entities
 				}
 			}
 
-			if (totalMove.X > 0.0f)
-			{
-				dir = Dir.RIGHT;
-			}
-			else if (totalMove.X < 0.0f)
-			{
-				dir = Dir.LEFT;
-			}
-			else if (totalMove.Y > 0.0f)
-			{
-				dir = Dir.DOWN;
-			}
-			else if (totalMove.Y < 0.0f)
-			{
-				dir = Dir.UP;
-			}
+			moveDir(totalMove);
 			pos += totalMove;
-
 			
 			if (Main.newKeyState.IsKeyDown(Keys.D1) && !Main.oldKeyState.IsKeyDown(Keys.D1))
 			{
@@ -141,11 +125,6 @@ namespace ProjectBueno.Game.Entities
 				}
 			}
 			base.Update();
-		}
-		public override void Draw()
-		{
-            curTexture.incrementAnimation();
-			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), Color.White);
 		}
 
 		public void loadSkills(JArray skillList, JObject skillTree)
@@ -212,14 +191,7 @@ namespace ProjectBueno.Game.Entities
 		{
 			foreach (States st in Enum.GetValues(typeof(States)))
 			{
-				JObject anim = (JObject)animData[st.ToString()];
-				Texture2D loadedTex = Main.content.Load<Texture2D>((string)anim["Texture"]);
-				int w = (int)anim["Width"];
-				int h = (int)anim["Height"];
-				foreach (Dir dr in Enum.GetValues(typeof(Dir)))
-				{
-					textures.Add(new AnimatedTexture(loadedTex,(int)anim[dr.ToString()]["Frames"],(float)anim[dr.ToString()]["Speed"],w,h,0,(int)dr*h));
-				}
+				loadTexture((JObject)animData[st.ToString()]);	
 			}
         }
 	}
