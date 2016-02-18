@@ -3,7 +3,9 @@
 		"Width" : 5, //Collision box width
 		"Height" : 9, //Collision box height
 		"Health" : 100.0,
-		"Speed" : 0.5 //Speed in pixels/tick
+		"Speed" : 0.5, //Speed in pixels/tick
+		"Damage" : 0,
+		"HitForce" : 10 //Speed of knockback in pixels/tick
 	},
 	"Animations" : {
 		"WALKING" : {

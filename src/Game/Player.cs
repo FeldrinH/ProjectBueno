@@ -54,11 +54,6 @@ namespace ProjectBueno.Game.Entities
 
 		public override void Update()
 		{
-			if (Main.newKeyState.IsKeyDown(Keys.R) && Main.oldKeyState.IsKeyUp(Keys.R))
-			{
-				dealDamage(0.0f, Dir.LEFT.Vector()*5.0f);
-			}
-
 			Vector2 totalMove = new Vector2();
 			if (Main.newKeyState.IsKeyDown(Keys.W))
 			{
@@ -194,5 +189,10 @@ namespace ProjectBueno.Game.Entities
 				loadTexture((JObject)animData[st.ToString()]);	
 			}
         }
+
+		public override void onPlayerCollide(Player player)
+		{
+			Console.WriteLine("Whoa! Multiplayer magically implemented itself. Or this is a serious error.");
+		}
 	}
 }

@@ -47,7 +47,7 @@ namespace ProjectBueno.Game.Entities
 		protected float speed;
 		public float health { get; protected set; }
 
-		protected const int DAMAGECOOLDOWN = 30;
+		protected const int DAMAGECOOLDOWN = 15;
 		protected const float KNOCKBACKDAMPENING = 0.75f;
 
 		protected readonly GameHandler game;
@@ -89,29 +89,37 @@ namespace ProjectBueno.Game.Entities
 
 		protected List<AnimatedTexture> textures = new List<AnimatedTexture>();
 
-		public bool checkTilesCollision()
+		public bool checkTilesCollision() //Might not work
 		{
 			return game.colMap[(int)((pos.X + size.X) * Tile.TILEMULT)][(int)((pos.Y + size.Y) * Tile.TILEMULT)]
 				|| game.colMap[(int)(pos.X * Tile.TILEMULT)][(int)((pos.Y + size.Y) * Tile.TILEMULT)] 
 				|| game.colMap[(int)((pos.X + size.X) * Tile.TILEMULT)][(int)(pos.Y * Tile.TILEMULT)] 
 				|| game.colMap[(int)(pos.X * Tile.TILEMULT)][(int)(pos.Y * Tile.TILEMULT)];
 		}
-		public bool checkEntityCollision(Entity entity)
+		public bool checkCollision(Vector2 entPos, Vector2 entSize)
 		{
-			return pos.X + size.X > entity.pos.X && entity.pos.X + entity.size.X > pos.X && pos.Y + size.Y > entity.pos.Y && entity.pos.Y + entity.size.Y > pos.Y;
+			return pos.X + size.X > entPos.X && entPos.X + entSize.X > pos.X && pos.Y + size.Y > entPos.Y && entPos.Y + entSize.Y > pos.Y;
         }
 		public virtual void dealDamage(float amount, Vector2 direction)
 		{
 			if (damageCooldown <= 0)
 			{
-				knockback = direction;
+				knockback += direction;
 				health -= amount;
 				damageCooldown = DAMAGECOOLDOWN;
 			}
 		}
+
+		#warning Enemy method onPlayerCollide() in Entity class. To move.
+		public abstract void onPlayerCollide(Player player);
+
 		public void moveDir(Vector2 vec)
 		{
-			if (Math.Abs(vec.X) > Math.Abs(vec.Y) && vec != Vector2.Zero)
+			if (vec == Vector2.Zero)
+			{
+				return;
+			}
+			if (Math.Abs(vec.X) > Math.Abs(vec.Y))
 			{
 				if (vec.X > 0.0f)
 				{
@@ -147,6 +155,10 @@ namespace ProjectBueno.Game.Entities
 			}
 		}
 
+		///<summary>
+		///Updates knockback and damage cooldown.
+		///Should be called after custom update logic.
+		///</summary>
 		public virtual void Update()
 		{
 			pos += knockback;
@@ -157,7 +169,6 @@ namespace ProjectBueno.Game.Entities
 			if (knockback.LengthSquared() > 0.005f)
 			{
 				knockback *= KNOCKBACKDAMPENING;
-				//Console.WriteLine(knockback);
 			}
 			else
 			{
@@ -167,7 +178,7 @@ namespace ProjectBueno.Game.Entities
 		public virtual void Draw()
 		{
 			curTexture.incrementAnimation();
-			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), Color.White);
+			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), damageCooldown > 0 ? Color.Red : Color.White);
 		}
 	}
 }

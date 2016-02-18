@@ -27,10 +27,15 @@ namespace ProjectBueno.Game.Entities
 			health = (float)stats["Health"];
 			speed = (float)stats["Speed"];
 			size = new Vector2((float)stats["Width"], (float)stats["Height"]);
+			damage = (float)stats["Damage"];
+			hitForce = (float)stats["HitForce"];
 
 			state = (int)States.STANDING;
 			dir = Dir.DOWN;
 		}
+
+		public float damage { get; protected set; }
+		public float hitForce { get; protected set; }
 
 		public override void Update()
 		{
@@ -55,6 +60,11 @@ namespace ProjectBueno.Game.Entities
 			}
 
 			pos += totalMove;
+
+			if (checkCollision(game.player.pos, game.player.size))
+			{
+				onPlayerCollide(game.player);
+			}
 		}
 
 		public override void loadTextures(JObject animData)
@@ -63,6 +73,14 @@ namespace ProjectBueno.Game.Entities
 			{
 				loadTexture((JObject)animData[st.ToString()]);
 			}
+		}
+
+		public override void onPlayerCollide(Player player)
+		{
+			Vector2 pushback = game.player.pos - pos;
+			pushback.Normalize();
+			pushback *= hitForce;
+			player.dealDamage(damage, pushback);
 		}
 	}
 }

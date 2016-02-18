@@ -23,6 +23,7 @@ namespace ProjectBueno.Game.Entities
 		protected List<Vector2> projSpeed;
 		protected AnimatedTexture projTexture;
 		protected int lifetime;
+		protected float damage;
 		private static Random random = new Random(); //Random for testing with random removal
 
 		public void addProjectile(Vector2 pos, Vector2 speed)
@@ -55,6 +56,7 @@ namespace ProjectBueno.Game.Entities
 			for (int i = projPos.Count-1; i >= 0; i--)
 			{
 				projPos[i] += projSpeed[i];
+				if(pla)
 			}
 		}
 	}
