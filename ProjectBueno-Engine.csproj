@@ -97,43 +97,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\flyingProj.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\pauseScreen.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\plStand.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\plWalk.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Skills.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\skillTree.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="ProjectBueno-Release\Content\flyingProj.png" />
+    <Content Include="ProjectBueno-Release\Content\pauseScreen.png" />
+    <Content Include="ProjectBueno-Release\Content\plStand.png" />
+    <Content Include="ProjectBueno-Release\Content\plWalk.png" />
+    <Content Include="ProjectBueno-Release\Content\Skills.png" />
+    <Content Include="ProjectBueno-Release\Content\skillTree.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
+    <MonoGameContentReference Include="ProjectBueno-Release\Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Content\EnemyTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\Player.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\Skills.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\SkillTree.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="ProjectBueno-Release\Content\EnemyTest.json" />
+    <None Include="ProjectBueno-Release\Content\Player.json" />
+    <None Include="ProjectBueno-Release\Content\Skills.json" />
+    <None Include="ProjectBueno-Release\Content\SkillTree.json" />
     <None Include="newtonsoft.json.8.0.2.nupkg" />
     <None Include="packages.config" />
   </ItemGroup>

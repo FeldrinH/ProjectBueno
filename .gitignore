@@ -199,4 +199,7 @@ FakesAssemblies/
 
 # Visual Studio Solution
 *.sln
-ProjectBueno-Release/
+ProjectBueno-Release/*
+!ProjectBueno-Release/Content/
+ProjectBueno-Release/Content/bin
+ProjectBueno-Release/Content/obj

@@ -56,7 +56,6 @@ namespace ProjectBueno.Game.Entities
 			for (int i = projPos.Count-1; i >= 0; i--)
 			{
 				projPos[i] += projSpeed[i];
-				if(pla)
 			}
 		}
 	}
