@@ -53,9 +53,9 @@ namespace ProjectBueno.Game.Spells
 			modBottomBounds = new Rectangle(128, 25, Skill.buttonSize, Skill.buttonSize);
 		}
 
-		public Projectile createProjectile(Vector2 pos, Vector2 dir)
+		public Projectile createProjectile(Vector2 pos, Vector2 dir, GameHandler game)
 		{
-			return spell.shape.generateProjectiles(pos, dir, spell);
+			return spell.shape.generateProjectiles(pos, dir, spell, game);
 		}
 
 		public void onPlaceClick(float mouseX, float mouseY, ref Skill curHeld)

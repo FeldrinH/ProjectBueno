@@ -116,7 +116,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (spells[selectedSpell].spell.shape != null)
 				{
-					game.projectiles.Add(spells[selectedSpell].createProjectile(pos, dir.Vector()));
+					game.projectiles.Add(spells[selectedSpell].createProjectile(pos, dir.Vector(), game));
 				}
 			}
 			base.Update();

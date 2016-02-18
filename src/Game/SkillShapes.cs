@@ -14,7 +14,7 @@ namespace ProjectBueno.Game.Spells
 		{
 		}
 		public AnimatedTexture projTexture;
-		public abstract Projectile generateProjectiles(Vector2 pos,Vector2 dir, Spell spell);
+		public abstract Projectile generateProjectiles(Vector2 pos,Vector2 dir, Spell spell, GameHandler game);
 	}
 
 	//Concrete Shapes
@@ -27,9 +27,9 @@ namespace ProjectBueno.Game.Spells
 
 		public float speed { get; protected set; }
 
-		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
+		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game)
 		{
-			return new ProjectileSingle(pos,dir*speed,spell);
+			return new ProjectileSingle(pos,dir*speed,spell,game);
 		}
 	}
 
@@ -45,9 +45,9 @@ namespace ProjectBueno.Game.Spells
 		protected float radSquared;
 		private static Random random = new Random(); //For testing
 
-		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
+		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game)
 		{
-			ProjectileGroup projReturn = new ProjectileBurst(spell,Projectile.TIMEOUTLIFETIME,pos,radSquared);
+			ProjectileGroup projReturn = new ProjectileBurst(spell, game, Projectile.TIMEOUTLIFETIME, pos, radSquared);
 			Vector2 vecSpeed;
 			for (int i = 0; i < partCount; i++)
 			{
@@ -74,9 +74,9 @@ namespace ProjectBueno.Game.Spells
 		protected float length;
 		private static Random random = new Random();
 
-		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell)
+		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game)
 		{
-			ProjectileGroup projReturn = new ProjectileGroup(spell,duration);
+			ProjectileGroup projReturn = new ProjectileGroup(spell,game,duration);
 			for (int i = 0; i < partCount; i++)
 			{
 				projReturn.addProjectile(pos + dir * 5.0f + new Vector2((float)(random.NextDouble() * (2.0 + length * dir.X) - 1.0), (float)(random.NextDouble() * (2.0 + length * dir.Y) - 1.0)), Vector2.Zero );
