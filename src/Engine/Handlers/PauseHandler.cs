@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -6,14 +7,18 @@ namespace ProjectBueno.Engine
 {
 	public class PauseHandler : IHandler
 	{
-		GameHandler game;
+		protected GameHandler game;
 		protected Texture2D background;
+		protected SoundEffectInstance music;
 		protected static readonly Color backColor = new Color(0, 0, 0);
 
 		public PauseHandler(GameHandler game)
 		{
 			this.game = game;
 			background = Main.content.Load<Texture2D>("pauseScreen");
+			music = Main.content.Load<SoundEffect>("pattern").CreateInstance();
+			music.IsLooped = true;
+			music.Play();
 		}
 
 		public void Draw()
@@ -28,6 +33,8 @@ namespace ProjectBueno.Engine
 		{
 			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
 			{
+				music.Stop();
+				music.Dispose();
 				Main.handler = game;
 			}
 		}
