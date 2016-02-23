@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 namespace ProjectBueno.Engine
 {
@@ -16,13 +17,14 @@ namespace ProjectBueno.Engine
 		{
 			this.game = game;
 			background = Main.content.Load<Texture2D>("pauseScreen");
-			music = Main.content.Load<SoundEffect>("pattern").CreateInstance();
+			music = Main.content.Load<SoundEffect>("pauseMusic").CreateInstance();
 			music.IsLooped = true;
 			music.Play();
 		}
 
 		public void Draw()
 		{
+			Texture2DReader test = new Texture2DReader();
 			Main.graphicsManager.GraphicsDevice.Clear(backColor);
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, null);
 			Main.spriteBatch.Draw(background, Main.window.ClientBounds, Color.White);
