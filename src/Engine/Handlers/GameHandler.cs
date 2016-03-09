@@ -4,8 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using ProjectBueno.Game.Entities;
 using ProjectBueno.Game.Tiles;
 using System.Collections.Generic;
-using ProjectBueno.Game.Terrain;
 using System;
+using ProjectBueno.Engine.World;
 
 namespace ProjectBueno.Engine
 {
@@ -15,16 +15,18 @@ namespace ProjectBueno.Engine
         {
 			Main.exiting += onExitSave;
 
-			player = new Player(new Vector2(TerrainGenerator.xSize*0.5f*Tile.TILESIZE,TerrainGenerator.ySize*0.5f*Tile.TILESIZE), this);
+			player = new Player(new Vector2(Terrain.xSize*0.5f*Tile.TILESIZE,Terrain.ySize*0.5f*Tile.TILESIZE), this);
 			screenScale = 2.0f;
 			projectiles = new List<Projectile>();
 			entities = new List<Entity>();
-			entities.Add(new Enemy(new Vector2((TerrainGenerator.xSize * 0.5f + 20.0f) * Tile.TILESIZE, (TerrainGenerator.ySize * 0.5f + 20.0f) * Tile.TILESIZE), this)); //Add enemy for testing
+			entities.Add(new Enemy(new Vector2((Terrain.xSize * 0.5f + 20.0f) * Tile.TILESIZE, (Terrain.ySize * 0.5f + 20.0f) * Tile.TILESIZE), this)); //Add enemy for testing
 
-			TerrainGenerator.startGenerate();
-			TerrainGenerator.startPoint = TerrainGenerator.getRandomForest();
-			TerrainGenerator.endPoint = TerrainGenerator.getRandomForest();
-			TerrainGenerator.processBiome();
+			terrain = new Terrain();
+
+			terrain.generateChunkMap();
+			terrain.startPoint = terrain.getRandomForestChunk();
+			terrain.endPoint = terrain.getRandomForestChunk();
+			terrain.processBiome();
 		}
 
 		public float screenScale;
@@ -36,6 +38,7 @@ namespace ProjectBueno.Engine
 		public List<Entity> entities;
 		public List<Projectile> projectiles;
 		public Player player { get; protected set; }
+		public Terrain terrain { get; protected set; }
 
 		private void onExitSave(object sender, EventArgs args)
 		{
@@ -64,16 +67,11 @@ namespace ProjectBueno.Engine
 
 			float scaleInv = 1 / screenScale * 0.5f;
 
-			int xRight = Math.Min((int)((player.pos.X + Main.window.ClientBounds.Width * scaleInv)*Tile.TILEMULT)+2,TerrainGenerator.xSize); 
-			int yBottom = Math.Min((int)((player.pos.Y + Main.window.ClientBounds.Height * scaleInv) * Tile.TILEMULT)+2, TerrainGenerator.ySize);
+			int xRight = Math.Min((int)((player.pos.X + Main.window.ClientBounds.Width * scaleInv) * Tile.TILEMULT) + 2, Terrain.xSize);
+			int yBottom = Math.Min((int)((player.pos.Y + Main.window.ClientBounds.Height * scaleInv) * Tile.TILEMULT) + 2, Terrain.ySize);
 
-			for (int x = Math.Max((int)((player.pos.X- Main.window.ClientBounds.Width * scaleInv) * Tile.TILEMULT),0); x < xRight; x++)
-			{
-				for (int y = Math.Max((int)((player.pos.Y - Main.window.ClientBounds.Height * scaleInv)*Tile.TILEMULT), 0); y < yBottom; y++)
-				{
-					Main.spriteBatch.Draw(Main.boxel, new Rectangle(x * Tile.TILESIZE, y * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), TerrainGenerator.tileColors[(int)TerrainGenerator.terrain[x][y]]);
-                }
-			}
+			terrain.drawChunk(Terrain.getChunkFromPos(player.pos));
+			Console.WriteLine(Terrain.getChunkFromPos(player.pos));
 			//Main.spriteBatch.DrawLine(TerrainGenerator.startPoint*Tile.TILESIZE,TerrainGenerator.endPoint*Tile.TILESIZE,Color.Black,1.0f);
 
 			player.Draw();
@@ -103,10 +101,10 @@ namespace ProjectBueno.Engine
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.Enter) && !Main.oldKeyState.IsKeyDown(Keys.Enter))
 			{
-				TerrainGenerator.startGenerate();
-				TerrainGenerator.startPoint = TerrainGenerator.getRandomForest();
-				TerrainGenerator.endPoint = TerrainGenerator.getRandomForest();
-				TerrainGenerator.processBiome();
+				terrain.generateChunkMap();
+				terrain.startPoint = terrain.getRandomForestChunk();
+				terrain.endPoint = terrain.getRandomForestChunk();
+				terrain.processBiome();
 			}
 			for (int i = 0; i < projectiles.Count; i++)
 			{

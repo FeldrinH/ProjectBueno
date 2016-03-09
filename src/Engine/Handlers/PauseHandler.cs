@@ -24,7 +24,6 @@ namespace ProjectBueno.Engine
 
 		public void Draw()
 		{
-			Texture2DReader test = new Texture2DReader();
 			Main.graphicsManager.GraphicsDevice.Clear(backColor);
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, null);
 			Main.spriteBatch.Draw(background, Main.window.ClientBounds, Color.White);

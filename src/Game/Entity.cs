@@ -32,7 +32,7 @@ namespace ProjectBueno.Game.Entities
 	}
 
 	public abstract class Entity
-    {
+	{
 		public Entity(Vector2 pos, GameHandler game)
 		{
 			this.pos = pos;
@@ -96,10 +96,15 @@ namespace ProjectBueno.Game.Entities
 				|| game.colMap[(int)((pos.X + size.X) * Tile.TILEMULT)][(int)(pos.Y * Tile.TILEMULT)] 
 				|| game.colMap[(int)(pos.X * Tile.TILEMULT)][(int)(pos.Y * Tile.TILEMULT)];
 		}
+		public void resolveTilesCollision()
+		{
+
+		}
+			
 		public bool checkCollision(Vector2 entPos, Vector2 entSize)
 		{
 			return pos.X + size.X > entPos.X && entPos.X + entSize.X > pos.X && pos.Y + size.Y > entPos.Y && entPos.Y + entSize.Y > pos.Y;
-        }
+		}
 		public virtual void dealDamage(float amount, Vector2 direction)
 		{
 			if (damageCooldown <= 0)

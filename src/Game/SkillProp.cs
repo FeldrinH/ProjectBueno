@@ -10,10 +10,8 @@ namespace ProjectBueno.Game.Spells
 		{
 		}
 		public /*abstract*/ bool isProperty { get; }
-		public /*abstract*/ void setProperties()
-		{}
-        public /*abstract*/ void onContact(Entity target)
-		{}
+		public /*abstract*/ void setProperties() {}
+		public /*abstract*/ void onContact(Entity target) {}
 	}
 
 	//Concrete Properties and Modifiers

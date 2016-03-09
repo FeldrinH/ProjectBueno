@@ -68,7 +68,7 @@
     <Compile Include="src\Game\SkillProp.cs" />
     <Compile Include="src\Game\SkillShapes.cs" />
     <Compile Include="src\Game\Spell.cs" />
-    <Compile Include="src\Game\TerrainGenerator.cs" />
+    <Compile Include="src\Engine\TerrainGenerator.cs" />
     <Compile Include="src\Game\Entity.cs" />
     <Compile Include="src\Game\ProjectileSingle.cs" />
     <Compile Include="src\Engine\AnimatedTexture.cs" />

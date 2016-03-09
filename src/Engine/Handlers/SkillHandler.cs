@@ -38,7 +38,7 @@ namespace ProjectBueno.Engine
 			foreach (Skill skillButton in player.skills)
 			{
 				skillButton.DrawButton(mouseX,mouseY);
-            }
+			}
 			player.spells[player.selectedSpell].DrawButtons(mouseX,mouseY);
 			if (curHeld != null)
 			{
@@ -54,11 +54,11 @@ namespace ProjectBueno.Engine
 			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
 			{
 				foreach (Skill skill in player.skills)
-                {
+				{
 					skill.onClick(mouseX, mouseY, ref player.knowledgePoints, ref curHeld);
 				}
 				player.spells[player.selectedSpell].onPlaceClick(mouseX, mouseY, ref curHeld);
-            }
+			}
 			if (Main.newMouseState.RightButton == ButtonState.Pressed && Main.oldMouseState.RightButton == ButtonState.Released)
 			{
 				if (!player.spells[player.selectedSpell].onClearClick(mouseX, mouseY))
@@ -71,7 +71,7 @@ namespace ProjectBueno.Engine
 				Main.handler = game;
 			}
 		}
-        
+		
 		public void windowResize()
 		{
 			sreenScale = Matrix.CreateScale((float)Main.window.ClientBounds.Width / Main.xRatio);
