@@ -29,16 +29,30 @@ namespace ProjectBueno.Engine
 			terrain.processBiome();
 		}
 
-		public float screenScale;
+		private float _screenScale;
+		public float screenScale
+		{
+			get { return _screenScale; }
+			set {
+				screenScaleInv = 1 / value;
+				_screenScale = value;
+			}
+		}
+		public float screenScaleInv;
+		public Vector2 screenShift;
 		public Matrix screenMatrix;
 
 		public List<List<bool>> colMap;
-		public Dictionary<string, Tile> tileRegistry;
 
 		public List<Entity> entities;
 		public List<Projectile> projectiles;
 		public Player player { get; protected set; }
 		public Terrain terrain { get; protected set; }
+
+		public Vector2 posFromScreenPos(Vector2 screenPos)
+		{
+			return (screenPos - screenShift) * screenScaleInv + player.pos;
+		}
 
 		private void onExitSave(object sender, EventArgs args)
 		{
@@ -50,14 +64,10 @@ namespace ProjectBueno.Engine
 			Main.exiting -= onExitSave;
 		}
 
-		public void addTile(string id,Tile tile)
-		{
-			tileRegistry.Add(id,tile);
-		}
-
 		public void windowResize()
 		{
-			screenMatrix = Matrix.CreateScale(screenScale)*Matrix.CreateTranslation(new Vector3((float)Math.Floor((Main.window.ClientBounds.Width - (player.size.X * screenScale)) * 0.5), (float)Math.Floor((Main.window.ClientBounds.Height - (player.size.Y * screenScale)) * 0.5), 0.0f));
+			screenShift = new Vector2((float)Math.Floor((Main.window.ClientBounds.Width - (player.size.X * screenScale)) * 0.5), (float)Math.Floor((Main.window.ClientBounds.Height - (player.size.Y * screenScale)) * 0.5));
+			screenMatrix = Matrix.CreateScale(screenScale)*Matrix.CreateTranslation(new Vector3(screenShift, 0.0f));
 		}
 
 		public void Draw()
@@ -65,14 +75,19 @@ namespace ProjectBueno.Engine
 			Main.graphicsManager.GraphicsDevice.Clear(Color.CornflowerBlue);
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f))*screenMatrix);
 
-			float scaleInv = 1 / screenScale * 0.5f;
+			//int xRight = Math.Min((int)((player.pos.X + Main.window.ClientBounds.Width * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.xSize);
+			//int yBottom = Math.Min((int)((player.pos.Y + Main.window.ClientBounds.Height * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.ySize);
 
-			int xRight = Math.Min((int)((player.pos.X + Main.window.ClientBounds.Width * scaleInv) * Tile.TILEMULT) + 2, Terrain.xSize);
-			int yBottom = Math.Min((int)((player.pos.Y + Main.window.ClientBounds.Height * scaleInv) * Tile.TILEMULT) + 2, Terrain.ySize);
-
-			terrain.drawChunk(Terrain.getChunkFromPos(player.pos));
-			Console.WriteLine(Terrain.getChunkFromPos(player.pos));
+			terrain.drawChunk(Terrain.getChunkFromPos(new Vector2(player.pos.X + 500.0f, player.pos.Y + 500.0f)));
+			terrain.drawChunk(Terrain.getChunkFromPos(new Vector2(player.pos.X - 500.0f, player.pos.Y - 500.0f)));
+			terrain.drawChunk(Terrain.getChunkFromPos(new Vector2(player.pos.X + 500.0f, player.pos.Y - 500.0f)));
+			terrain.drawChunk(Terrain.getChunkFromPos(new Vector2(player.pos.X - 500.0f, player.pos.Y + 500.0f)));
 			//Main.spriteBatch.DrawLine(TerrainGenerator.startPoint*Tile.TILESIZE,TerrainGenerator.endPoint*Tile.TILESIZE,Color.Black,1.0f);
+
+			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
+			{
+				Console.WriteLine("Mouse:" + posFromScreenPos(Main.newMouseState.Position.ToVector2()) + " Player:" + player.pos);
+			}
 
 			player.Draw();
 			for (int i = 0; i < projectiles.Count; i++)

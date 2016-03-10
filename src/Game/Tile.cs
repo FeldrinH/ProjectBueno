@@ -13,10 +13,5 @@ namespace ProjectBueno.Game.Tiles
 
 		public const int TILESIZE = 16; //Size of one tile
 		public const float TILEMULT = 1.0f / TILESIZE;
-
-		public static void initTiles(GameHandler game)
-		{
-			game.addTile("box",new Tile());
-		}
 	}
 }
