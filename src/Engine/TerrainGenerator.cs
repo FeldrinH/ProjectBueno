@@ -31,6 +31,7 @@ namespace ProjectBueno.Engine.World
 		protected static readonly int[] ySide = { -1, 1, 0, 0 };
 		public const int CHUNK_SIZE = 64;
 		public const float CHUNK_MULT = 1.0f / CHUNK_SIZE;
+		public const float CHUNK_SHIFT = CHUNK_SIZE * Tile.TILESIZE * 0.5f;
 		public static int xSize = 500;
 		public static int ySize = 500;
 		public static int tileLimit = 30000;
@@ -72,7 +73,7 @@ namespace ProjectBueno.Engine.World
 		public void drawChunk(Point coords)
 		{
 			List<List<Tiles>> chunk = getChunk(coords);
-			for (int x = 0; x < CHUNK_SIZE; x++)
+            for (int x = 0; x < CHUNK_SIZE; x++)
 			{
 				for (int y = 0; y < CHUNK_SIZE; y++)
 				{
