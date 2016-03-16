@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ProjectBueno.Engine.World;
 using ProjectBueno.Game.Spells;
 using System;
 
@@ -103,7 +102,7 @@ namespace ProjectBueno.Engine
 		protected override void Initialize()
         {
 			base.Initialize();
-			//handler = new GameHandler();
+			handler = new GameHandler();
 		}
 
         /// <summary>
@@ -139,7 +138,7 @@ namespace ProjectBueno.Engine
 			oldMouseState = newMouseState;
 			newKeyState = Keyboard.GetState();
 			newMouseState = Mouse.GetState();
-			//handler.Update();
+			handler.Update();
 		}
 
         /// <summary>
@@ -149,9 +148,7 @@ namespace ProjectBueno.Engine
         protected override void Draw(GameTime gameTime)
         {
 			graphicsManager.ApplyChanges();
-			handler = new GameHandler();
-			Terrain.maxLoop++;
-			//handler.Draw();
+			handler.Draw();
 		}
 	}
 }
