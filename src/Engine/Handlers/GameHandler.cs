@@ -86,10 +86,11 @@ namespace ProjectBueno.Engine
 			Point playerChunk = Terrain.getChunkFromPos(player.pos);
 			int hShift = (player.pos.X - playerChunk.ToVector2().X * Terrain.CHUNK_SIZE * Tile.TILESIZE) > Terrain.CHUNK_SHIFT ? 1 : -1;
 			int vShift = (player.pos.Y - playerChunk.ToVector2().Y * Terrain.CHUNK_SIZE * Tile.TILESIZE) > Terrain.CHUNK_SHIFT ? 1 : -1;
-            terrain.drawChunk(playerChunk);
-			terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y));
-			terrain.drawChunk(new Point(playerChunk.X, playerChunk.Y + vShift));
-			terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y + vShift));
+            //terrain.drawChunk(playerChunk);
+			//terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y));
+			//terrain.drawChunk(new Point(playerChunk.X, playerChunk.Y + vShift));
+			//terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y + vShift));
+
 			//Main.spriteBatch.DrawLine(TerrainGenerator.startPoint*Tile.TILESIZE,TerrainGenerator.endPoint*Tile.TILESIZE,Color.Black,1.0f);
 
 			/*if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
@@ -124,10 +125,12 @@ namespace ProjectBueno.Engine
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.Enter) && !Main.oldKeyState.IsKeyDown(Keys.Enter))
 			{
+				terrain.clearChunks();
 				terrain.generateChunkMap();
 				terrain.startPoint = terrain.getRandomForestChunk();
 				terrain.endPoint = terrain.getRandomForestChunk();
 				terrain.processBiome();
+				Console.WriteLine("Break!");
 			}
 			for (int i = 0; i < projectiles.Count; i++)
 			{
@@ -149,7 +152,7 @@ namespace ProjectBueno.Engine
 				Main.handler = new PauseHandler(this);
 			}
 
-			Stopwatch s1 = new Stopwatch();
+			/*Stopwatch s1 = new Stopwatch();
             s1.Start();
 			if (ppChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X + Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT)) ||
 				mmChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y - Terrain.CHUNK_SHIFT)) ||
@@ -185,7 +188,7 @@ namespace ProjectBueno.Engine
 				s1.Stop();
 				Console.WriteLine("Check: " + s1.ElapsedTicks);
             }
-			s1.Stop();
+			s1.Stop();*/
 		}
     }
 }
