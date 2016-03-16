@@ -29,7 +29,7 @@ namespace ProjectBueno.Engine
 			terrain.endPoint = terrain.getRandomForestChunk();
 			terrain.processBiome();
 
-			loadedChunks = new List<List<List<Tiles>>>();
+			//loadedChunks = new List<List<List<Tiles>>>();
 		}
 
 		private float _screenScale;
@@ -49,7 +49,7 @@ namespace ProjectBueno.Engine
 
 		public List<Entity> entities;
 		public List<Projectile> projectiles;
-		protected List<List<List<Tiles>>> loadedChunks;
+		//protected List<List<List<Tiles>>> loadedChunks;
 		protected Point ppChunk, mmChunk, mpChunk, pmChunk;
 		public Player player { get; protected set; }
 		public Terrain terrain { get; protected set; }
@@ -124,6 +124,7 @@ namespace ProjectBueno.Engine
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.Enter) && !Main.oldKeyState.IsKeyDown(Keys.Enter))
 			{
+				terrain.clearChunks();
 				terrain.generateChunkMap();
 				terrain.startPoint = terrain.getRandomForestChunk();
 				terrain.endPoint = terrain.getRandomForestChunk();
@@ -149,7 +150,7 @@ namespace ProjectBueno.Engine
 				Main.handler = new PauseHandler(this);
 			}
 
-			Stopwatch s1 = new Stopwatch();
+			/*Stopwatch s1 = new Stopwatch();
             s1.Start();
 			if (ppChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X + Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT)) ||
 				mmChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y - Terrain.CHUNK_SHIFT)) ||
@@ -185,7 +186,7 @@ namespace ProjectBueno.Engine
 				s1.Stop();
 				Console.WriteLine("Check: " + s1.ElapsedTicks);
             }
-			s1.Stop();
+			s1.Stop();*/
 		}
     }
 }

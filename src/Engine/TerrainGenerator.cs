@@ -29,11 +29,15 @@ namespace ProjectBueno.Engine.World
 		protected static readonly int[] yShift = { -1, -1, -1, 0, 0, 1, 1, 1 };
 		protected static readonly int[] xSide = { 0, 0, -1, 1 };
 		protected static readonly int[] ySide = { -1, 1, 0, 0 };
+
 		public const int CHUNK_SIZE = 64;
 		public const float CHUNK_MULT = 1.0f / CHUNK_SIZE;
 		public const float CHUNK_SHIFT = CHUNK_SIZE * Tile.TILESIZE * 0.5f;
-		public static int xSize = 500;
-		public static int ySize = 500;
+		public const int BLOCK_SIZE = 16;
+		public const int BLOCK_PER_CHUNK = CHUNK_SIZE / BLOCK_SIZE;
+
+		public static int xSize = 512;
+		public static int ySize = 512;
 		public static int tileLimit = 30000;
 		protected List<List<Tiles>> chunkMap;
 		protected Dictionary<Point, List<List<Tiles>>> chunks;
@@ -67,7 +71,7 @@ namespace ProjectBueno.Engine.World
 
 		protected List<List<Tiles>> generateChunk(Point coords)
 		{
-			return Enumerable.Repeat(Enumerable.Repeat(chunkMap[coords.X][coords.Y],CHUNK_SIZE).ToList(), CHUNK_SIZE).ToList();
+			return Enumerable.Range(0, CHUNK_SIZE).Select(x => Enumerable.Range(0, CHUNK_SIZE).Select(y => chunkMap[x / BLOCK_SIZE + coords.X * BLOCK_PER_CHUNK][y / BLOCK_SIZE + coords.Y * BLOCK_PER_CHUNK]).ToList()).ToList();
 		}
 
 		public void drawChunk(Point coords)
@@ -129,7 +133,7 @@ namespace ProjectBueno.Engine.World
 			tileCount = 0;
 			seaCount = 1;
 			callqueue.Clear();
-			chunkMap = Enumerable.Repeat(Enumerable.Repeat(Tiles.FilledForest, ySize).ToList(), xSize).ToList();
+			chunkMap = Enumerable.Range(0, xSize).Select(h => Enumerable.Range(0, ySize).Select(w => Tiles.FilledForest).ToList()).ToList();
 
 			//Process land
 			int x = xSize/2;
@@ -208,6 +212,11 @@ namespace ProjectBueno.Engine.World
 			{
 				generateSea(x + xSide[i], y + ySide[i]);
 			}
+		}
+
+		public void clearChunks()
+		{
+			chunks.Clear();
 		}
 	}
 }
