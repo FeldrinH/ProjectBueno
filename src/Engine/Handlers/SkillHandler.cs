@@ -3,10 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectBueno.Game.Entities;
 using ProjectBueno.Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ProjectBueno.Engine
 {
@@ -18,6 +14,9 @@ namespace ProjectBueno.Engine
 		protected Player player;
 		public float downscale { get; protected set; }
 		protected Matrix sreenScale;
+
+		public static readonly Vector2 namePos = new Vector2(75,39);
+		public static readonly Vector2 descPos = new Vector2(75,49);
 
 		protected Skill curHeld;
 
@@ -32,18 +31,28 @@ namespace ProjectBueno.Engine
 		{
 			float mouseX = Main.newMouseState.X * downscale;
 			float mouseY = Main.newMouseState.Y * downscale;
+			Skill drawHeldText = curHeld;
 			Main.graphicsManager.GraphicsDevice.Clear(Color.Gray);
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, sreenScale);
 			Main.spriteBatch.Draw(background, Vector2.Zero, Color.White);
 			foreach (Skill skillButton in player.skills)
 			{
-				skillButton.DrawButton(mouseX,mouseY);
+				if (skillButton.DrawButton(mouseX, mouseY))
+				{
+					drawHeldText = skillButton;
+				}
 			}
 			player.spells[player.selectedSpell].DrawButtons(mouseX,mouseY);
+			if (drawHeldText != null)
+			{
+				Main.spriteBatch.DrawString(Main.retroFont, drawHeldText.name, namePos, Color.Purple);
+				Main.spriteBatch.DrawString(Main.retroFont, drawHeldText.description, descPos, Color.Black);
+			}
 			if (curHeld != null)
 			{
 				curHeld.Draw(new Vector2(mouseX, mouseY));
 			}
+			
 			Main.spriteBatch.End();
 		}
 

@@ -13,3 +13,11 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Font.png
+/importer:TextureImporter
+/processor:FontTextureProcessor
+/processorParam:FirstCharacter= 
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font.png
+

@@ -32,6 +32,7 @@ namespace ProjectBueno.Engine
 		private static Rectangle oldClientBounds;
 
 		public static Texture2D boxel;
+		public static SpriteFont retroFont;
 
 		public static event EventHandler<EventArgs> exiting;
 
@@ -115,6 +116,8 @@ namespace ProjectBueno.Engine
 
 			boxel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			boxel.SetData(new[] { Color.White });
+
+			retroFont = Content.Load<SpriteFont>("Font");
 
 			EmptySkill.initEmpty();
 		}

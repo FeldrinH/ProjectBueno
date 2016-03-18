@@ -6,7 +6,7 @@
 		"id" : "PropMana",
 		"class" : "SkillProp",
 		"name" : "Mana",
-		"desc" : "Makes shape burst.",
+		"desc" : "Erin go\nbrah.",
 		"bought" : true,
 		"textureNum" : 1
 	},
@@ -17,7 +17,7 @@
 			"id" : "PropDestruction",
 			"class" : "SkillProp",
 			"name" : "Destruction",
-			"desc" : "Inflict damage on your foes.",
+			"desc" : "Inflict\ndamage on\nyour foes.",
 			"textureNum" : 2
 		},
 			{
@@ -27,7 +27,7 @@
 				"id" : "PropBurning",
 				"class" : "SkillProp",
 				"name" : "Burning",
-				"desc" : "Deal more damage against living enemies.",
+				"desc" : "Deal more\ndamage against\nliving enemies.",
 				"textureNum" : 6
 			},
 				{
@@ -37,7 +37,7 @@
 					"id" : "PropArcing",
 					"class" : "SkillProp",
 					"name" : "Arcing",
-					"desc" : "Make your spells arc three times.",
+					"desc" : "Make your\nspells arc\nthree times.",
 					"textureNum" : 14
 				},
 					{
@@ -47,6 +47,7 @@
 						"id" : "PropEradication",
 						"class" : "SkillProp",
 						"name" : "Eradictation",
+						desc : "",
 						"textureNum" : 17
 					},
 			{
@@ -56,7 +57,7 @@
 				"id" : "PropShocking",
 				"class" : "SkillProp",
 				"name" : "Shocking",
-				"desc" : "Deal more damage against machinery.",
+				"desc" : "Deal more\ndamage against\nmachinery.",
 				"textureNum" : 5
 			},
 
@@ -78,7 +79,7 @@
 				"id" : "PropInfluence",
 				"class" : "SkillProp",
 				"name" : "Infulence",
-				"desc" : "Take control of flesh.",
+				"desc" : "Take control\nof flesh.",
 				"textureNum" : 8
 			},
 				{
@@ -88,7 +89,7 @@
 					"id" : "PropTakeover",
 					"class" : "SkillProp",
 					"name" : "Takeover",
-					"desc" : "Take control of everything.",
+					"desc" : "Take control\nof everything.",
 					"textureNum" : 16
 				},
 					{
@@ -98,7 +99,7 @@
 						"id" : "PropSlavery",
 						"class" : "SkillProp",
 						"name" : "Slavery",
-						"desc" : "Everything will serve you.",
+						"desc" : "Everything\nwill serve\nyou.",
 						"textureNum" : 18
 					},
 			{
@@ -108,7 +109,7 @@
 				"id" : "PropTinkering",
 				"class" : "SkillProp",
 				"name" : "Tinkering",
-				"desc" : "Deal more damage against machinery.",
+				"desc" : "Deal more\ndamage against\nmachinery.",
 				"textureNum" : 7
 			},
 
@@ -119,7 +120,7 @@
 			"id" : "PropHealing",
 			"class" : "SkillProp",
 			"name" : "Healing",
-			"desc" : "Heal your allies.",
+			"desc" : "Heal your\nallies.",
 			"textureNum" : 4
 		},
 			{

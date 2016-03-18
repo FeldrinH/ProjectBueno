@@ -43,9 +43,9 @@ namespace ProjectBueno.Game.Spells
 		protected List<Skill> dependants;
 		public bool locked;
 		public bool bought;
-		protected string name;
-		protected string description;
-		protected int cost;
+		public string name { get; protected set; }
+		public string description { get; protected set; }
+		public int cost { get; protected set; }
 
 		protected static readonly Color forsaleColor = Color.Gray;
 		protected static readonly Color lockedColor = new Color(25, 25, 25);
@@ -85,7 +85,8 @@ namespace ProjectBueno.Game.Spells
 		}
 
 		//Button Specialized Draw
-		public void DrawButton(float mouseX,float mouseY)
+		//Returns true if mouse is hovering over button
+		public bool DrawButton(float mouseX,float mouseY)
 		{
 			if (locked)
 			{
@@ -96,11 +97,17 @@ namespace ProjectBueno.Game.Spells
 				textureSource.X = buttonSize;
 				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, bought ? Color.White : forsaleColor);
 				textureSource.X = 0;
+
+				Main.spriteBatch.DrawString(Main.retroFont, name, SkillHandler.namePos, Color.White);
+				Main.spriteBatch.DrawString(Main.retroFont, description, SkillHandler.descPos, Color.White);
+
+				return true;
 			}
 			else
 			{
 				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, bought ? Color.White : forsaleColor);
 			}
+			return false;
 		}
 
 		//General Draw

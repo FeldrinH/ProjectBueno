@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectBueno.Engine;
 using Newtonsoft.Json.Linq;
@@ -8,7 +7,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using ProjectBueno.Game.Spells;
-using System.Reflection;
 
 namespace ProjectBueno.Game.Entities
 {

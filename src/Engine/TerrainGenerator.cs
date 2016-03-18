@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ProjectBueno.Game.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ProjectBueno.Engine.World
 {
@@ -34,7 +32,7 @@ namespace ProjectBueno.Engine.World
 		public const float CHUNK_MULT = 1.0f / CHUNK_SIZE;
 		public const float CHUNK_SHIFT = CHUNK_SIZE * Tile.TILESIZE * 0.5f;
 		public const int BLOCK_SIZE = 16;
-		public const int BLOCK_PER_CHUNK = CHUNK_SIZE / BLOCK_SIZE;
+		public const int BLOCKS_PER_CHUNK = CHUNK_SIZE / BLOCK_SIZE;
 
 		public static int xSize = 512;
 		public static int ySize = 512;
@@ -59,7 +57,6 @@ namespace ProjectBueno.Engine.World
 			else
 			{
 				returnChunk = generateChunk(coords);
-				chunks.Add(coords,returnChunk);
 				return returnChunk;
 			}
 		}
@@ -71,7 +68,15 @@ namespace ProjectBueno.Engine.World
 
 		protected List<List<Tiles>> generateChunk(Point coords)
 		{
-			return Enumerable.Range(0, CHUNK_SIZE).Select(x => Enumerable.Range(0, CHUNK_SIZE).Select(y => chunkMap[x / BLOCK_SIZE + coords.X * BLOCK_PER_CHUNK][y / BLOCK_SIZE + coords.Y * BLOCK_PER_CHUNK]).ToList()).ToList();
+			List<List<Tiles>> chunk = Enumerable.Range(0, CHUNK_SIZE).Select(x => Enumerable.Range(0, CHUNK_SIZE).Select(y => chunkMap[x / BLOCK_SIZE + coords.X * BLOCKS_PER_CHUNK][y / BLOCK_SIZE + coords.Y * BLOCKS_PER_CHUNK]).ToList()).ToList();
+			for(int x = 0; x <= CHUNK_SIZE; x++)
+			{
+				for (int y = 0; y <= CHUNK_SIZE; y++)
+				{
+				}
+			}
+			chunks.Add(coords, chunk);
+			return chunk;
 		}
 
 		public void drawChunk(Point coords)
