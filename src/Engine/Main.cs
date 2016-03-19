@@ -31,8 +31,8 @@ namespace ProjectBueno.Engine
 
 		private static Rectangle oldClientBounds;
 
-		public static Texture2D boxel;
-		public static SpriteFont retroFont;
+		public static Texture2D boxel { get; private set; }
+		public static SpriteFont retroFont { get; private set; }
 
 		public static event EventHandler<EventArgs> exiting;
 

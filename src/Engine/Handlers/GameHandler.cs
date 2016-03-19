@@ -108,6 +108,13 @@ namespace ProjectBueno.Engine
 			}
 
 			Main.spriteBatch.End();
+
+			if (Main.newKeyState.IsKeyDown(Keys.M))
+			{
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap);
+				terrain.drawChunkMap(player.pos);
+				Main.spriteBatch.End();
+			}
 		}
 
         public void Update()

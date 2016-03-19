@@ -62,7 +62,6 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
-    <Compile Include="src\Engine\Handlers\MapHandler.cs" />
     <Compile Include="src\Engine\Handlers\PauseHandler.cs" />
     <Compile Include="src\Game\Enemy.cs" />
     <Compile Include="src\Game\Projectile.cs" />

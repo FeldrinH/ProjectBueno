@@ -8,9 +8,9 @@ namespace ProjectBueno.Engine.World
 {
 	public enum Tiles : byte
 	{
-		FilledForest,
-		Forest,
-		FloodedSea,
+		FilledForest, //Only in generation
+		Forest, //Currently only in generation
+		FloodedSea, //Currently unused
         Sea,
 		ColdForest,
 		HotForest
@@ -22,7 +22,7 @@ namespace ProjectBueno.Engine.World
 			chunks = new Dictionary<Point, List<List<Tiles>>>();
 		}
 
-		public static readonly List<Color> tileColors = new List<Color>() { Color.LawnGreen, Color.LawnGreen, Color.DarkBlue, Color.DarkBlue, Color.LightBlue, Color.Yellow };
+		public static readonly List<Color> tileColors = new List<Color>() { Color.LightGreen, Color.LawnGreen, Color.Blue, Color.DarkBlue, Color.LightBlue, Color.Yellow };
 		protected static readonly int[] xShift = { -1, 0, 1, -1, 1, -1, 0, 1 };
 		protected static readonly int[] yShift = { -1, -1, -1, 0, 0, 1, 1, 1 };
 		protected static readonly int[] xSide = { 0, 0, -1, 1 };
@@ -69,10 +69,19 @@ namespace ProjectBueno.Engine.World
 		protected List<List<Tiles>> generateChunk(Point coords)
 		{
 			List<List<Tiles>> chunk = Enumerable.Range(0, CHUNK_SIZE).Select(x => Enumerable.Range(0, CHUNK_SIZE).Select(y => chunkMap[x / BLOCK_SIZE + coords.X * BLOCKS_PER_CHUNK][y / BLOCK_SIZE + coords.Y * BLOCKS_PER_CHUNK]).ToList()).ToList();
-			for(int x = 0; x <= CHUNK_SIZE; x++)
+			for(int xC = 0; xC <= BLOCKS_PER_CHUNK; xC++)
 			{
-				for (int y = 0; y <= CHUNK_SIZE; y++)
+				for (int yC = 0; yC <= BLOCKS_PER_CHUNK; yC++)
 				{
+					if(checkBlockBorders(coords.X*BLOCKS_PER_CHUNK+xC,coords.Y*BLOCKS_PER_CHUNK+yC))
+					{
+						for (int x = 0; x <= BLOCK_SIZE; x++)
+						{
+							for (int y = 0; y <= BLOCK_SIZE; y++)
+							{
+							}
+						}
+					}
 				}
 			}
 			chunks.Add(coords, chunk);
@@ -90,6 +99,25 @@ namespace ProjectBueno.Engine.World
 				}
 			}
 		}
+		public void drawChunkMap(Vector2 playerPos)
+		{
+			Main.spriteBatch.Draw(Main.boxel,new Rectangle(0,0,xSize,ySize),Color.Black);
+			for (int x = 1; x < xSize-1; x++)
+			{
+				for (int y = 1; y < ySize-1; y++)
+				{
+					Main.spriteBatch.Draw(Main.boxel, new Rectangle(x, y, 1, 1), tileColors[(int)chunkMap[x][y]]);
+				}
+			}
+			Main.spriteBatch.Draw(Main.boxel, playerPos * Tile.TILEMULT / BLOCK_SIZE, Color.Red);
+		}
+
+		protected bool checkBlockBorders(int xB, int yB)
+		{
+			Tiles center = chunkMap[xB][yB];
+			return (center != chunkMap[xB + 1][yB] || center != chunkMap[xB][yB + 1] || center != chunkMap[xB - 1][yB] || center != chunkMap[xB][yB - 1] ||
+				center != chunkMap[xB + 1][yB + 1] || center != chunkMap[xB - 1][yB - 1] || center != chunkMap[xB + 1][yB - 1] || center != chunkMap[xB - 1][yB + 1]);
+        }
 
 		protected void setChunk(int x, int y, Tiles type)
 		{
@@ -128,7 +156,7 @@ namespace ProjectBueno.Engine.World
                 {
 					seaCount++;
 					tileCount--;
-					chunkMap[x][y] = Tiles.FloodedSea;
+					chunkMap[x][y] = Tiles.Sea;
 				}
 			}
 		}
