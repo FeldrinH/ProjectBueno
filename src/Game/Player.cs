@@ -186,7 +186,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				loadTexture((JObject)animData[st.ToString()]);	
 			}
-        }
+		}
 
 		public override void onPlayerCollide(Player player)
 		{

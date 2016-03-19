@@ -6,8 +6,8 @@ using ProjectBueno.Game.Spells;
 
 namespace ProjectBueno.Game.Entities
 {
-    public class ProjectileSingle : Projectile
-    {
+	public class ProjectileSingle : Projectile
+	{
 		public ProjectileSingle(Vector2 pos,Vector2 speed, Spell spell, GameHandler game) : base(spell, game)
 		{
 			this.pos = pos;
@@ -45,7 +45,7 @@ namespace ProjectBueno.Game.Entities
 			pos += speed;
 			--health;
 		}
-        public override void Draw()
+		public override void Draw()
 		{
 			projTexture.incrementAnimation();
 			Main.spriteBatch.Draw(projTexture.texture, pos, projTexture.getCurFrame(), Color.White);

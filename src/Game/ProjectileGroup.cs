@@ -45,7 +45,7 @@ namespace ProjectBueno.Game.Entities
 		{
 			projTexture.incrementAnimation();
 			Rectangle frameCache = projTexture.getCurFrame();
-            for (int i = 0; i < projPos.Count; i++)
+			for (int i = 0; i < projPos.Count; i++)
 			{
 				Main.spriteBatch.Draw(projTexture.texture, projPos[i], frameCache, Color.White*0.5f);
 			}
@@ -55,7 +55,7 @@ namespace ProjectBueno.Game.Entities
 		{
 			--lifetime;
 			bool removeFlag;
-            for (int i = projPos.Count-1; i >= 0; i--)
+			for (int i = projPos.Count-1; i >= 0; i--)
 			{
 				removeFlag = false;
 				foreach (var entity in game.entities)

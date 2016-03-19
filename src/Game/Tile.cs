@@ -7,8 +7,8 @@ using System.Text;
 
 namespace ProjectBueno.Game.Tiles
 {
-    public class Tile
-    {
+	public class Tile
+	{
 		public Texture2D texture;
 
 		public const int TILESIZE = 16; //Size of one tile

@@ -11,7 +11,7 @@ namespace ProjectBueno.Engine.World
 		FilledForest, //Only in generation
 		Forest, //Currently only in generation
 		FloodedSea, //Currently unused
-        Sea,
+		Sea,
 		ColdForest,
 		HotForest
 	}
@@ -91,7 +91,7 @@ namespace ProjectBueno.Engine.World
 		public void drawChunk(Point coords)
 		{
 			List<List<Tiles>> chunk = getChunk(coords);
-            for (int x = 0; x < CHUNK_SIZE; x++)
+			for (int x = 0; x < CHUNK_SIZE; x++)
 			{
 				for (int y = 0; y < CHUNK_SIZE; y++)
 				{
@@ -117,7 +117,7 @@ namespace ProjectBueno.Engine.World
 			Tiles center = chunkMap[xB][yB];
 			return (center != chunkMap[xB + 1][yB] || center != chunkMap[xB][yB + 1] || center != chunkMap[xB - 1][yB] || center != chunkMap[xB][yB - 1] ||
 				center != chunkMap[xB + 1][yB + 1] || center != chunkMap[xB - 1][yB - 1] || center != chunkMap[xB + 1][yB - 1] || center != chunkMap[xB - 1][yB + 1]);
-        }
+		}
 
 		protected void setChunk(int x, int y, Tiles type)
 		{
@@ -136,7 +136,7 @@ namespace ProjectBueno.Engine.World
 				y = random.Next(0, ySize);
 			}
 			while (chunkMap[x][y] != Tiles.Forest && chunkMap[x][y] != Tiles.FilledForest);
-            return new Vector2(x, y);
+			return new Vector2(x, y);
 		}
 		protected bool emptyTile(int x, int y)
 		{
@@ -153,7 +153,7 @@ namespace ProjectBueno.Engine.World
 					callqueue.Add(new Point(x, y));
 				}
 				else if (chunkMap[x][y] == Tiles.Forest)
-                {
+				{
 					seaCount++;
 					tileCount--;
 					chunkMap[x][y] = Tiles.Sea;

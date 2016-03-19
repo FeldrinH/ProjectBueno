@@ -11,9 +11,9 @@ using System.Diagnostics;
 namespace ProjectBueno.Engine
 {
 	public class GameHandler : IHandler
-    {
-        public GameHandler()
-        {
+	{
+		public GameHandler()
+		{
 			Main.exiting += onExitSave;
 
 			player = new Player(new Vector2(Terrain.xSize*0.5f*Tile.TILESIZE,Terrain.ySize*0.5f*Tile.TILESIZE), this);
@@ -88,7 +88,7 @@ namespace ProjectBueno.Engine
 		}
 
 		public void Draw()
-        {
+		{
 			Main.graphicsManager.GraphicsDevice.Clear(Color.CornflowerBlue);
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f))*screenMatrix);
 
@@ -98,7 +98,7 @@ namespace ProjectBueno.Engine
 			Point playerChunk = Terrain.getChunkFromPos(player.pos);
 			int hShift = (player.pos.X - playerChunk.ToVector2().X * Terrain.CHUNK_SIZE * Tile.TILESIZE) > Terrain.CHUNK_SHIFT ? 1 : -1;
 			int vShift = (player.pos.Y - playerChunk.ToVector2().Y * Terrain.CHUNK_SIZE * Tile.TILESIZE) > Terrain.CHUNK_SHIFT ? 1 : -1;
-            terrain.drawChunk(playerChunk);
+			terrain.drawChunk(playerChunk);
 			terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y));
 			terrain.drawChunk(new Point(playerChunk.X, playerChunk.Y + vShift));
 			terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y + vShift));
@@ -125,8 +125,8 @@ namespace ProjectBueno.Engine
 			}
 		}
 
-        public void Update()
-        {
+		public void Update()
+		{
 			if (Main.newKeyState.IsKeyDown(Keys.Up) && !Main.oldKeyState.IsKeyDown(Keys.Up))
 			{
 				screenScale *= 2.0f;
@@ -172,7 +172,7 @@ namespace ProjectBueno.Engine
 			}
 
 			/*Stopwatch s1 = new Stopwatch();
-            s1.Start();
+			s1.Start();
 			if (ppChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X + Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT)) ||
 				mmChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y - Terrain.CHUNK_SHIFT)) ||
 				mpChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT)) ||
@@ -180,8 +180,8 @@ namespace ProjectBueno.Engine
 			{
 				ppChunk = Terrain.getChunkFromPos(new Vector2(player.pos.X + Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT));
 				mmChunk = Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y - Terrain.CHUNK_SHIFT));
-                mpChunk = Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT));
-                pmChunk = Terrain.getChunkFromPos(new Vector2(player.pos.X + Terrain.CHUNK_SHIFT, player.pos.Y - Terrain.CHUNK_SHIFT));
+				mpChunk = Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT));
+				pmChunk = Terrain.getChunkFromPos(new Vector2(player.pos.X + Terrain.CHUNK_SHIFT, player.pos.Y - Terrain.CHUNK_SHIFT));
 				loadedChunks.Clear();
 				if (mmChunk == ppChunk)
 				{
@@ -206,8 +206,8 @@ namespace ProjectBueno.Engine
 				}
 				s1.Stop();
 				Console.WriteLine("Check: " + s1.ElapsedTicks);
-            }
+			}
 			s1.Stop();*/
 		}
-    }
+	}
 }

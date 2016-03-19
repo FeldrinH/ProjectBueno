@@ -54,7 +54,7 @@ namespace ProjectBueno.Game.Spells
 				vecSpeed = new Vector2((float)(random.NextDouble() < 0.5 ? random.NextDouble() : random.NextDouble()*-1.0), (float)(random.NextDouble() < 0.5 ? random.NextDouble() : random.NextDouble() * -1.0));
 				vecSpeed.Normalize();
 				vecSpeed *= (float)(random.NextDouble() * 2.0 + 1.0);
-                projReturn.addProjectile(pos,vecSpeed);
+				projReturn.addProjectile(pos,vecSpeed);
 			}
 			return projReturn;
 		}

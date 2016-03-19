@@ -11,13 +11,13 @@ namespace ProjectBueno.Engine
 	/// This is the main type for your game.
 	/// </summary>
 	public sealed class Main : Microsoft.Xna.Framework.Game
-    {
+	{
 		//All really bad workaround. Do not use static!
-        public static GraphicsDeviceManager graphicsManager { get; private set; }
-        public static SpriteBatch spriteBatch { get; private set; }
+		public static GraphicsDeviceManager graphicsManager { get; private set; }
+		public static SpriteBatch spriteBatch { get; private set; }
 		public static ContentManager content { get; private set; }
 		public static GameWindow window { get; private set; }
-        public static IHandler handler { get; set; }
+		public static IHandler handler { get; set; }
 
 		public static KeyboardState oldKeyState { get; private set; }
 		public static KeyboardState newKeyState { get; private set; }
@@ -26,7 +26,7 @@ namespace ProjectBueno.Engine
 
 		public const int xRatio = 140;
 		public const int yRatio = 105;
-        public const float widthMult = (float)xRatio / yRatio;
+		public const float widthMult = (float)xRatio / yRatio;
 		public const float heightMult = (float)yRatio / xRatio;
 
 		private static Rectangle oldClientBounds;
@@ -37,7 +37,7 @@ namespace ProjectBueno.Engine
 		public static event EventHandler<EventArgs> exiting;
 
 		public Main()
-        {
+		{
 			graphicsManager = new GraphicsDeviceManager(this);// { SynchronizeWithVerticalRetrace = false }; //Bad workaround
 			content = Content; //Bad workaround
 			window = Window; //Bad workaround
@@ -101,18 +101,18 @@ namespace ProjectBueno.Engine
 		/// and initialize them as well.
 		/// </summary>
 		protected override void Initialize()
-        {
+		{
 			base.Initialize();
 			handler = new GameHandler();
 		}
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            spriteBatch = new SpriteBatch(GraphicsDevice); //Bad workaround
+		/// <summary>
+		/// LoadContent will be called once per game and is the place to load
+		/// all of your content.
+		/// </summary>
+		protected override void LoadContent()
+		{
+			spriteBatch = new SpriteBatch(GraphicsDevice); //Bad workaround
 
 			boxel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			boxel.SetData(new[] { Color.White });
@@ -122,21 +122,21 @@ namespace ProjectBueno.Engine
 			EmptySkill.initEmpty();
 		}
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-        }
+		/// <summary>
+		/// UnloadContent will be called once per game and is the place to unload
+		/// game-specific content.
+		/// </summary>
+		protected override void UnloadContent()
+		{
+		}
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
+		/// <summary>
+		/// Allows the game to run logic such as updating the world,
+		/// checking for collisions, gathering input, and playing audio.
+		/// </summary>
+		/// <param name="gameTime">Provides a snapshot of timing values.</param>
+		protected override void Update(GameTime gameTime)
+		{
 			oldKeyState = newKeyState;
 			oldMouseState = newMouseState;
 			newKeyState = Keyboard.GetState();
@@ -144,12 +144,12 @@ namespace ProjectBueno.Engine
 			handler.Update();
 		}
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
-        {
+		/// <summary>
+		/// This is called when the game should draw itself.
+		/// </summary>
+		/// <param name="gameTime">Provides a snapshot of timing values.</param>
+		protected override void Draw(GameTime gameTime)
+		{
 			graphicsManager.ApplyChanges();
 			handler.Draw();
 		}

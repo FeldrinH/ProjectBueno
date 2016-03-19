@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -7,7 +6,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Project Bueno")]
 [assembly: AssemblyProduct("Project Bueno Engine")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("Release (Alpha)")]
 [assembly: AssemblyDescription("Project Buenche (née Bueno)")]
 [assembly: AssemblyCompany("Not Affiliated Inc. (A Joke)")]
 [assembly: AssemblyCopyright("Copyright © Juhan Oskar Hennoste 2015")]
@@ -34,6 +33,6 @@ using System.Runtime.InteropServices;
 
 internal static class PB
 {
-	public const string VERSION = "0.2.0";
-	public const string VERSION_NAME = "Beaufort";
+	public const string VERSION = "0.3.0";
+	public const string VERSION_NAME = "Caciobufala";
 }
