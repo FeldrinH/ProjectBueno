@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectBueno.Game.Entities;
 using ProjectBueno.Game.Spells;
+using System;
 
 namespace ProjectBueno.Engine
 {
@@ -52,7 +53,7 @@ namespace ProjectBueno.Engine
 			{
 				curHeld.Draw(new Vector2(mouseX, mouseY));
 			}
-			
+
 			Main.spriteBatch.End();
 		}
 
@@ -84,7 +85,7 @@ namespace ProjectBueno.Engine
 		public void windowResize()
 		{
 			sreenScale = Matrix.CreateScale((float)Main.window.ClientBounds.Width / Main.xRatio);
-			downscale = (float)Main.xRatio / Main.window.ClientBounds.Width ;
+			downscale = (float)Main.xRatio / Main.window.ClientBounds.Width;
 		}
 	}
 }

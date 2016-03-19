@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace ProjectBueno.Engine
 {
@@ -25,8 +26,8 @@ namespace ProjectBueno.Engine
 		public void Draw()
 		{
 			Main.graphicsManager.GraphicsDevice.Clear(backColor);
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, null);
-			Main.spriteBatch.Draw(background, Main.window.ClientBounds, Color.White);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap);
+			Main.spriteBatch.Draw(background, new Rectangle(0,0,Main.window.ClientBounds.Width, Main.window.ClientBounds.Height), Color.White);
 			Main.spriteBatch.End();
 		}
 
