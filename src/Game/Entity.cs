@@ -89,8 +89,9 @@ namespace ProjectBueno.Game.Entities
 
 		protected List<AnimatedTexture> textures = new List<AnimatedTexture>();
 
-		public bool checkTilesCollision() //Might not work
+		/*public bool checkTilesCollision()
 		{
+			#warning Does not work
 			return game.colMap[(int)((pos.X + size.X) * Tile.TILEMULT)][(int)((pos.Y + size.Y) * Tile.TILEMULT)]
 				|| game.colMap[(int)(pos.X * Tile.TILEMULT)][(int)((pos.Y + size.Y) * Tile.TILEMULT)] 
 				|| game.colMap[(int)((pos.X + size.X) * Tile.TILEMULT)][(int)(pos.Y * Tile.TILEMULT)] 
@@ -99,7 +100,7 @@ namespace ProjectBueno.Game.Entities
 		public void resolveTilesCollision()
 		{
 
-		}
+		}*/
 			
 		public bool checkCollision(Vector2 entPos, Vector2 entSize)
 		{

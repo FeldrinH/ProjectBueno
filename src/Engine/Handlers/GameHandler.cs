@@ -59,6 +59,18 @@ namespace ProjectBueno.Engine
 			return (screenPos - screenShift) * screenScaleInv + player.pos;
 		}
 
+		public Entity getEntityAtPos(Vector2 pos)
+		{
+			foreach (var entity in entities)
+			{
+				if (entity.checkCollision(pos, Vector2.Zero))
+				{
+					return entity;
+				}
+			}
+			return null;
+		}
+
 		private void onExitSave(object sender, EventArgs args)
 		{
 			Console.WriteLine("NOW PRETENDING TO SAVE GAME");
@@ -90,12 +102,8 @@ namespace ProjectBueno.Engine
 			terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y));
 			terrain.drawChunk(new Point(playerChunk.X, playerChunk.Y + vShift));
 			terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y + vShift));
-			//Main.spriteBatch.DrawLine(TerrainGenerator.startPoint*Tile.TILESIZE,TerrainGenerator.endPoint*Tile.TILESIZE,Color.Black,1.0f);
 
-			/*if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
-			{
-				Console.WriteLine("Mouse:" + posFromScreenPos(Main.newMouseState.Position.ToVector2()) + " Player:" + player.pos);
-			}*/
+			//Main.spriteBatch.DrawLine(TerrainGenerator.startPoint*Tile.TILESIZE,TerrainGenerator.endPoint*Tile.TILESIZE,Color.Black,1.0f);
 
 			player.Draw();
 			for (int i = 0; i < projectiles.Count; i++)
@@ -148,6 +156,12 @@ namespace ProjectBueno.Engine
 			player.Update();
 			projectiles.RemoveAll(item => item.toRemove);
 			entities.RemoveAll(item => item.health == 0.0f);
+
+			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
+			{
+				Console.WriteLine("Mouse:" + getEntityAtPos(posFromScreenPos(Main.newMouseState.Position.ToVector2())));
+			}
+
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{
 				Main.handler = new SkillHandler(this,player);
