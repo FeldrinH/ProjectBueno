@@ -52,6 +52,8 @@ namespace ProjectBueno.Engine.World
 
 		protected Random random = new Random();
 
+
+		#region Chunk Generation
 		public Tiles[][] getChunk(Point coords)
 		{
 			Tiles[][] returnChunk;
@@ -91,35 +93,7 @@ namespace ProjectBueno.Engine.World
 			chunks.Add(coords, chunk);
 			return chunk;
 		}
-
-		public void drawChunk(Point coords)
-		{
-			Tiles[][] chunk = getChunk(coords);
-			for (int x = 0; x < CHUNK_SIZE; x++)
-			{
-				for (int y = 0; y < CHUNK_SIZE; y++)
-				{
-					Main.spriteBatch.Draw(tileTex, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), tileColors[(int)chunk[x][y]]);
-				}
-			}
-		}
-		public void drawChunkMap(Vector2 playerPos)
-		{
-			Main.spriteBatch.Draw(Main.boxel,new Rectangle(0,0,xSize,ySize),Color.Black);
-			for (int x = 1; x < xSize-1; x++)
-			{
-				for (int y = 1; y < ySize-1; y++)
-				{
-					Main.spriteBatch.Draw(Main.boxel, new Rectangle(x, y, 1, 1), tileColors[(int)chunkMap[x][y]]);
-				}
-			}
-			Main.spriteBatch.Draw(Main.boxel, playerPos * Tile.TILEMULT / BLOCK_SIZE, Color.Red);
-		}
-		public bool getPseudor(int x, int y) //Test simplex noise
-		{
-			return Noise.GetNoise(x*0.25,y*0.25,0.0) < 0.25;
-		}
-
+		
 		protected bool checkBlockBorders(int xB, int yB)
 		{
 			Tiles center = chunkMap[xB][yB];
@@ -141,7 +115,39 @@ namespace ProjectBueno.Engine.World
 			}
 			return chunk[x][y];
 		}
+		public bool getPseudor(int x, int y) //Simplex noise to bool
+		{
+			return Noise.GetNoise(x * 0.25, y * 0.25, 0.0) < 0.25;
+		}
+		#endregion
 
+		#region Draw
+		public void drawChunk(Point coords)
+		{
+			Tiles[][] chunk = getChunk(coords);
+			for (int x = 0; x < CHUNK_SIZE; x++)
+			{
+				for (int y = 0; y < CHUNK_SIZE; y++)
+				{
+					Main.spriteBatch.Draw(tileTex, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), tileColors[(int)chunk[x][y]]);
+				}
+			}
+		}
+		public void drawChunkMap(Vector2 playerPos)
+		{
+			Main.spriteBatch.Draw(Main.boxel, new Rectangle(0, 0, xSize, ySize), Color.Black);
+			for (int x = 1; x < xSize - 1; x++)
+			{
+				for (int y = 1; y < ySize - 1; y++)
+				{
+					Main.spriteBatch.Draw(Main.boxel, new Rectangle(x, y, 1, 1), tileColors[(int)chunkMap[x][y]]);
+				}
+			}
+			Main.spriteBatch.Draw(Main.boxel, playerPos * Tile.TILEMULT / BLOCK_SIZE, Color.Red);
+		}
+		#endregion
+
+		#region Generate ChunkMap
 		protected void setChunk(int x, int y, Tiles type)
 		{
 			if (emptyTile(x, y))
@@ -268,6 +274,7 @@ namespace ProjectBueno.Engine.World
 				generateSea(pos.X + xSide[i], pos.Y + ySide[i]);
 			}
 		}
+		#endregion
 
 		public void clearChunks()
 		{
