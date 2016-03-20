@@ -9,20 +9,26 @@ using System.Text;
 
 namespace ProjectBueno.Game.Spells
 {
-	public class Spell
+	public class Spell //Data class
 	{
-		public Spell()
-		{
-			cooldown = -1; //Spell can't be used
-		}
-
-		public Spell(SkillShape shape,SkillProp prop,SkillProp modTop,SkillProp modBottom)
+		public Spell(SkillShape shape, SkillProp prop, SkillProp modTop, SkillProp modBottom)
 		{
 			this.shape = shape;
 			this.prop = prop;
 			this.modTop = modTop;
 			this.modBottom = modBottom;
-			cooldown = 30; //For testing
+			if (shape == null)
+			{
+				cooldown = -1;
+			}
+			else
+			{
+				cooldown = 0;
+				cooldown += shape.cooldown;
+				cooldown += modBottom == null ? 0 : modBottom.cooldown;
+				cooldown += modBottom == null ? 0 : modBottom.cooldown;
+				cooldown += modBottom == null ? 0 : modBottom.cooldown;
+			}
 		}
 
 		public readonly SkillShape shape;
@@ -31,14 +37,18 @@ namespace ProjectBueno.Game.Spells
 		public readonly SkillProp modBottom;
 		public readonly int cooldown;
 	}
-	public sealed class SpellContainer
+
+	public class SpellContainer //Wrapper for player spells
 	{
 		public SpellContainer()
 		{
-			spell = new Spell();
+			spell = new Spell(null,null,null,null);
 		}
 
-		public Spell spell { get; private set; }
+		public int cooldown { get { return spell.cooldown; } }
+		public bool canCast { get { return spell.cooldown > -1 && spell.shape != null; } }
+
+		protected Spell spell;
 
 		public static Rectangle shapeBounds { get; private set; }
 		public static Rectangle propBounds { get; private set; }

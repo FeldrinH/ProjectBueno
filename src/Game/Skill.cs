@@ -46,6 +46,7 @@ namespace ProjectBueno.Game.Spells
 		public string name { get; protected set; }
 		public string description { get; protected set; }
 		public int cost { get; protected set; }
+		public int cooldown { get; protected set; }
 
 		protected static readonly Color forsaleColor = Color.Gray;
 		protected static readonly Color lockedColor = new Color(25, 25, 25);

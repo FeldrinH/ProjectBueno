@@ -47,6 +47,7 @@ namespace ProjectBueno.Game.Entities
 		public List<SpellContainer> spells { get; protected set; }
 
 		public int selectedSpell;
+		public int cooldown;
 
 		public int knowledgePoints;
 
@@ -109,12 +110,18 @@ namespace ProjectBueno.Game.Entities
 
 			moveDir(totalMove);
 			pos += totalMove;
-			
+
+			if (cooldown > 0)
+			{
+				cooldown--;
+			}
+
 			if (Main.newKeyState.IsKeyDown(Keys.D1) && !Main.oldKeyState.IsKeyDown(Keys.D1))
 			{
-				if (spells[selectedSpell].spell.shape != null)
+				if (spells[selectedSpell].canCast && cooldown < 1)
 				{
 					game.projectiles.Add(spells[selectedSpell].createProjectile(pos, dir.Vector(), game));
+					cooldown = spells[selectedSpell].cooldown;
 				}
 			}
 			base.Update();
