@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using ProjectBueno.Game.Tiles;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ namespace ProjectBueno.Engine.World
 	{
 		public Terrain()
 		{
-			chunks = new Dictionary<Point, List<List<Tiles>>>();
+			chunks = new Dictionary<Point, Tiles[][]>();
+			tileTex = Main.content.Load<Texture2D>("Tile");
 		}
 
 		public static readonly List<Color> tileColors = new List<Color>() { Color.LightGreen, Color.LawnGreen, Color.Blue, Color.DarkBlue, Color.LightBlue, Color.Yellow };
@@ -37,19 +39,21 @@ namespace ProjectBueno.Engine.World
 		public static int xSize = 512;
 		public static int ySize = 512;
 		public static int tileLimit = 30000;
-		protected List<List<Tiles>> chunkMap;
-		protected Dictionary<Point, List<List<Tiles>>> chunks;
+		protected Tiles[][] chunkMap;
+		protected Dictionary<Point, Tiles[][]> chunks;
 		protected Queue<Point> callqueue = new Queue<Point>();
 		public int tileCount;
 		public int seaCount;
 		public Vector2 startPoint;
 		public Vector2 endPoint;
 
+		protected static Texture2D tileTex;
+
 		protected Random random = new Random();
 
-		public List<List<Tiles>> getChunk(Point coords)
+		public Tiles[][] getChunk(Point coords)
 		{
-			List<List<Tiles>> returnChunk;
+			Tiles[][] returnChunk;
 			if (chunks.TryGetValue(coords, out returnChunk))
 			{
 				return returnChunk;
@@ -66,9 +70,9 @@ namespace ProjectBueno.Engine.World
 			return new Point((int)pos.X,(int)pos.Y);
 		}
 
-		protected List<List<Tiles>> generateChunk(Point coords)
+		protected Tiles[][] generateChunk(Point coords)
 		{
-			List<List<Tiles>> chunk = Enumerable.Range(0, CHUNK_SIZE).Select(x => Enumerable.Range(0, CHUNK_SIZE).Select(y => chunkMap[x / BLOCK_SIZE + coords.X * BLOCKS_PER_CHUNK][y / BLOCK_SIZE + coords.Y * BLOCKS_PER_CHUNK]).ToList()).ToList();
+			Tiles[][] chunk = Enumerable.Range(0, CHUNK_SIZE).Select(x => Enumerable.Range(0, CHUNK_SIZE).Select(y => chunkMap[x / BLOCK_SIZE + coords.X * BLOCKS_PER_CHUNK][y / BLOCK_SIZE + coords.Y * BLOCKS_PER_CHUNK]).ToArray()).ToArray();
 			for(int xC = 0; xC <= BLOCKS_PER_CHUNK; xC++)
 			{
 				for (int yC = 0; yC <= BLOCKS_PER_CHUNK; yC++)
@@ -90,12 +94,12 @@ namespace ProjectBueno.Engine.World
 
 		public void drawChunk(Point coords)
 		{
-			List<List<Tiles>> chunk = getChunk(coords);
+			Tiles[][] chunk = getChunk(coords);
 			for (int x = 0; x < CHUNK_SIZE; x++)
 			{
 				for (int y = 0; y < CHUNK_SIZE; y++)
 				{
-					Main.spriteBatch.Draw(Main.boxel, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), tileColors[(int)chunk[x][y]]);
+					Main.spriteBatch.Draw(tileTex, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), tileColors[(int)chunk[x][y]]);
 				}
 			}
 		}
@@ -166,7 +170,7 @@ namespace ProjectBueno.Engine.World
 			tileCount = 0;
 			seaCount = 1;
 			callqueue.Clear();
-			chunkMap = Enumerable.Range(0, xSize).Select(h => Enumerable.Range(0, ySize).Select(w => Tiles.FilledForest).ToList()).ToList();
+			chunkMap = Enumerable.Range(0, xSize).Select(h => Enumerable.Range(0, ySize).Select(w => Tiles.FilledForest).ToArray()).ToArray();
 
 			//Process land
 			int x = xSize/2;

@@ -45,12 +45,9 @@ namespace ProjectBueno.Engine
 		public Vector2 screenShift;
 		public Matrix screenMatrix;
 
-		public List<List<bool>> colMap;
-
 		public List<Entity> entities;
 		public List<Projectile> projectiles;
-		//protected List<List<List<Tiles>>> loadedChunks;
-		protected Point ppChunk, mmChunk, mpChunk, pmChunk;
+		//protected Point ppChunk, mmChunk, mpChunk, pmChunk;
 		public Player player { get; protected set; }
 		public Terrain terrain { get; protected set; }
 
@@ -102,8 +99,6 @@ namespace ProjectBueno.Engine
 			terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y));
 			terrain.drawChunk(new Point(playerChunk.X, playerChunk.Y + vShift));
 			terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y + vShift));
-
-			//Main.spriteBatch.DrawLine(TerrainGenerator.startPoint*Tile.TILESIZE,TerrainGenerator.endPoint*Tile.TILESIZE,Color.Black,1.0f);
 
 			player.Draw();
 			for (int i = 0; i < projectiles.Count; i++)
