@@ -20,15 +20,17 @@ namespace ProjectBueno.Game.Spells
 			name = (string)skill["name"];
 			description = (string)skill["desc"];
 			cost = (int)skill["cost"];
-			locked = true;
+
+			cooldown = (int?)skill["cooldown"] ?? 0;
 
 			if ((bool?)skill["bought"] == true)
 			{
-				bought = true;
 				locked = false;
+				bought = true;
 			}
 			else
 			{
+				locked = true;
 				bought = false;
 			}
 

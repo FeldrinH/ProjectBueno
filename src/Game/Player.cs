@@ -116,7 +116,7 @@ namespace ProjectBueno.Game.Entities
 				cooldown--;
 			}
 
-			if (Main.newKeyState.IsKeyDown(Keys.D1) && !Main.oldKeyState.IsKeyDown(Keys.D1))
+			if (Main.newKeyState.IsKeyDown(Keys.D1)/* && !Main.oldKeyState.IsKeyDown(Keys.D1)*/)
 			{
 				if (spells[selectedSpell].canCast && cooldown < 1)
 				{
