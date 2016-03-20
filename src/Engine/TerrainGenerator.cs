@@ -76,13 +76,13 @@ namespace ProjectBueno.Engine.World
 		protected Tiles[][] generateChunk(Point coords)
 		{
 			Tiles[][] chunk = Enumerable.Range(0, CHUNK_SIZE).Select(x => Enumerable.Range(0, CHUNK_SIZE).Select(y => chunkMap[x / BLOCK_SIZE + coords.X * BLOCKS_PER_CHUNK][y / BLOCK_SIZE + coords.Y * BLOCKS_PER_CHUNK]).ToArray()).ToArray();
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 5; i++)
 			{
 				for (int xC = 0; xC < CHUNK_SIZE; xC++)
 				{
 					for (int yC = 0; yC < CHUNK_SIZE; yC++)
 					{
-						if (random.Next(2) == 0)
+						if (getPseudor(xC, yC, (int)chunk[xC][yC] % 2 == 0))
 						{
 							chunk[xC][yC] = getAdjacentDifferent(chunk, xC, yC);
 						}
@@ -115,9 +115,9 @@ namespace ProjectBueno.Engine.World
 			}
 			return chunk[x][y];
 		}
-		public bool getPseudor(int x, int y) //Simplex noise to bool
+		public bool getPseudor(int x, int y, bool flip) //Simplex noise to bool
 		{
-			return Noise.GetNoise(x * 0.25, y * 0.25, 0.0) < 0.25;
+			return flip ? Noise.GetNoise(x * 0.125, y * 0.125, 0.0) > 0.5 : Noise.GetNoise(x * 0.125, y * 0.125, 0.0) < 0.5;
 		}
 		#endregion
 
