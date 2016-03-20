@@ -39,7 +39,7 @@ namespace ProjectBueno.Engine.World
 		public static int tileLimit = 30000;
 		protected List<List<Tiles>> chunkMap;
 		protected Dictionary<Point, List<List<Tiles>>> chunks;
-		protected List<Point> callqueue = new List<Point>();
+		protected Queue<Point> callqueue = new Queue<Point>();
 		public int tileCount;
 		public int seaCount;
 		public Vector2 startPoint;
@@ -150,7 +150,7 @@ namespace ProjectBueno.Engine.World
 				{
 					seaCount++;
 					chunkMap[x][y] = Tiles.Sea;
-					callqueue.Add(new Point(x, y));
+					callqueue.Enqueue(new Point(x, y));
 				}
 				else if (chunkMap[x][y] == Tiles.Forest)
 				{
@@ -186,11 +186,10 @@ namespace ProjectBueno.Engine.World
 
 			//Process sea
 			chunkMap[0][0] = Tiles.Sea;
-			callqueue.Add(new Point(0, 0));
+			callqueue.Enqueue(new Point(0, 0));
 			while (callqueue.Count > 0)
 			{
-				processSeaChunks(callqueue[0].X,callqueue[0].Y);
-				callqueue.RemoveAt(0);
+				processSeaChunks(callqueue.Dequeue());
 			}
 			Console.WriteLine("Total land count: " + (xSize * ySize - seaCount));
 			Console.WriteLine("Land count: " + tileCount);
@@ -239,11 +238,11 @@ namespace ProjectBueno.Engine.World
 				}
 			}
 		}
-		protected void processSeaChunks(int x, int y)
+		protected void processSeaChunks(Point pos)
 		{
 			for (var i = 0; i < xSide.Length; i++)
 			{
-				generateSea(x + xSide[i], y + ySide[i]);
+				generateSea(pos.X + xSide[i], pos.Y + ySide[i]);
 			}
 		}
 
