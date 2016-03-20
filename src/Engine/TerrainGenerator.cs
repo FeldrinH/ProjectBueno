@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectBueno.Game.Tiles;
+using ProjectBueno.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,21 +74,20 @@ namespace ProjectBueno.Engine.World
 		protected Tiles[][] generateChunk(Point coords)
 		{
 			Tiles[][] chunk = Enumerable.Range(0, CHUNK_SIZE).Select(x => Enumerable.Range(0, CHUNK_SIZE).Select(y => chunkMap[x / BLOCK_SIZE + coords.X * BLOCKS_PER_CHUNK][y / BLOCK_SIZE + coords.Y * BLOCKS_PER_CHUNK]).ToArray()).ToArray();
-			for(int xC = 0; xC <= BLOCKS_PER_CHUNK; xC++)
+			for (int i = 0; i < 3; i++)
 			{
-				for (int yC = 0; yC <= BLOCKS_PER_CHUNK; yC++)
+				for (int xC = 0; xC < CHUNK_SIZE; xC++)
 				{
-					if(checkBlockBorders(coords.X*BLOCKS_PER_CHUNK+xC,coords.Y*BLOCKS_PER_CHUNK+yC))
+					for (int yC = 0; yC < CHUNK_SIZE; yC++)
 					{
-						for (int x = 0; x <= BLOCK_SIZE; x++)
+						if (random.Next(2) == 0)
 						{
-							for (int y = 0; y <= BLOCK_SIZE; y++)
-							{
-							}
+							chunk[xC][yC] = getAdjacentDifferent(chunk, xC, yC);
 						}
 					}
 				}
 			}
+
 			chunks.Add(coords, chunk);
 			return chunk;
 		}
@@ -115,12 +115,31 @@ namespace ProjectBueno.Engine.World
 			}
 			Main.spriteBatch.Draw(Main.boxel, playerPos * Tile.TILEMULT / BLOCK_SIZE, Color.Red);
 		}
+		public bool getPseudor(int x, int y) //Test simplex noise
+		{
+			return Noise.GetNoise(x*0.25,y*0.25,0.0) < 0.25;
+		}
 
 		protected bool checkBlockBorders(int xB, int yB)
 		{
 			Tiles center = chunkMap[xB][yB];
 			return (center != chunkMap[xB + 1][yB] || center != chunkMap[xB][yB + 1] || center != chunkMap[xB - 1][yB] || center != chunkMap[xB][yB - 1] ||
 				center != chunkMap[xB + 1][yB + 1] || center != chunkMap[xB - 1][yB - 1] || center != chunkMap[xB + 1][yB - 1] || center != chunkMap[xB - 1][yB + 1]);
+		}
+		protected Tiles getAdjacentDifferent(Tiles[][] chunk, int x, int y)
+		{
+			if (x < 1 || y < 1 || x > CHUNK_SIZE-2 || y > CHUNK_SIZE-2) //Broken workaround. FIXME
+			{
+				return chunk[x][y];
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				if (chunk[x][y] != chunk[x + xSide[i]][y + ySide[i]])
+				{
+					return chunk[x + xSide[i]][y + ySide[i]];
+				}
+			}
+			return chunk[x][y];
 		}
 
 		protected void setChunk(int x, int y, Tiles type)
