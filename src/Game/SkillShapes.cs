@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using ProjectBueno.Engine;
 using ProjectBueno.Game.Entities;
 using System;
-using System.Collections.Generic;
 
 namespace ProjectBueno.Game.Spells
 {
@@ -47,7 +46,7 @@ namespace ProjectBueno.Game.Spells
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game)
 		{
-			ProjectileGroup projReturn = new ProjectileBurst(spell, game, Projectile.TIMEOUTLIFETIME, pos, radSquared);
+			ProjectileBurst projReturn = new ProjectileBurst(spell, game, Projectile.TIMEOUTLIFETIME, pos, radSquared);
 			Vector2 vecSpeed;
 			for (int i = 0; i < partCount; i++)
 			{

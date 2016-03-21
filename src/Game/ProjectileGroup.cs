@@ -17,7 +17,6 @@ namespace ProjectBueno.Game.Entities
 			projSpeed = new List<Vector2>();
 			this.lifetime = lifetime;
 			size = new Vector2(4.0f, 4.0f); //To load
-			damage = 0.0f; //To load
 			projTexture = new AnimatedTexture(Main.content.Load<Texture2D>("flyingProj"), 3, 0.5f, 4, 4);
 		}
 
@@ -54,51 +53,21 @@ namespace ProjectBueno.Game.Entities
 		public override void Update()
 		{
 			--lifetime;
-			bool removeFlag;
 			for (int i = projPos.Count-1; i >= 0; i--)
 			{
-				removeFlag = false;
+				//projPos[i] += projSpeed[i];
 				foreach (var entity in game.entities)
 				{
 					if (entity.checkCollision(projPos[i], size))
 					{
-						Vector2 pushback = projPos[i] - game.player.pos;
+						Vector2 pushback = entity.pos - game.player.pos;
 						pushback.Normalize();
 						pushback *= 5.0f; //To load
-						entity.dealDamage(damage, pushback);
+						entity.dealDamage(spell.getDamage(entity), pushback);
 						projPos.RemoveAt(i);
 						projSpeed.RemoveAt(i);
-						removeFlag = true;
+						break;
 					}
-				}
-				if (!removeFlag)
-				{
-					projPos[i] += projSpeed[i];
-				}
-			}
-		}
-	}
-
-	class ProjectileBurst : ProjectileGroup
-	{
-		public ProjectileBurst(Spell spell, GameHandler game, int lifetime, Vector2 origin, float radSquared) : base(spell,game,lifetime)
-		{
-			this.origin = origin;
-			this.radSquared = radSquared;
-		}
-
-		protected float radSquared;
-		protected Vector2 origin;
-
-		public override void Update()
-		{
-			base.Update();
-			for (int i = projPos.Count-1; i >= 0; i--)
-			{
-				if ((origin - projPos[i]).LengthSquared() > radSquared)
-				{
-					projPos.RemoveAt(i);
-					projSpeed.RemoveAt(i);
 				}
 			}
 		}

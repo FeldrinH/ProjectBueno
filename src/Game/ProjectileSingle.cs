@@ -35,10 +35,10 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (entity.checkCollision(pos, size))
 				{
-					Vector2 pushback = pos - game.player.pos;
+					Vector2 pushback = speed;
 					pushback.Normalize();
 					pushback *= 5.0f; //To load
-					entity.dealDamage(damage, pushback);
+					entity.dealDamage(spell.getDamage(entity), pushback);
 					health = 0;
 				}
 			}

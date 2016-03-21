@@ -31,6 +31,11 @@ namespace ProjectBueno.Game.Spells
 			}
 		}
 
+		public float getDamage(Entity target)
+		{
+			return 0.0f;
+		}
+
 		public readonly SkillShape shape;
 		public readonly SkillProp prop;
 		public readonly SkillProp modTop;

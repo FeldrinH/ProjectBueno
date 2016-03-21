@@ -46,8 +46,8 @@
 						"cost" : 900,
 						"id" : "PropEradication",
 						"class" : "SkillProp",
-						"name" : "Eradictation",
-						desc : "",
+						"name" : "Eradication",
+						desc : "Deal massive\ndamage.",
 						"textureNum" : 17
 					},
 			{
@@ -130,7 +130,7 @@
 				"id" : "PropEngineer",
 				"class" : "SkillProp",
 				"name" : "Infulence",
-				"desc" : "More healing for machinery.",
+				"desc" : "More healing\nfor machinery.",
 				"textureNum" : 9
 			},
 				{
@@ -140,7 +140,7 @@
 					"id" : "PropRebound",
 					"class" : "SkillProp",
 					"name" : "Rebound",
-					"desc" : "Gain life based on effects granted.",
+					"desc" : "Gain life\nbased on\neffects granted.",
 					"textureNum" : 17
 				},
 					{
@@ -150,7 +150,7 @@
 						"id" : "PropHarmony",
 						"class" : "SkillProp",
 						"name" : "Harmony",
-						"desc" : "Effects of the spell affect all allies.",
+						"desc" : "Effects of the\nspell affect\nall allies.",
 						"textureNum" : 1 //Placeholder
 					},
 			{
@@ -160,7 +160,7 @@
 				"id" : "PropMedic",
 				"class" : "SkillProp",
 				"name" : "Medic",
-				"desc" : "More healing for living allies.",
+				"desc" : "More healing\nfor living\nallies.",
 				"textureNum" : 10
 			},
 	{
@@ -171,7 +171,7 @@
 		"id" : "ShapeBall",
 		"class" : "ShapeBall",
 		"name" : "Ball",
-		"desc" : "TODO",
+		"desc" : "Fire projectiles\nwith medium\neffect.",
 		"bought" : true,
 		"textureNum" : 13,
 		"projSpeed" : 2.0
@@ -186,21 +186,21 @@
 			"projCount" : 5000,
 			"radius" : 50,
 			"name" : "Burst",
-			"desc" : "TODO",
+			"desc" : "Surround yourself\nwith a mighty\nburst.",
 			"textureNum" : 12
 		},
 		{
 			"x" : 36,
 			"y" : 72,
 			"cost" : 100,
-			"cooldown" : 10,
+			"cooldown" : 0,
 			"id" : "ShapeStream",
 			"class" : "ShapeStream",
 			"projCount" : 200,
-			"duration" : 10,
+			"duration" : 1,
 			"length" : 100,
 			"name" : "Stream",
-			"desc" : "TODO",
+			"desc" : "Fire a constant\nstream.",
 			"textureNum" : 11
 		}
 ]

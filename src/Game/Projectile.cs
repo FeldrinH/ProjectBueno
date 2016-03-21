@@ -18,14 +18,9 @@ namespace ProjectBueno.Game.Entities
 
 		protected Vector2 size;
 
-		protected float damage;
-
 		public readonly Spell spell;
 		protected readonly GameHandler game;
 
-		public void dealDamage(Entity target, Vector2 dmgPos)
-		{
-		}
 		public abstract void Update();
 		public abstract void Draw();
 	}
