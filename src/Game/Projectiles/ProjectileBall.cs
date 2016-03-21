@@ -24,18 +24,32 @@ namespace ProjectBueno.Game.Spells
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return lifetime <= 0;
 			}
 		}
 
 		public override void Draw()
 		{
-			throw new NotImplementedException();
+			projTexture.incrementAnimation();
+			Main.spriteBatch.Draw(projTexture.texture, pos, projTexture.getCurFrame(), Color.White);
 		}
 
 		public override void Update()
 		{
-			throw new NotImplementedException();
+			--lifetime;
+			foreach (var entity in game.entities)
+			{
+				if (entity.checkCollision(pos, size))
+				{
+					Vector2 pushback = speed;
+					pushback.Normalize();
+					pushback *= 5.0f; //To load
+					entity.dealDamage(spell.getDamage(entity), pushback);
+					lifetime = 0;
+					break;
+				}
+			}
+			pos += speed;
 		}
 	}
 }

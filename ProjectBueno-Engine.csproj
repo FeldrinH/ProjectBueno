@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="src\Engine\Handlers\PauseHandler.cs" />
     <Compile Include="src\Game\Enemy.cs" />
-    <Compile Include="src\Game\Projectiles\Proj.cs" />
     <Compile Include="src\Game\Projectiles\Projectile.cs" />
     <Compile Include="src\Game\Projectiles\ProjectileBall.cs" />
     <Compile Include="src\Game\Projectiles\ProjectileBurst.cs" />

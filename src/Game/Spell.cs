@@ -33,20 +33,12 @@ namespace ProjectBueno.Game.Spells
 
 		public float getDamage(Entity target)
 		{
-			return 1.0f;
+			return 1.0f; //Todo
 		}
 
 		public float getHeal(Player caster)
 		{
-			return 1.0f;
-		}
-
-		public void onCollide(Player caster, Entity target, Vector2 pos, Vector2 speed)
-		{
-			if (target.canDamage)
-			{
-				target.dealDamage(getDamage(target), Vector2.Zero);//shape.getKnockback(caster, target, pos, speed);
-			}
+			return 1.0f; //Todo
 		}
 
 		public readonly SkillShape shape;
