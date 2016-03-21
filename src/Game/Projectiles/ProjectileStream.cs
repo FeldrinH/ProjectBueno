@@ -19,7 +19,6 @@ namespace ProjectBueno.Game.Spells
 
 		protected List<Vector2> projectiles;
 
-		protected static int collisiontime;
 		protected static int effecttime;
 
 		public override bool toRemove

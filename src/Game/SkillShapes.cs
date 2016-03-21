@@ -11,8 +11,11 @@ namespace ProjectBueno.Game.Spells
 	{
 		protected SkillShape(JObject skill) : base(skill)
 		{
+			#warning To load
+			potencyMult = 1.0f;
 		}
 		public AnimatedTexture projTexture;
+		public float potencyMult;
 		public abstract Projectile generateProjectiles(Vector2 pos,Vector2 dir, Spell spell, GameHandler game);
 	}
 
@@ -72,6 +75,11 @@ namespace ProjectBueno.Game.Spells
 		protected int duration;
 		protected float length;
 		private static Random random = new Random();
+
+		public override int modCooldown(int cooldownIn)
+		{
+			return cooldown;
+		}
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game)
 		{

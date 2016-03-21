@@ -3,16 +3,18 @@ using ProjectBueno.Game.Entities;
 
 namespace ProjectBueno.Game.Spells
 {
-	//Base Skill for Properties and Modifiers
-	public /*abstract*/ class SkillProp : Skill
-	{
-		/*protected*/ public SkillProp(JObject skill) : base(skill)
-		{
-		}
-		public /*abstract*/ bool isProperty { get; }
-		public /*abstract*/ void setProperties() {}
-		public /*abstract*/ void onContact(Entity target) {}
-	}
-
 	//Concrete Properties and Modifiers
+	public class SkillProp : Skill
+	{
+		public SkillProp(JObject skill) : base(skill)
+		{
+			damageAdd = (float?)skill["damage"] ?? 0.0f;
+			healAdd = (float?)skill["heal"] ?? 0.0f;
+			controlAdd = (int?)skill["control"] ?? 0;
+		}
+
+		public float healAdd;
+		public float damageAdd;
+		public int controlAdd;
+	}
 }

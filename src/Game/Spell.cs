@@ -1,48 +1,56 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ProjectBueno.Engine;
 using ProjectBueno.Game.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ProjectBueno.Game.Spells
 {
 	public class Spell //Data class
 	{
-		public Spell(SkillShape shape, SkillProp prop, SkillProp modTop, SkillProp modBottom)
+		public Spell(SkillShape shape, SkillProp modMid, SkillProp modTop, SkillProp modBottom)
 		{
 			this.shape = shape;
-			this.prop = prop;
+			this.modMid = modMid;
 			this.modTop = modTop;
 			this.modBottom = modBottom;
-			if (shape == null)
+			if (shape == null || modMid == null || modTop == null || modBottom == null)
 			{
 				cooldown = -1;
 			}
 			else
 			{
-				cooldown = 0;
-				cooldown += shape.cooldown;
-				cooldown += modBottom == null ? 0 : modBottom.cooldown;
-				cooldown += modBottom == null ? 0 : modBottom.cooldown;
-				cooldown += modBottom == null ? 0 : modBottom.cooldown;
+				cooldown = shape.modCooldown(modMid.modCooldown(modTop.modCooldown(modBottom.modCooldown(0))));
+				Console.WriteLine(cooldown);
 			}
+		}
+
+		public bool Contains(Skill test)
+		{
+			return shape == test || modMid == test || modTop == test || modBottom == test;
 		}
 
 		public float getDamage(Entity target)
 		{
-			return 1.0f; //Todo
+			return (modMid.damageAdd + modTop.damageAdd + modBottom.damageAdd) * shape.potencyMult;
 		}
 
 		public float getHeal(Player caster)
 		{
-			return 1.0f; //Todo
+			return (modMid.healAdd + modTop.healAdd + modBottom.healAdd) * shape.potencyMult;
+		}
+
+		public int getControl(Entity target)
+		{
+			return (modMid.controlAdd + modTop.controlAdd + modBottom.controlAdd);
+		}
+
+		public void doEffect() //Some arguments or stuff???
+		{
+			#warning Might be needed?
 		}
 
 		public readonly SkillShape shape;
-		public readonly SkillProp prop;
+		public readonly SkillProp modMid;
 		public readonly SkillProp modTop;
 		public readonly SkillProp modBottom;
 		public readonly int cooldown;
@@ -80,34 +88,44 @@ namespace ProjectBueno.Game.Spells
 
 		public void onPlaceClick(float mouseX, float mouseY, ref Skill curHeld)
 		{
-			if (shapeBounds.Contains(mouseX, mouseY) && curHeld is SkillShape)
+			if (!spell.Contains(curHeld))
 			{
-				spell = new Spell((SkillShape)curHeld, spell.prop, spell.modTop, spell.modBottom);
+				if (curHeld is SkillShape && shapeBounds.Contains(mouseX, mouseY))
+				{
+					spell = new Spell((SkillShape)curHeld, spell.modMid, spell.modTop, spell.modBottom);
+				}
+				else if (curHeld is SkillProp)
+				{
+					if (propBounds.Contains(mouseX, mouseY))
+					{
+						spell = new Spell(spell.shape, (SkillProp)curHeld, spell.modTop, spell.modBottom);
+					}
+					else if (modTopBounds.Contains(mouseX, mouseY))
+					{
+						spell = new Spell(spell.shape, spell.modMid, (SkillProp)curHeld, spell.modBottom);
+					}
+					else if (modBottomBounds.Contains(mouseX, mouseY))
+					{
+						spell = new Spell(spell.shape, spell.modMid, spell.modTop, (SkillProp)curHeld);
+					}
+					else
+					{
+						return;
+					}
+				}
+				else
+				{
+					return;
+				}
+				curHeld = null;
 			}
-			else if (propBounds.Contains(mouseX, mouseY) && curHeld is SkillProp)
-			{
-				spell = new Spell(spell.shape, (SkillProp)curHeld, spell.modTop, spell.modBottom);
-			}
-			else if (modTopBounds.Contains(mouseX, mouseY) && curHeld is SkillProp)
-			{
-				spell = new Spell(spell.shape, spell.prop, (SkillProp)curHeld, spell.modBottom);
-			}
-			else if (modBottomBounds.Contains(mouseX, mouseY) && curHeld is SkillProp)
-			{
-				spell = new Spell(spell.shape, spell.prop, spell.modTop, (SkillProp)curHeld);
-			}
-			else
-			{
-				return;
-			}
-			curHeld = null;
 		}
 
 		public bool onClearClick(float mouseX, float mouseY)
 		{
 			if (shapeBounds.Contains(mouseX, mouseY))
 			{
-				spell = new Spell(null, spell.prop, spell.modTop, spell.modBottom);
+				spell = new Spell(null, spell.modMid, spell.modTop, spell.modBottom);
 			}
 			else if (propBounds.Contains(mouseX, mouseY))
 			{
@@ -115,11 +133,11 @@ namespace ProjectBueno.Game.Spells
 			}
 			else if (modTopBounds.Contains(mouseX, mouseY))
 			{
-				spell = new Spell(spell.shape, spell.prop, null, spell.modBottom);
+				spell = new Spell(spell.shape, spell.modMid, null, spell.modBottom);
 			}
 			else if (modBottomBounds.Contains(mouseX, mouseY))
 			{
-				spell = new Spell(spell.shape, spell.prop, spell.modTop, null);
+				spell = new Spell(spell.shape, spell.modMid, spell.modTop, null);
 			}
 			else
 			{
@@ -138,9 +156,9 @@ namespace ProjectBueno.Game.Spells
 			{
 				EmptySkill.DrawHightlight(shapeBounds, mouseX, mouseY);
 			}
-			if (spell.prop != null)
+			if (spell.modMid != null)
 			{
-				spell.prop.DrawHightlight(propBounds, mouseX, mouseY);
+				spell.modMid.DrawHightlight(propBounds, mouseX, mouseY);
 			}
 			else
 			{

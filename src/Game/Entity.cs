@@ -48,7 +48,7 @@ namespace ProjectBueno.Game.Entities
 		public float health { get; protected set; }
 		public bool canDamage { get { return damageCooldown <= 0; } }
 
-		protected const int DAMAGECOOLDOWN = 15;
+		protected const int DAMAGECOOLDOWN = 5;
 		protected const float KNOCKBACKDAMPENING = 0.75f;
 
 		protected readonly GameHandler game;
