@@ -82,7 +82,7 @@ namespace ProjectBueno.Engine.World
 				{
 					for (int yC = 0; yC < CHUNK_SIZE; yC++)
 					{
-						if (getPseudor(xC, yC, (int)chunk[xC][yC] % 2 == 0))
+						if (getPseudor(xC+coords.X*CHUNK_SIZE, yC+coords.Y*CHUNK_SIZE, (int)chunk[xC][yC] < (int)getAdjacentDifferent(chunk, xC, yC)))
 						{
 							chunk[xC][yC] = getAdjacentDifferent(chunk, xC, yC);
 						}
