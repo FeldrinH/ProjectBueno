@@ -90,7 +90,7 @@
 					"class" : "SkillProp",
 					"name" : "Takeover",
 					"desc" : "Take control\nof everything.",
-					"textureNum" : 16
+					"textureNum" : 15
 				},
 					{
 						"x" : 53,
@@ -141,7 +141,7 @@
 					"class" : "SkillProp",
 					"name" : "Rebound",
 					"desc" : "Gain life\nbased on\neffects granted.",
-					"textureNum" : 17
+					"textureNum" : 16
 				},
 					{
 						"x" : 61,
