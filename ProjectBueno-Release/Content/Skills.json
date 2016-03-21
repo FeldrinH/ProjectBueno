@@ -171,14 +171,14 @@
 		"id" : "ShapeBall",
 		"class" : "ShapeBall",
 		"name" : "Ball",
-		"desc" : "Fire projectiles\nwith medium\neffect.",
+		"desc" : "Cast projectiles\nwith medium\neffect.",
 		"bought" : true,
 		"textureNum" : 13,
 		"projSpeed" : 2.0
 	},
 		{
-			"x" : 28,
-			"y" : 85,
+			"x" : 25,
+			"y" : 86,
 			"cost" : 100,
 			"cooldown" : 30,
 			"id" : "ShapeBurst",
@@ -190,8 +190,8 @@
 			"textureNum" : 12
 		},
 		{
-			"x" : 36,
-			"y" : 72,
+			"x" : 37,
+			"y" : 74,
 			"cost" : 100,
 			"cooldown" : 0,
 			"id" : "ShapeStream",
