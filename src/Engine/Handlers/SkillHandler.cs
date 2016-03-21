@@ -16,8 +16,8 @@ namespace ProjectBueno.Engine
 		public float downscale { get; protected set; }
 		protected Matrix sreenScale;
 
-		public static readonly Vector2 namePos = new Vector2(75,39);
-		public static readonly Vector2 descPos = new Vector2(75,49);
+		public static readonly Vector2 namePos = new Vector2(72,41);
+		public static readonly Vector2 descPos = new Vector2(72,51);
 
 		protected Skill curHeld;
 
