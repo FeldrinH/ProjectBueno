@@ -64,9 +64,8 @@
   <ItemGroup>
     <Compile Include="src\Engine\Handlers\PauseHandler.cs" />
     <Compile Include="src\Game\Enemy.cs" />
-    <Compile Include="src\Game\Projectile.cs" />
-    <Compile Include="src\Game\ProjectileBurst.cs" />
-    <Compile Include="src\Game\ProjectileGroup.cs" />
+    <Compile Include="src\Game\Projectiles\Projectile.cs" />
+    <Compile Include="src\Game\Projectiles\ProjectileStream.cs" />
     <Compile Include="src\Game\Skill.cs" />
     <Compile Include="src\Engine\Handlers\SkillHandler.cs" />
     <Compile Include="src\Game\SkillProp.cs" />
