@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System;
 using ProjectBueno.Engine.World;
 using System.Diagnostics;
+using ProjectBueno.Game.Spells;
 
 namespace ProjectBueno.Engine
 {

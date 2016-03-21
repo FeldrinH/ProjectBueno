@@ -46,7 +46,7 @@ namespace ProjectBueno.Game.Spells
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game)
 		{
-			ProjectileBurst projReturn = new ProjectileBurst(spell, game, Projectile.TIMEOUTLIFETIME, pos, radSquared);
+			ProjectileBurst projReturn = new ProjectileBurst(spell, game, pos, radSquared);
 			Vector2 vecSpeed;
 			for (int i = 0; i < partCount; i++)
 			{
