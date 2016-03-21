@@ -6,7 +6,7 @@
 		"id" : "PropMana",
 		"class" : "SkillProp",
 		"name" : "Mana",
-		"desc" : "Plain energy that\nprotects.",
+		"desc" : "Plain energy\nthat protects.",
 		"bought" : true,
 		"textureNum" : 1
 	},
