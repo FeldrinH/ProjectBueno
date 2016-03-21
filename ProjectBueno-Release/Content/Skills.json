@@ -17,7 +17,7 @@
 			"id" : "PropDestruction",
 			"class" : "SkillProp",
 			"name" : "Destruction",
-			"desc" : "Inflict\ndamage on\nyour foes.",
+			"desc" : "Inflict damage\non your foes.",
 			"textureNum" : 2
 		},
 			{
@@ -27,7 +27,7 @@
 				"id" : "PropBurning",
 				"class" : "SkillProp",
 				"name" : "Burning",
-				"desc" : "Deal more\ndamage against\nliving enemies.",
+				"desc" : "Deal more damage\nagainst living\nenemies.",
 				"textureNum" : 6
 			},
 				{
@@ -37,7 +37,7 @@
 					"id" : "PropArcing",
 					"class" : "SkillProp",
 					"name" : "Arcing",
-					"desc" : "Make your\nspells arc\nthree times.",
+					"desc" : "Make your spells\narc three times.",
 					"textureNum" : 14
 				},
 					{
@@ -57,7 +57,7 @@
 				"id" : "PropShocking",
 				"class" : "SkillProp",
 				"name" : "Shocking",
-				"desc" : "Deal more\ndamage against\nmachinery.",
+				"desc" : "Deal more damage\nagainst machine-\nry.",
 				"textureNum" : 5
 			},
 
@@ -79,7 +79,7 @@
 				"id" : "PropInfluence",
 				"class" : "SkillProp",
 				"name" : "Infulence",
-				"desc" : "Take control\nof flesh.",
+				"desc" : "Take control of\nflesh.",
 				"textureNum" : 8
 			},
 				{
@@ -89,7 +89,7 @@
 					"id" : "PropTakeover",
 					"class" : "SkillProp",
 					"name" : "Takeover",
-					"desc" : "Take control\nof everything.",
+					"desc" : "Take control of\neverything.",
 					"textureNum" : 15
 				},
 					{
@@ -99,7 +99,7 @@
 						"id" : "PropSlavery",
 						"class" : "SkillProp",
 						"name" : "Slavery",
-						"desc" : "Everything\nwill serve\nyou.",
+						"desc" : "Everything will\nserve you.",
 						"textureNum" : 18
 					},
 			{
@@ -109,7 +109,7 @@
 				"id" : "PropTinkering",
 				"class" : "SkillProp",
 				"name" : "Tinkering",
-				"desc" : "Deal more\ndamage against\nmachinery.",
+				"desc" : "Take control of\nmachinery.",
 				"textureNum" : 7
 			},
 
@@ -120,7 +120,7 @@
 			"id" : "PropHealing",
 			"class" : "SkillProp",
 			"name" : "Healing",
-			"desc" : "Heal your\nallies.",
+			"desc" : "Heal your allies.",
 			"textureNum" : 4
 		},
 			{
@@ -130,7 +130,7 @@
 				"id" : "PropEngineer",
 				"class" : "SkillProp",
 				"name" : "Infulence",
-				"desc" : "More healing\nfor machinery.",
+				"desc" : "More healing for\nmachinery.",
 				"textureNum" : 9
 			},
 				{
@@ -140,7 +140,7 @@
 					"id" : "PropRebound",
 					"class" : "SkillProp",
 					"name" : "Rebound",
-					"desc" : "Gain life\nbased on\neffects granted.",
+					"desc" : "Gain life based\non effects grant-\ned.",
 					"textureNum" : 16
 				},
 					{
@@ -150,7 +150,7 @@
 						"id" : "PropHarmony",
 						"class" : "SkillProp",
 						"name" : "Harmony",
-						"desc" : "Effects of the\nspell affect\nall allies.",
+						"desc" : "Effects of the\nspell affect all\nallies.",
 						"textureNum" : 1 //Placeholder
 					},
 			{
@@ -160,7 +160,7 @@
 				"id" : "PropMedic",
 				"class" : "SkillProp",
 				"name" : "Medic",
-				"desc" : "More healing\nfor living\nallies.",
+				"desc" : "More healing for\nliving allies.",
 				"textureNum" : 10
 			},
 	{
@@ -186,7 +186,7 @@
 			"projCount" : 10000,
 			"radius" : 50,
 			"name" : "Burst",
-			"desc" : "Surround yourself\nwith a mighty\nburst.",
+			"desc" : "Surround your-\nself with a\nmighty burst.",
 			"textureNum" : 12
 		},
 		{
@@ -200,7 +200,7 @@
 			"duration" : 1,
 			"length" : 100,
 			"name" : "Stream",
-			"desc" : "Fire a constant\nstream.",
+			"desc" : "Cast a constant\nstream.",
 			"textureNum" : 11
 		}
 ]
