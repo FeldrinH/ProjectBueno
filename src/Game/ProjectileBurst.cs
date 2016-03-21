@@ -1,12 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using ProjectBueno.Engine;
-using ProjectBueno.Game.Entities;
 using ProjectBueno.Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjectBueno.Game.Entities
 {
@@ -16,10 +10,14 @@ namespace ProjectBueno.Game.Entities
 		{
 			this.origin = origin;
 			this.radSquared = radSquared;
+			damagetime = 7;
+			effecttime = 7;
 		}
 
 		protected float radSquared;
 		protected Vector2 origin;
+		protected static int damagetime;
+		protected static int effecttime;
 
 		public override void Update()
 		{
