@@ -14,6 +14,7 @@ namespace ProjectBueno.Game.Spells
 		}
 		public AnimatedTexture projTexture;
 		public abstract Projectile generateProjectiles(Vector2 pos,Vector2 dir, Spell spell, GameHandler game);
+		public abstract Vector2 getKnockback(Player caster, Entity target, Vector2 pos, Vector2 speed);
 	}
 
 	//Concrete Shapes
@@ -28,7 +29,12 @@ namespace ProjectBueno.Game.Spells
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game)
 		{
-			return new ProjectileSingle(pos,dir*speed,spell,game);
+			return new ProjectileBall(spell, game, pos, dir * speed);
+		}
+
+		public override Vector2 getKnockback(Player caster, Entity target, Vector2 pos, Vector2 speed)
+		{
+			throw new NotImplementedException();
 		}
 	}
 
@@ -57,6 +63,11 @@ namespace ProjectBueno.Game.Spells
 			}
 			return projReturn;
 		}
+
+		public override Vector2 getKnockback(Player caster, Entity target, Vector2 pos, Vector2 speed)
+		{
+			throw new NotImplementedException();
+		}
 	}
 
 	public class ShapeStream : SkillShape
@@ -75,12 +86,17 @@ namespace ProjectBueno.Game.Spells
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game)
 		{
-			ProjectileGroup projReturn = new ProjectileGroup(spell,game,duration);
+			ProjectileStream projReturn = new ProjectileStream(spell,game,duration);
 			for (int i = 0; i < partCount; i++)
 			{
 				projReturn.addProjectile(pos + dir * 5.0f + new Vector2((float)(random.NextDouble() * (2.0 + length * dir.X) - 1.0), (float)(random.NextDouble() * (2.0 + length * dir.Y) - 1.0)), Vector2.Zero );
 			}
 			return projReturn;
+		}
+
+		public override Vector2 getKnockback(Player caster, Entity target, Vector2 pos, Vector2 speed)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

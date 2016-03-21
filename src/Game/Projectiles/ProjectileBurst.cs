@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using ProjectBueno.Engine;
+using ProjectBueno.Game.Spells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +9,20 @@ using System.Threading.Tasks;
 
 namespace ProjectBueno.Game.Spells
 {
-	class ProjectileStream : Projectile
+	class ProjectileBurst : Projectile
 	{
-		public ProjectileStream(Spell spell, GameHandler game, int lifetime) : base(spell, game, null)
+		public ProjectileBurst(Spell spell, GameHandler game, Vector2 origin, float radSquared) : base(spell, game, null) //Add target
 		{
+			this.origin = origin;
+			this.radSquared = radSquared;
+			lifetime = TIMEOUT;
 			projectiles = new List<Proj>();
-			this.lifetime = lifetime;
 		}
 
 		protected List<Proj> projectiles;
 
-		protected static int collisiontime;
-		protected static int effecttime;
+		protected Vector2 origin;
+		protected float radSquared;
 
 		public override bool toRemove
 		{

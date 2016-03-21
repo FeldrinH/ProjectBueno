@@ -64,7 +64,10 @@
   <ItemGroup>
     <Compile Include="src\Engine\Handlers\PauseHandler.cs" />
     <Compile Include="src\Game\Enemy.cs" />
+    <Compile Include="src\Game\Projectiles\Proj.cs" />
     <Compile Include="src\Game\Projectiles\Projectile.cs" />
+    <Compile Include="src\Game\Projectiles\ProjectileBall.cs" />
+    <Compile Include="src\Game\Projectiles\ProjectileBurst.cs" />
     <Compile Include="src\Game\Projectiles\ProjectileStream.cs" />
     <Compile Include="src\Game\Skill.cs" />
     <Compile Include="src\Engine\Handlers\SkillHandler.cs" />
@@ -73,7 +76,6 @@
     <Compile Include="src\Game\Spell.cs" />
     <Compile Include="src\Engine\TerrainGenerator.cs" />
     <Compile Include="src\Game\Entity.cs" />
-    <Compile Include="src\Game\ProjectileSingle.cs" />
     <Compile Include="src\Engine\AnimatedTexture.cs" />
     <Compile Include="src\Engine\Handlers\IHandler.cs" />
     <Compile Include="src\Engine\Handlers\GameHandler.cs" />
