@@ -72,7 +72,7 @@ namespace ProjectBueno.Game.Spells
 
 		public virtual int modCooldown(int cooldownIn)
 		{
-			return cooldownIn += cooldown;
+			return (cooldownIn + cooldown);
 		}
 
 		public void onClick(float mouseX, float mouseY, ref int knowledgePoints, ref Skill curHeld)
