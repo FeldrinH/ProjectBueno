@@ -6,7 +6,7 @@
 		"id" : "PropMana",
 		"class" : "SkillProp",
 		"name" : "Mana",
-		"desc" : "Erin go\nbrah#%&@.",
+		"desc" : "Plain energy that\nprotects.",
 		"bought" : true,
 		"textureNum" : 1
 	},
@@ -69,7 +69,7 @@
 			"id" : "PropControl",
 			"class" : "SkillProp",
 			"name" : "Control",
-			"desc" : "",
+			"desc" : "Take control of\na foe.",
 			"textureNum" : 3
 		},
 			{
