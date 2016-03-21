@@ -17,6 +17,8 @@ namespace ProjectBueno.Game.Spells
 			textureSource = new Rectangle(0, (int)skill["textureNum"] * buttonSize, buttonSize, buttonSize);
 			texture = Main.content.Load<Texture2D>("Skills");
 
+			id = (string)skill["id"];
+
 			name = (string)skill["name"];
 			description = (string)skill["desc"];
 			cost = (int)skill["cost"];
@@ -49,6 +51,7 @@ namespace ProjectBueno.Game.Spells
 		public string description { get; protected set; }
 		public int cost { get; protected set; }
 		public int cooldown { get; protected set; }
+		public readonly string id;
 
 		protected static readonly Color forsaleColor = Color.Gray;
 		protected static readonly Color lockedColor = new Color(25, 25, 25);
