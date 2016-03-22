@@ -56,13 +56,18 @@ namespace ProjectBueno.Engine.World
 		#region Chunk Generation
 		public Tiles[][] getChunk(Point coords)
 		{
+			
 			Tiles[][] returnChunk;
 			if (chunks.TryGetValue(coords, out returnChunk))
 			{
 				return returnChunk;
 			}
-			else
+			else if (coords.X < 0 || coords.Y < 0 || coords.X >= xSize || coords.Y >= ySize)
 			{
+				return null;
+			}
+			else
+			{	
 				returnChunk = generateChunk(coords);
 				return returnChunk;
 			}
@@ -125,6 +130,10 @@ namespace ProjectBueno.Engine.World
 		public void drawChunk(Point coords)
 		{
 			Tiles[][] chunk = getChunk(coords);
+			if (chunk == null)
+			{
+				return;
+			}
 			for (int x = 0; x < CHUNK_SIZE; x++)
 			{
 				for (int y = 0; y < CHUNK_SIZE; y++)
