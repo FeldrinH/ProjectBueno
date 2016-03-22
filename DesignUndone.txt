@@ -1,20 +1,13 @@
-﻿The Player:
+The Player:
 
-
-Base controls
-WASD: movement
 F: interract
-12345: spells
+(1)2345: spells
 Left click: choose target
-Character life = 100
-Character speed = 100% 
-100% speed = 18 pixels per second
+100% speed = 18 pixels per second??? 0.8 * 30 = 24 px/s
 Whenever you cast a spell in combat gain a knowledge point
 Whenever you rummage gain a knowledge point
 When you, an ally or a robot you made kills an enemy gain 3 knowledge points
-Player clicks on target to select one
-Characters can have 5 different spells at any time
-Each spell consists of a shape, a property and two modifiers
+
 Shapes:
 	0 KP, Ball: the character fires a ball +2 cooldown "Fire projectiles with medium effect."
 		100 KP, Burst: Ring expands 3 blocks around the character for one second +100% effect +1 cooldown x2 cooldown "Surround yourself with a mighty burst."
@@ -77,18 +70,15 @@ If you die the game offers you a choice to either respawn in the nearest town or
 
 The World:
 
-
-	Terrain edges:
-
 	Types of terrain:
 
-		Sea
-		Not able to walk on
-		Desert
-		-10 speed
+		(Sea)
+			Not able to walk on
+		(Desert)
+			-10 speed
 		Forest
-		Cold
-		-10 speed
+		(Cold)
+			-10 speed
 
 	Structures:
 		Tree: 20% chance to appear at any square without a tree in a forest 10% in cold. When a tree appears leaves appear on top of it, leaves cover everything, count as a tree, but are able to be walked through.
