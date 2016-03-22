@@ -16,5 +16,7 @@ namespace ProjectBueno.Game.Spells
 		public float healAdd;
 		public float damageAdd;
 		public int controlAdd;
+
+		public const string ARCINGID = "PropArcing"; //HARDCODED EXCEPTION.(TODO)
 	}
 }
