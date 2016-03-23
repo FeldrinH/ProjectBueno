@@ -16,8 +16,9 @@ namespace ProjectBueno.Engine
 		public float downscale { get; protected set; }
 		protected Matrix sreenScale;
 
-		public static readonly Vector2 namePos = new Vector2(69,41);
-		public static readonly Vector2 descPos = new Vector2(69,51);
+		public static readonly Vector2 namePos;
+		public static readonly Vector2 descPos;
+		public static readonly Vector2 costPos;
 
 		protected Skill curHeld;
 
@@ -26,6 +27,13 @@ namespace ProjectBueno.Engine
 			this.game = game;
 			background = Main.content.Load<Texture2D>("skillTree");
 			this.player = player;
+		}
+
+		static SkillHandler()
+		{
+			namePos = new Vector2((int)Main.Config["namePos"]["x"], (int)Main.Config["namePos"]["y"]);
+			descPos = new Vector2((int)Main.Config["descPos"]["x"], (int)Main.Config["descPos"]["y"]);
+			costPos = new Vector2((int)Main.Config["costPos"]["x"], (int)Main.Config["costPos"]["y"]);
 		}
 
 		public void Draw()
@@ -48,6 +56,7 @@ namespace ProjectBueno.Engine
 			{
 				Main.spriteBatch.DrawString(Main.retroFont, drawHeldText.name, namePos, Color.Purple);
 				Main.spriteBatch.DrawString(Main.retroFont, drawHeldText.description, descPos, Color.Black);
+				Main.spriteBatch.DrawString(Main.retroFont, drawHeldText.cost.ToString() + " KP", costPos, Color.Green);
 			}
 			if (curHeld != null)
 			{

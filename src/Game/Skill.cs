@@ -124,8 +124,6 @@ namespace ProjectBueno.Game.Spells
 			{
 				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, (bought ? Color.White : forsaleColor));
 				Main.spriteBatch.Draw(Main.boxel, buttonBounds, Color.White * (bought? boughtHighlight : forsaleHighlight));
-				Main.spriteBatch.DrawString(Main.retroFont, name, SkillHandler.namePos, Color.White);
-				Main.spriteBatch.DrawString(Main.retroFont, description, SkillHandler.descPos, Color.White);
 				return true;
 			}
 			else

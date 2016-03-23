@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json.Linq;
 using ProjectBueno.Game.Spells;
 using System;
+using System.IO;
 
 namespace ProjectBueno.Engine
 {
@@ -31,6 +33,8 @@ namespace ProjectBueno.Engine
 
 		private static Rectangle oldClientBounds;
 
+		public static readonly JObject Config;
+
 		public static Texture2D boxel { get; private set; }
 		public static SpriteFont retroFont { get; private set; }
 
@@ -53,6 +57,11 @@ namespace ProjectBueno.Engine
 			graphicsManager.PreferredBackBufferHeight = yRatio * 5;
 			oldClientBounds = Window.ClientBounds;
 			//IsFixedTimeStep = false;
+		}
+
+		static Main()
+		{
+			Config = JObject.Parse(File.ReadAllText("Content/Config.json"));
 		}
 
 		private void WindowSizeChanged(object sender, EventArgs e)

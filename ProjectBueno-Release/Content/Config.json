@@ -1,0 +1,10 @@
+{
+	"shape" : {"x" : 98, "y" : 18},
+	"modMidBounds" : {"x" : 113 , "y" : 18},
+	"modTopBounds" : {"x" : 127, "y" : 12},
+	"modBottomBounds" : {"x" : 127, "y" : 24},
+	
+	"namePos" : {"x" : 69, "y" : 41},
+	"descPos" : {"x" : 69, "y" : 51},
+	"costPos" : {"x" : 24, "y" : 92}
+}

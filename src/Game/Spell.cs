@@ -69,16 +69,16 @@ namespace ProjectBueno.Game.Spells
 		protected Spell spell;
 
 		public static Rectangle shapeBounds { get; private set; }
-		public static Rectangle propBounds { get; private set; }
+		public static Rectangle modMidBounds { get; private set; }
 		public static Rectangle modTopBounds { get; private set; }
 		public static Rectangle modBottomBounds { get; private set; }
 
 		static SpellContainer()
 		{
-			shapeBounds = new Rectangle(98, 18, Skill.buttonSize, Skill.buttonSize);
-			propBounds = new Rectangle(113, 18, Skill.buttonSize, Skill.buttonSize);
-			modTopBounds = new Rectangle(127, 12, Skill.buttonSize, Skill.buttonSize);
-			modBottomBounds = new Rectangle(127, 24, Skill.buttonSize, Skill.buttonSize);
+			shapeBounds = new Rectangle((int)Main.Config["shape"]["x"], (int)Main.Config["shape"]["y"], Skill.buttonSize, Skill.buttonSize);
+			modMidBounds = new Rectangle((int)Main.Config["modMidBounds"]["x"], (int)Main.Config["modMidBounds"]["y"], Skill.buttonSize, Skill.buttonSize);
+			modTopBounds = new Rectangle((int)Main.Config["modTopBounds"]["x"], (int)Main.Config["modTopBounds"]["y"], Skill.buttonSize, Skill.buttonSize);
+			modBottomBounds = new Rectangle((int)Main.Config["modBottomBounds"]["x"], (int)Main.Config["modBottomBounds"]["y"], Skill.buttonSize, Skill.buttonSize);
 		}
 
 		public Projectile createProjectile(Vector2 pos, Vector2 dir, GameHandler game)
@@ -96,7 +96,7 @@ namespace ProjectBueno.Game.Spells
 				}
 				else if (curHeld is SkillProp)
 				{
-					if (propBounds.Contains(mouseX, mouseY))
+					if (modMidBounds.Contains(mouseX, mouseY))
 					{
 						spell = new Spell(spell.shape, (SkillProp)curHeld, spell.modTop, spell.modBottom);
 					}
@@ -127,7 +127,7 @@ namespace ProjectBueno.Game.Spells
 			{
 				spell = new Spell(null, spell.modMid, spell.modTop, spell.modBottom);
 			}
-			else if (propBounds.Contains(mouseX, mouseY))
+			else if (modMidBounds.Contains(mouseX, mouseY))
 			{
 				spell = new Spell(spell.shape, null, spell.modTop, spell.modBottom);
 			}
@@ -158,11 +158,11 @@ namespace ProjectBueno.Game.Spells
 			}
 			if (spell.modMid != null)
 			{
-				spell.modMid.DrawHightlight(propBounds, mouseX, mouseY);
+				spell.modMid.DrawHightlight(modMidBounds, mouseX, mouseY);
 			}
 			else
 			{
-				EmptySkill.DrawHightlight(propBounds, mouseX, mouseY);
+				EmptySkill.DrawHightlight(modMidBounds, mouseX, mouseY);
 			}
 			if (spell.modTop != null)
 			{
