@@ -75,10 +75,10 @@ namespace ProjectBueno.Game.Spells
 
 		static SpellContainer()
 		{
-			shapeBounds = new Rectangle(99, 18, Skill.buttonSize, Skill.buttonSize);
-			propBounds = new Rectangle(114, 18, Skill.buttonSize, Skill.buttonSize);
-			modTopBounds = new Rectangle(128, 11, Skill.buttonSize, Skill.buttonSize);
-			modBottomBounds = new Rectangle(128, 25, Skill.buttonSize, Skill.buttonSize);
+			shapeBounds = new Rectangle(98, 18, Skill.buttonSize, Skill.buttonSize);
+			propBounds = new Rectangle(113, 18, Skill.buttonSize, Skill.buttonSize);
+			modTopBounds = new Rectangle(127, 12, Skill.buttonSize, Skill.buttonSize);
+			modBottomBounds = new Rectangle(127, 24, Skill.buttonSize, Skill.buttonSize);
 		}
 
 		public Projectile createProjectile(Vector2 pos, Vector2 dir, GameHandler game)

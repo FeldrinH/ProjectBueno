@@ -1,6 +1,6 @@
 [
 	{
-		"x" : 2,
+		"x" : 3,
 		"y" : 14,
 		"cost" : 0,
 		"id" : "PropMana",
@@ -11,7 +11,7 @@
 		"textureNum" : 1
 	},
 		{
-			"x" : 1,
+			"x" : 2,
 			"y" : 27,
 			"cost" : 50,
 			"id" : "PropDestruction",
@@ -21,7 +21,7 @@
 			"textureNum" : 2
 		},
 			{
-				"x" : 12,
+				"x" : 13,
 				"y" : 45,
 				"cost" : 200,
 				"id" : "PropBurning",
@@ -63,7 +63,7 @@
 
 
 		{
-			"x" : 15,
+			"x" : 16,
 			"y" : 27,
 			"cost" : 50,
 			"id" : "PropControl",
@@ -73,7 +73,7 @@
 			"textureNum" : 3
 		},
 			{
-				"x" : 35,
+				"x" : 36,
 				"y" : 36,
 				"cost" : 200,
 				"id" : "PropInfluence",
@@ -103,7 +103,7 @@
 						"textureNum" : 18
 					},
 			{
-				"x" : 24,
+				"x" : 25,
 				"y" : 47,
 				"cost" : 200,
 				"id" : "PropTinkering",
@@ -114,7 +114,7 @@
 			},
 
 		{
-			"x" : 15,
+			"x" : 16,
 			"y" : 13,
 			"cost" : 50,
 			"id" : "PropHealing",
@@ -124,17 +124,17 @@
 			"textureNum" : 4
 		},
 			{
-				"x" : 33,
+				"x" : 34,
 				"y" : 24,
 				"cost" : 200,
 				"id" : "PropEngineer",
 				"class" : "SkillProp",
-				"name" : "Infulence",
+				"name" : "Engineer",
 				"desc" : "More healing for\nmachinery.",
 				"textureNum" : 9
 			},
 				{
-					"x" : 47,
+					"x" : 48,
 					"y" : 18,
 					"cost" : 400,
 					"id" : "PropRebound",
@@ -144,18 +144,18 @@
 					"textureNum" : 16
 				},
 					{
-						"x" : 61,
+						"x" : 62,
 						"y" : 18,
 						"cost" : 900,
 						"id" : "PropHarmony",
 						"class" : "SkillProp",
 						"name" : "Harmony",
 						"desc" : "Effects of the\nspell affect all\nallies.",
-						"textureNum" : 0 //Placeholder
+						"textureNum" : 19 //Placeholder
 					},
 			{
-				"x" : 33,
-				"y" : 13,
+				"x" : 34,
+				"y" : 12,
 				"cost" : 200,
 				"id" : "PropMedic",
 				"class" : "SkillProp",
@@ -164,8 +164,8 @@
 				"textureNum" : 10
 			},
 	{
-		"x" : 24,
-		"y" : 73,	
+		"x" : 21,
+		"y" : 63,	
 		"cost" : 0,
 		"cooldown" : 5,
 		"id" : "ShapeBall",
@@ -177,8 +177,8 @@
 		"projSpeed" : 2.0
 	},
 		{
-			"x" : 25,
-			"y" : 86,
+			"x" : 22,
+			"y" : 76,
 			"cost" : 100,
 			"cooldown" : 30,
 			"id" : "ShapeBurst",
@@ -191,8 +191,8 @@
 			"textureNum" : 12
 		},
 		{
-			"x" : 37,
-			"y" : 74,
+			"x" : 34,
+			"y" : 64,
 			"cost" : 100,
 			"cooldown" : 0,
 			"id" : "ShapeStream",
