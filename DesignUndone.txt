@@ -8,26 +8,18 @@ Whenever you rummage gain a knowledge point
 When you, an ally or a robot you made kills an enemy gain 3 knowledge points
 
 Shapes:
-	0 KP, Ball: the character fires a ball
-		100 KP, Burst: Ring expands 3 blocks around the character for one second +100% effect
-		100 KP, Stream: Constantly fires a stream with effect refreshing every second, heal or damage happens every 0.25 second with 1/4 the potency. No cooldown -70% effect
+		Burst: Ring expands 3 blocks around the character for one second +100% effect
+		Stream: effect refreshing every second, heal or damage happens every 0.25 second with 1/4 the potency. -70% effect
 Properties and modifiers:
-	0KP, Mana:
-		50KP, Destruction: 
-			200KP, Burning: +15 damage to targets considered living
-			200KP, Shocking: +15 damage to targets considered robots
-				400KP, Arcing: Spells bounce from target to targets of same type losing 40% effectiveness every time.
-					900KP, Eradication:				
-		50KP, Control:
-			200KP, Influence: +30 control against targets considered living
-			200KP, Tinkering: +30 control against targets considered robots 
-				400KP, Takeover:
-					900KP, Slavery:
-		50KP, Healing:
-			200KP, Medic: Spells heal things considered living 30 more
-			200KP, Engineer: Spells heal things considered robots 30 more
-				400KP, Rebound: Effects granted on others give you a point of life for every two points of effect
-					900KP, Harmony: All effects of the spell that affect one ally affect all allies
+			Burning: +15 damage to targets considered living
+			Shocking: +15 damage to targets considered robots
+				Arcing: Spells bounce from target to targets of same type losing 40% effectiveness every time.
+			Influence: +30 control against targets considered living
+			Tinkering: +30 control against targets considered robots 
+			Medic: Spells heal things considered living 30 more
+			Engineer: Spells heal things considered robots 30 more
+				Rebound: Effects granted on others give you a point of life for every two points of effect
+					Harmony: All effects of the spell that affect one ally affect all allies
 
 Levels of control:
 1-9 enemy cannot move for 2 seconds

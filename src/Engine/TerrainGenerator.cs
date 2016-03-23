@@ -22,7 +22,6 @@ namespace ProjectBueno.Engine.World
 		public Terrain()
 		{
 			chunks = new Dictionary<Point, Tiles[][]>();
-			tileTex = Main.content.Load<Texture2D>("Tile");
 		}
 
 		public static readonly List<Color> tileColors = new List<Color>() { Color.LightGreen, Color.LawnGreen, Color.Blue, Color.DarkBlue, Color.LightBlue, Color.Yellow };
@@ -47,8 +46,6 @@ namespace ProjectBueno.Engine.World
 		public int seaCount;
 		public Vector2 startPoint;
 		public Vector2 endPoint;
-
-		protected static Texture2D tileTex;
 
 		protected Random random = new Random();
 
@@ -138,7 +135,7 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int y = 0; y < CHUNK_SIZE; y++)
 				{
-					Main.spriteBatch.Draw(tileTex, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), tileColors[(int)chunk[x][y]]);
+					Main.spriteBatch.Draw(Main.boxel, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), tileColors[(int)chunk[x][y]]);
 				}
 			}
 		}

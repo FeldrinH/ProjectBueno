@@ -41,13 +41,18 @@ namespace ProjectBueno.Game.Spells
 		{
 			partCount = (int)skill["projCount"];
 			radSquared = (float)skill["radius"] * (float)skill["radius"];
-			cooldownMult = (float)skill["cooldownMult"];
+			cooldownMult = (int)skill["cooldownMult"];
 		}
 
 		protected int partCount;
 		protected float radSquared;
-		protected float cooldownMult;
+		protected int cooldownMult;
 		private static Random random = new Random(); //For testing
+
+		public override int modCooldown(int cooldownIn)
+		{
+			return base.modCooldown(cooldownIn) * cooldownMult;
+		}
 
 		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game)
 		{
