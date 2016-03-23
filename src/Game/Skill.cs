@@ -46,7 +46,22 @@ namespace ProjectBueno.Game.Spells
 
 		protected List<Skill> dependants;
 		public bool locked;
-		public bool bought;
+		private bool _bought;
+		public bool bought
+		{
+			get { return _bought; }
+			set {
+				if (value)
+				{
+					textureSource.X = buttonSize;
+				}
+				else
+				{
+					textureSource.X = 0;
+				}
+				_bought = value;
+			}
+		}
 		public string name { get; protected set; }
 		public string description { get; protected set; }
 		public int cost { get; protected set; }
@@ -55,6 +70,8 @@ namespace ProjectBueno.Game.Spells
 
 		protected static readonly Color forsaleColor = Color.Gray;
 		protected static readonly Color lockedColor = new Color(25, 25, 25);
+		protected static readonly float forsaleHighlight = 0.2f;
+		protected static readonly float boughtHighlight = 0.4f;
 
 		public static Skill Empty { get; private set; }
 
@@ -105,18 +122,15 @@ namespace ProjectBueno.Game.Spells
 			}
 			else if (buttonBounds.Contains(mouseX, mouseY))
 			{
-				textureSource.X = buttonSize;
-				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, bought ? Color.White : forsaleColor);
-				textureSource.X = 0;
-
+				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, (bought ? Color.White : forsaleColor));
+				Main.spriteBatch.Draw(Main.boxel, buttonBounds, Color.White * (bought? boughtHighlight : forsaleHighlight));
 				Main.spriteBatch.DrawString(Main.retroFont, name, SkillHandler.namePos, Color.White);
 				Main.spriteBatch.DrawString(Main.retroFont, description, SkillHandler.descPos, Color.White);
-
 				return true;
 			}
 			else
 			{
-				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, bought ? Color.White : forsaleColor);
+				Main.spriteBatch.Draw(texture, buttonBounds, textureSource, (bought ? Color.White : forsaleColor));
 			}
 			return false;
 		}
@@ -128,15 +142,10 @@ namespace ProjectBueno.Game.Spells
 		}
 		public void DrawHightlight(Rectangle rect, float mouseX, float mouseY)
 		{
+			Main.spriteBatch.Draw(texture, rect, textureSource, Color.White);
 			if (rect.Contains(mouseX, mouseY))
 			{
-				textureSource.X = buttonSize;
-				Main.spriteBatch.Draw(texture, rect, textureSource, Color.White);
-				textureSource.X = 0;
-			}
-			else
-			{
-				Main.spriteBatch.Draw(texture, rect, textureSource, Color.White);
+				Main.spriteBatch.Draw(Main.boxel, buttonBounds, Color.White * (bought ? boughtHighlight : forsaleHighlight));
 			}
 		}
 	}

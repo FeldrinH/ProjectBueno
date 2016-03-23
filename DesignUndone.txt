@@ -3,7 +3,6 @@ The Player:
 F: interract
 (1)2345: spells
 Left click: choose target
-100% speed = 18 pixels per second??? 0.8 * 30 = 24 px/s
 Whenever you cast a spell in combat gain a knowledge point
 Whenever you rummage gain a knowledge point
 When you, an ally or a robot you made kills an enemy gain 3 knowledge points
