@@ -151,7 +151,7 @@
 						"class" : "SkillProp",
 						"name" : "Harmony",
 						"desc" : "Effects of the\nspell affect all\nallies.",
-						"textureNum" : 1 //Placeholder
+						"textureNum" : 0 //Placeholder
 					},
 			{
 				"x" : 33,
