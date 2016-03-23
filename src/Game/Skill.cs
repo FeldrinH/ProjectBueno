@@ -143,7 +143,7 @@ namespace ProjectBueno.Game.Spells
 			Main.spriteBatch.Draw(texture, rect, textureSource, Color.White);
 			if (rect.Contains(mouseX, mouseY))
 			{
-				Main.spriteBatch.Draw(Main.boxel, buttonBounds, Color.White * (bought ? boughtHighlight : forsaleHighlight));
+				Main.spriteBatch.Draw(Main.boxel, rect, Color.White * (bought ? boughtHighlight : forsaleHighlight));
 			}
 		}
 	}
