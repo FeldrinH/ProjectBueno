@@ -5,10 +5,9 @@ F: interract
 Left click: choose target
 Whenever you cast a spell in combat gain a knowledge point
 Whenever you rummage gain a knowledge point
-When you, an ally or a robot you made kills an enemy gain 3 knowledge points
 
 Shapes:
-		Burst: Ring expands 3 blocks around the character for one second +100% effect
+		Burst: Ring expands !!!3 blocks!!! around the character for one second +100% effect
 		Stream: effect refreshing every second, heal or damage happens every 0.25 second with 1/4 the potency. -70% effect
 Properties and modifiers:
 			Burning: +15 damage to targets considered living

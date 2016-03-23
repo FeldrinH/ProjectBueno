@@ -151,7 +151,7 @@ namespace ProjectBueno.Engine
 			}
 			player.Update();
 			projectiles.RemoveAll(item => item.toRemove);
-			entities.RemoveAll(item => item.health <= 0.0f);
+			entities.RemoveAll(item => item.isDead);
 
 			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
 			{

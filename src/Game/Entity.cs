@@ -48,6 +48,22 @@ namespace ProjectBueno.Game.Entities
 		public float health { get; protected set; }
 		public bool canDamage { get { return damageCooldown <= 0; } }
 
+		public bool isDead
+		{
+			get
+			{
+				if (health > 0.0f)
+				{
+					return false;
+				}
+				else
+				{
+					game.player.knowledgePoints += 3;
+					return true;
+				}
+			}
+		}
+
 		protected const int DAMAGECOOLDOWN = 5;
 		protected const float KNOCKBACKDAMPENING = 0.75f;
 
