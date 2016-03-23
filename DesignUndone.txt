@@ -8,26 +8,26 @@ Whenever you rummage gain a knowledge point
 When you, an ally or a robot you made kills an enemy gain 3 knowledge points
 
 Shapes:
-	0 KP, Ball: the character fires a ball +2 cooldown "Fire projectiles with medium effect."
-		100 KP, Burst: Ring expands 3 blocks around the character for one second +100% effect +1 cooldown x2 cooldown "Surround yourself with a mighty burst."
-		100 KP, Stream: Constantly fires a stream with effect refreshing every second, heal or damage happens every 0.25 second with 1/4 the potency. No cooldown -70% effect "Fire a constant stream."
+	0 KP, Ball: the character fires a ball
+		100 KP, Burst: Ring expands 3 blocks around the character for one second +100% effect
+		100 KP, Stream: Constantly fires a stream with effect refreshing every second, heal or damage happens every 0.25 second with 1/4 the potency. No cooldown -70% effect
 Properties and modifiers:
-	0KP, Mana: 5% heal you 10 control against target
-		50KP, Destruction: +10 damage with spells +4 cooldown "Inflict damage on your foes."
-			200KP, Burning: +15 damage to targets considered living +2 cooldown "Deal more damage against living enemies."
-			200KP, Shocking: +15 damage to targets considered robots +2 cooldown "Deal more damage against machinery."
-				400KP, Arcing: Spells bounce from target to targets of same type losing 40% effectiveness every time. +4 cooldown "Make your spells arc three times"
-					900KP, Eradication: Spells do +100 damage +10 cooldown. "Deal massive damage."				
-		50KP, Control: Spells have +20 control +4 cooldown
-			200KP, Influence: +30 control against targets considered living +2 cooldown "Take control of flesh."
-			200KP, Tinkering: +30 control against targets considered robots +2 cooldown "Take control of machine." 
-				400KP, Takeover: +40 control +4 cooldown "Take control of everything."
-					900KP, Slavery: +100 control +10 cooldown "Everything will serve you."
-		50KP, Healing: Spells heal 20 life +4 cooldown "Heal your allies."
-			200KP, Medic: Spells heal things considered living 30 more +2 cooldown. "More healing for living allies."
-			200KP, Engineer: Spells heal things considered robots 30 more +2 cooldown "More healing for machinery."
-				400KP, Rebound: Effects granted on others give you a point of life for every two points of effect +4 cooldown "Gain life based on effects granted."
-					900KP, Harmony: All effects of the spell that affect one ally affect all allies +10 cooldown. "Effects of the spell affect all allies."
+	0KP, Mana:
+		50KP, Destruction: 
+			200KP, Burning: +15 damage to targets considered living
+			200KP, Shocking: +15 damage to targets considered robots
+				400KP, Arcing: Spells bounce from target to targets of same type losing 40% effectiveness every time.
+					900KP, Eradication:				
+		50KP, Control:
+			200KP, Influence: +30 control against targets considered living
+			200KP, Tinkering: +30 control against targets considered robots 
+				400KP, Takeover:
+					900KP, Slavery:
+		50KP, Healing:
+			200KP, Medic: Spells heal things considered living 30 more
+			200KP, Engineer: Spells heal things considered robots 30 more
+				400KP, Rebound: Effects granted on others give you a point of life for every two points of effect
+					900KP, Harmony: All effects of the spell that affect one ally affect all allies
 
 Levels of control:
 1-9 enemy cannot move for 2 seconds
