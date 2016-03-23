@@ -118,10 +118,42 @@ namespace ProjectBueno.Game.Entities
 
 			if (Main.newKeyState.IsKeyDown(Keys.D1)/* && !Main.oldKeyState.IsKeyDown(Keys.D1)*/)
 			{
-				if (spells[selectedSpell].canCast && cooldown < 1)
+				if (spells[0].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[selectedSpell].createProjectile(pos, dir.Vector(), game));
-					cooldown = spells[selectedSpell].cooldown;
+					game.projectiles.Add(spells[0].createProjectile(pos, dir.Vector(), game));
+					cooldown = spells[0].cooldown;
+				}
+			}
+			if (Main.newKeyState.IsKeyDown(Keys.D2)/* && !Main.oldKeyState.IsKeyDown(Keys.D1)*/)
+			{
+				if (spells[1].canCast && cooldown < 1)
+				{
+					game.projectiles.Add(spells[1].createProjectile(pos, dir.Vector(), game));
+					cooldown = spells[1].cooldown;
+				}
+			}
+			if (Main.newKeyState.IsKeyDown(Keys.D3)/* && !Main.oldKeyState.IsKeyDown(Keys.D1)*/)
+			{
+				if (spells[2].canCast && cooldown < 1)
+				{
+					game.projectiles.Add(spells[2].createProjectile(pos, dir.Vector(), game));
+					cooldown = spells[2].cooldown;
+				}
+			}
+			if (Main.newKeyState.IsKeyDown(Keys.D4)/* && !Main.oldKeyState.IsKeyDown(Keys.D1)*/)
+			{
+				if (spells[3].canCast && cooldown < 1)
+				{
+					game.projectiles.Add(spells[3].createProjectile(pos, dir.Vector(), game));
+					cooldown = spells[3].cooldown;
+				}
+			}
+			if (Main.newKeyState.IsKeyDown(Keys.D5)/* && !Main.oldKeyState.IsKeyDown(Keys.D1)*/)
+			{
+				if (spells[4].canCast && cooldown < 1)
+				{
+					game.projectiles.Add(spells[4].createProjectile(pos, dir.Vector(), game));
+					cooldown = spells[4].cooldown;
 				}
 			}
 			base.Update();
@@ -184,7 +216,7 @@ namespace ProjectBueno.Game.Entities
 
 			skills = skillMap.Values.ToList();
 
-			spells = new List<SpellContainer>() { new SpellContainer(), new SpellContainer(), new SpellContainer(), new SpellContainer(), new SpellContainer() };
+			spells = new List<SpellContainer>() { new SpellContainer(this), new SpellContainer(this), new SpellContainer(this), new SpellContainer(this), new SpellContainer(this) };
 			selectedSpell = 0;
 		}
 		public override void loadTextures(JObject animData)

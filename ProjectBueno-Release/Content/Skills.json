@@ -92,7 +92,7 @@
 				"living" : { "control" : 30 },
 				"cooldown" : 2,
 				"id" : "PropInfluence",
-				"class" : "PrejudiceProp",
+				"class" : "PropPrejudice",
 				"name" : "Infulence",
 				"desc" : "Take control of\nflesh.",
 				"textureNum" : 8
@@ -128,7 +128,7 @@
 				"robots" : { "control" : 30 },
 				"cooldown": 2,
 				"id" : "PropTinkering",
-				"class" : "PrejudiceProp",
+				"class" : "PropPrejudice",
 				"name" : "Tinkering",
 				"desc" : "Take control of\nmachinery.",
 				"textureNum" : 7

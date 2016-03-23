@@ -20,9 +20,9 @@ namespace ProjectBueno.Game.Spells
 		public const string ARCINGID = "PropArcing"; //HARDCODED EXCEPTION.(TODO)
 	}
 
-	public class PrejudiceProp : SkillProp
+	public class PropPrejudice : SkillProp
 	{
-		public PrejudiceProp(JObject skill) : base(skill)
+		public PropPrejudice(JObject skill) : base(skill)
 		{
 			if (skill["robots"] != null)
 			{

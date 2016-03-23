@@ -60,7 +60,7 @@ namespace ProjectBueno.Engine
 			}
 			if (curHeld != null)
 			{
-				curHeld.Draw(new Vector2(mouseX, mouseY));
+				curHeld.Draw(new Vector2(mouseX-Skill.buttonSize*0.5f, mouseY-Skill.buttonSize*0.5f));
 			}
 
 			Main.spriteBatch.End();

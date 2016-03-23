@@ -42,7 +42,7 @@ namespace ProjectBueno.Engine
 
 		public Main()
 		{
-			graphicsManager = new GraphicsDeviceManager(this);// { SynchronizeWithVerticalRetrace = false }; //Bad workaround
+			graphicsManager = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = false }; //Bad workaround
 			content = Content; //Bad workaround
 			window = Window; //Bad workaround
 			content.RootDirectory = "Content";
@@ -50,7 +50,7 @@ namespace ProjectBueno.Engine
 			window.ClientSizeChanged += new EventHandler<EventArgs>(WindowSizeChanged);
 			IsMouseVisible = true;
 			IsFixedTimeStep = true;
-			TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 30.0);
+			//TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 60.0);
 			newKeyState = Keyboard.GetState();
 			newMouseState = Mouse.GetState();
 			graphicsManager.PreferredBackBufferWidth = xRatio * 5;
