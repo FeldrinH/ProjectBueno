@@ -223,7 +223,7 @@
 			"x" : 34,
 			"y" : 64,
 			"cost" : 100,
-			"cooldown" : 0,
+			"cooldown" : 1, //In ticks
 			"id" : "ShapeStream",
 			"class" : "ShapeStream",
 			"projCount" : 200,

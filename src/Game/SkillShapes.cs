@@ -76,6 +76,7 @@ namespace ProjectBueno.Game.Spells
 			partCount = (int)skill["projCount"];
 			duration = (int)skill["duration"];
 			length = (float)skill["length"];
+			cooldown = (int?)skill["cooldown"] ?? 0;
 		}
 
 		protected int partCount;

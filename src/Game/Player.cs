@@ -53,6 +53,8 @@ namespace ProjectBueno.Game.Entities
 
 		public override void Update()
 		{
+			base.Update();
+
 			Vector2 totalMove = new Vector2();
 			if (Main.newKeyState.IsKeyDown(Keys.W))
 			{
@@ -156,7 +158,6 @@ namespace ProjectBueno.Game.Entities
 					cooldown = spells[4].cooldown;
 				}
 			}
-			base.Update();
 		}
 
 		public void loadSkills(JArray skillList, JObject skillTree)

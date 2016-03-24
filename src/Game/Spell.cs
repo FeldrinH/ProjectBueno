@@ -21,8 +21,7 @@ namespace ProjectBueno.Game.Spells
 			else
 			{
 				cooldown = shape.modCooldown(modMid.modCooldown(modTop.modCooldown(modBottom.modCooldown(0))));
-				Console.WriteLine(cooldown);
-				cooldown *= 60;
+				Console.WriteLine(cooldown/60);
 			}
 		}
 
