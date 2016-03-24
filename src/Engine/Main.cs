@@ -32,7 +32,7 @@ namespace ProjectBueno.Engine
 		public const float heightMult = (float)yRatio / xRatio;
 
 		private static Rectangle oldClientBounds;
-		private static bool graphicsDirty;
+		public static bool graphicsDirty;
 
 		public static readonly JObject Config;
 

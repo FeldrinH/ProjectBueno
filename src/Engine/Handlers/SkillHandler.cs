@@ -14,7 +14,7 @@ namespace ProjectBueno.Engine
 		protected Texture2D background;
 		protected Player player;
 		public float downscale { get; protected set; }
-		protected Matrix sreenScale;
+		protected Matrix screenScale;
 
 		public static readonly Vector2 namePos;
 		public static readonly Vector2 descPos;
@@ -42,7 +42,7 @@ namespace ProjectBueno.Engine
 			float mouseY = Main.newMouseState.Y * downscale;
 			Skill drawHeldText = curHeld;
 			Main.graphicsManager.GraphicsDevice.Clear(Color.Gray);
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, sreenScale);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, screenScale);
 			Main.spriteBatch.Draw(background, Vector2.Zero, Color.White);
 			foreach (Skill skillButton in player.skills)
 			{
@@ -93,7 +93,7 @@ namespace ProjectBueno.Engine
 		
 		public void windowResize()
 		{
-			sreenScale = Matrix.CreateScale((float)Main.window.ClientBounds.Width / Main.xRatio);
+			screenScale = Matrix.CreateScale((float)Main.window.ClientBounds.Width / Main.xRatio);
 			downscale = (float)Main.xRatio / Main.window.ClientBounds.Width;
 		}
 	}
