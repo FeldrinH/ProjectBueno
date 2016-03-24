@@ -11,7 +11,7 @@ namespace ProjectBueno.Game.Spells
 {
 	class ProjectileStream : Projectile
 	{
-		public ProjectileStream(Spell spell, GameHandler game, int lifetime) : base(spell, game, null)
+		public ProjectileStream(Spell spell, GameHandler game, Entity target, int lifetime) : base(spell, game, target)
 		{
 			projectiles = new List<Vector2>();
 			this.lifetime = lifetime;

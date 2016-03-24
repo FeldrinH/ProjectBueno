@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using ProjectBueno.Engine;
+using ProjectBueno.Game.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace ProjectBueno.Game.Spells
 {
 	class ProjectileBall : Projectile
 	{
-		public ProjectileBall(Spell spell, GameHandler game, Vector2 pos, Vector2 speed) : base(spell, game, null)
+		public ProjectileBall(Spell spell, GameHandler game, Entity target, Vector2 pos, Vector2 speed) : base(spell, game, target)
 		{
 			this.pos = pos;
 			this.speed = speed;

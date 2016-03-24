@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using ProjectBueno.Engine;
+using ProjectBueno.Game.Entities;
 using ProjectBueno.Game.Spells;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace ProjectBueno.Game.Spells
 {
 	class ProjectileBurst : Projectile
 	{
-		public ProjectileBurst(Spell spell, GameHandler game, Vector2 origin, float radSquared) : base(spell, game, null) //Add target
+		public ProjectileBurst(Spell spell, GameHandler game, Entity target, Vector2 origin, float radSquared) : base(spell, game, target) //Add target
 		{
 			this.origin = origin;
 			this.radSquared = radSquared;
