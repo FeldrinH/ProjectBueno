@@ -32,6 +32,7 @@ namespace ProjectBueno.Engine
 		public const float heightMult = (float)yRatio / xRatio;
 
 		private static Rectangle oldClientBounds;
+		private static bool graphicsDirty;
 
 		public static readonly JObject Config;
 
@@ -89,6 +90,7 @@ namespace ProjectBueno.Engine
 				{
 					handler.windowResize();
 				}
+				graphicsDirty = true;
 				//Console.WriteLine("Window resize");
 			}
 		}
@@ -159,7 +161,11 @@ namespace ProjectBueno.Engine
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			graphicsManager.ApplyChanges();
+			if (graphicsDirty)
+			{
+				graphicsManager.ApplyChanges();
+				graphicsDirty = false;
+			}
 			handler.Draw();
 		}
 	}
