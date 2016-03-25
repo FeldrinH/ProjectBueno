@@ -38,6 +38,8 @@ namespace ProjectBueno.Engine.World
 
 		public static int xSize = 512;
 		public static int ySize = 512;
+		public static int xChunks = xSize / BLOCKS_PER_CHUNK;
+		public static int yChunks = ySize / BLOCKS_PER_CHUNK;
 		public static int tileLimit = 30000;
 		protected Tiles[][] chunkMap;
 		protected Dictionary<Point, Tiles[][]> chunks;
@@ -59,7 +61,7 @@ namespace ProjectBueno.Engine.World
 			{
 				return returnChunk;
 			}
-			else if (coords.X < 0 || coords.Y < 0 || coords.X >= xSize || coords.Y >= ySize)
+			else if (coords.X < 0 || coords.Y < 0 || coords.X >= xChunks || coords.Y >= yChunks)
 			{
 				return null;
 			}
