@@ -8,6 +8,11 @@ namespace ProjectBueno.Engine
 	//Animated Entity Texture with frames(horizontal)
 	public class AnimatedTexture
 	{
+		public AnimatedTexture(JObject anim, int yShift) : this(anim)
+		{
+			yShift = yShift * h;
+		}
+
 		public AnimatedTexture(JObject anim)
 		{
 			texture = Main.content.Load<Texture2D>((string)anim["Texture"]);
@@ -26,7 +31,7 @@ namespace ProjectBueno.Engine
 		public AnimatedTexture(Texture2D texture, int frameCount, float speed, int w, int h, int yShift=0, float xOffset=0.0f, float yOffset=0.0f)
 		{
 			this.texture = texture;
-			this.yShift = yShift*h;
+			this.yShift = yShift * h;
 			this.xOffset = xOffset;
 			this.yOffset = yOffset;
 			this.w = w;
@@ -37,6 +42,7 @@ namespace ProjectBueno.Engine
 		}
 
 		public readonly Texture2D texture;
+
 		public readonly int yShift;
 		public readonly float xOffset;
 		public readonly float yOffset;
