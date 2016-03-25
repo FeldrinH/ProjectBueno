@@ -174,7 +174,7 @@ namespace ProjectBueno.Game.Entities
 			int h = (int)anim["Height"];
 			foreach (Dir dr in Enum.GetValues(typeof(Dir)))
 			{
-				textures.Add(new AnimatedTexture(loadedTex, (int)anim[dr.ToString()]["Frames"], (float)anim[dr.ToString()]["Speed"], w, h, 0, (int)dr * h));
+				textures.Add(new AnimatedTexture(loadedTex, (int)anim[dr.ToString()]["Frames"], (float)anim[dr.ToString()]["Speed"], w, h, (int)dr));
 			}
 		}
 
