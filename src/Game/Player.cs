@@ -51,6 +51,8 @@ namespace ProjectBueno.Game.Entities
 
 		public int knowledgePoints;
 
+		public Entity target;
+
 		public override void Update()
 		{
 			base.Update();
@@ -122,7 +124,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (spells[0].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[0].createProjectile(pos, game,null));
+					game.projectiles.Add(spells[0].createProjectile(pos, game, target));
 					cooldown = spells[0].cooldown;
 				}
 			}
@@ -130,7 +132,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (spells[1].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[1].createProjectile(pos, game,null));
+					game.projectiles.Add(spells[1].createProjectile(pos, game, target));
 					cooldown = spells[1].cooldown;
 				}
 			}
@@ -138,7 +140,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (spells[2].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[2].createProjectile(pos, game,null));
+					game.projectiles.Add(spells[2].createProjectile(pos, game, target));
 					cooldown = spells[2].cooldown;
 				}
 			}
@@ -146,7 +148,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (spells[3].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[3].createProjectile(pos, game,null));
+					game.projectiles.Add(spells[3].createProjectile(pos, game, target));
 					cooldown = spells[3].cooldown;
 				}
 			}
@@ -154,7 +156,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (spells[4].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[4].createProjectile(pos, game,null));
+					game.projectiles.Add(spells[4].createProjectile(pos, game, target));
 					cooldown = spells[4].cooldown;
 				}
 			}

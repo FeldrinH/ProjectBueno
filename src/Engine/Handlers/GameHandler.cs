@@ -30,6 +30,8 @@ namespace ProjectBueno.Engine
 			terrain.endPoint = terrain.getRandomForestChunk();
 			terrain.processBiome();
 
+			selectedEnemy = new AnimatedTexture(Main.content.Load<Texture2D>("selectedTargetTest"),2,1.0f/30,14,16);
+			selectedEnemySize = new Vector2(selectedEnemy.w, selectedEnemy.h);
 			//loadedChunks = new List<List<List<Tiles>>>();
 		}
 
@@ -45,6 +47,9 @@ namespace ProjectBueno.Engine
 		public float screenScaleInv;
 		public Vector2 screenShift;
 		public Matrix screenMatrix;
+
+		protected AnimatedTexture selectedEnemy;
+		protected Vector2 selectedEnemySize;
 
 		public List<Entity> entities;
 		public List<Projectile> projectiles;
@@ -106,9 +111,16 @@ namespace ProjectBueno.Engine
 			{
 				projectiles[i].Draw();
 			}
+
 			foreach (var ent in entities)
 			{
 				ent.Draw();
+			}
+
+			if (player.target != null)
+			{
+				selectedEnemy.incrementAnimation();
+				Main.spriteBatch.Draw(selectedEnemy.texture, player.target.pos+0.5f*(player.target.size-selectedEnemySize),selectedEnemy.getCurFrame(), Color.White);
 			}
 
 			Main.spriteBatch.End();
@@ -153,8 +165,13 @@ namespace ProjectBueno.Engine
 			projectiles.RemoveAll(item => item.toRemove);
 			entities.RemoveAll(item => item.isDead);
 
+			if (player.target != null && player.target.isDead)
+			{
+				player.target = null;
+			}
 			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
 			{
+				player.target = getEntityAtPos(posFromScreenPos(Main.newMouseState.Position.ToVector2())) ?? player.target;
 				Console.WriteLine("Mouse:" + getEntityAtPos(posFromScreenPos(Main.newMouseState.Position.ToVector2())));
 			}
 
