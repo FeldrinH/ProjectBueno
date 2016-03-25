@@ -16,7 +16,7 @@ namespace ProjectBueno.Game.Spells
 		}
 		public AnimatedTexture projTexture;
 		public float potencyMult;
-		public abstract Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game, Entity target);
+		public abstract Projectile generateProjectiles(Vector2 pos, Spell spell, GameHandler game, Entity target);
 	}
 
 	//Concrete Shapes
@@ -29,8 +29,18 @@ namespace ProjectBueno.Game.Spells
 
 		public float speed { get; protected set; }
 
-		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game, Entity target)
+		public override Projectile generateProjectiles(Vector2 pos, Spell spell, GameHandler game, Entity target)
 		{
+			Vector2 dir;
+			if (target != null)
+			{
+				dir = target.pos - pos;
+			}
+			else
+			{
+				dir = game.posFromScreenPos(Main.newMouseState.Position.ToVector2()) - pos;
+			}
+			dir.Normalize();
 			return new ProjectileBall(spell, game, target, pos, dir * speed);
 		}
 	}
@@ -54,7 +64,7 @@ namespace ProjectBueno.Game.Spells
 			return base.modCooldown(cooldownIn) * cooldownMult;
 		}
 
-		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game, Entity target)
+		public override Projectile generateProjectiles(Vector2 pos, Spell spell, GameHandler game, Entity target)
 		{
 			ProjectileBurst projReturn = new ProjectileBurst(spell, game, target, pos, radSquared);
 			Vector2 vecSpeed;
@@ -89,12 +99,22 @@ namespace ProjectBueno.Game.Spells
 			return cooldown;
 		}
 
-		public override Projectile generateProjectiles(Vector2 pos, Vector2 dir, Spell spell, GameHandler game, Entity target)
+		public override Projectile generateProjectiles(Vector2 pos, Spell spell, GameHandler game, Entity target)
 		{
+			Vector2 dir;
+			if (target != null)
+			{
+				dir = target.pos - pos;
+			}
+			else
+			{
+				dir = game.posFromScreenPos(Main.newMouseState.Position.ToVector2()) - pos;
+			}
+			dir.Normalize();
 			ProjectileStream projReturn = new ProjectileStream(spell, game, target, duration);
 			for (int i = 0; i < partCount; i++)
 			{
-				projReturn.addProjectile(pos + dir * 5.0f + new Vector2((float)(random.NextDouble() * (2.0 + length * dir.X) - 1.0), (float)(random.NextDouble() * (2.0 + length * dir.Y) - 1.0)));
+				projReturn.addProjectile(pos + dir * (float)random.NextDouble() * length);
 			}
 			return projReturn;
 		}

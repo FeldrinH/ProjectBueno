@@ -56,7 +56,7 @@ namespace ProjectBueno.Game.Spells
 					{
 						if (entity.canDamage)
 						{
-							Vector2 knockback = game.player.pos - entity.pos;
+							Vector2 knockback = entity.pos - game.player.pos;
 							knockback.Normalize();
 							knockback *= 5.0f;
 							entity.dealDamage(spell.getDamage(entity),knockback);

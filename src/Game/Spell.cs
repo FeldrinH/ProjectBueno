@@ -100,9 +100,9 @@ namespace ProjectBueno.Game.Spells
 			numPos = new Vector2((int)Main.Config["numPos"]["x"], (int)Main.Config["numPos"]["y"]);
 		}
 
-		public Projectile createProjectile(Vector2 pos, Vector2 dir, GameHandler game, Entity target)
+		public Projectile createProjectile(Vector2 pos, GameHandler game, Entity target)
 		{
-			return spell.shape.generateProjectiles(pos, dir, spell, game, target);
+			return spell.shape.generateProjectiles(pos, spell, game, target);
 		}
 
 		public void onPlaceClick(float mouseX, float mouseY, ref Skill curHeld)
