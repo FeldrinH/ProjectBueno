@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using ProjectBueno.Engine;
 
 namespace ProjectBueno.Engine
@@ -7,6 +8,21 @@ namespace ProjectBueno.Engine
 	//Animated Entity Texture with frames(horizontal)
 	public class AnimatedTexture
 	{
+		public AnimatedTexture(JObject anim)
+		{
+			texture = Main.content.Load<Texture2D>((string)anim["Texture"]);
+			w = (int)anim["Width"];
+			h = (int)anim["Height"];
+			maxFrame = (float)anim["Frames"];
+			speed = (float)anim["Speed"];
+			
+			xOffset = (float?)anim["xOffset"] ?? 0.0f;
+			yOffset = (float?)anim["yOffset"] ?? 0.0f;
+
+			yShift = 0;
+			curFrame = 0.0f;
+		}
+
 		public AnimatedTexture(Texture2D texture, int frameCount, float speed, int w, int h, int yShift=0, float xOffset=0.0f, float yOffset=0.0f)
 		{
 			this.texture = texture;
