@@ -7,21 +7,21 @@ namespace ProjectBueno.Engine
 	//Animated Entity Texture with frames(horizontal)
 	public class AnimatedTexture
 	{
-		public AnimatedTexture(Texture2D texture, int frameCount, float speed, int w, int h, int xOffset=0, int yOffset=0)
+		public AnimatedTexture(Texture2D texture, int frameCount, float speed, int w, int h, float xOffset=0.0f, float yOffset=0.0f)
 		{
 			this.texture = texture;
 			this.xOffset = xOffset;
 			this.yOffset = yOffset;
 			this.w = w;
 			this.h = h;
-			this.curFrame = 0.0F;
+			this.curFrame = 0.0f;
 			this.maxFrame = frameCount;
 			this.speed = speed;
 		}
 
 		public readonly Texture2D texture;
-		public readonly int xOffset;
-		public readonly int yOffset;
+		public readonly float xOffset;
+		public readonly float yOffset;
 		public readonly int w;
 		public readonly int h;
 
@@ -31,7 +31,7 @@ namespace ProjectBueno.Engine
 
 		public Rectangle getCurFrame()
 		{
-			return new Rectangle(w * (int)curFrame + xOffset, yOffset, w, h);
+			return new Rectangle(w * (int)curFrame, 0, w, h);
 		}
 		public void incrementAnimation()
 		{
