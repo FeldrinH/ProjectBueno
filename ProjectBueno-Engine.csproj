@@ -103,6 +103,7 @@
   <ItemGroup>
     <Content Include="ProjectBueno-Release\Content\flyingProj.png" />
     <Content Include="ProjectBueno-Release\Content\Font.png" />
+    <Content Include="ProjectBueno-Release\Content\OutlineShader.fx" />
     <Content Include="ProjectBueno-Release\Content\pauseScreen.png" />
     <Content Include="ProjectBueno-Release\Content\plStand.png" />
     <Content Include="ProjectBueno-Release\Content\plWalk.png" />

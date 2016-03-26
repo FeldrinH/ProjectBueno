@@ -40,7 +40,7 @@ namespace ProjectBueno.Game.Entities
 			_state = -1; //Set initial value to be non-zero, so setting state detects change
 		}
 
-		public Vector2 pos { get; protected set; }
+		public Vector2 pos { get; set; } //To protect
 		public Vector2 size { get; protected set; }
 		public Vector2 knockback { get; protected set; }
 		public int damageCooldown { get; protected set; }

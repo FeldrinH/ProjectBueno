@@ -43,14 +43,14 @@ namespace ProjectBueno.Engine
 
 		public Main()
 		{
-			graphicsManager = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = false }; //Bad workaround
+			graphicsManager = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = false, PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8 }; //Bad workaround
 			content = Content; //Bad workaround
 			window = Window; //Bad workaround
 			content.RootDirectory = "Content";
 			window.AllowUserResizing = true;
 			window.ClientSizeChanged += new EventHandler<EventArgs>(WindowSizeChanged);
 			IsMouseVisible = true;
-			IsFixedTimeStep = true;
+			IsFixedTimeStep = false;
 			//TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 60.0);
 			newKeyState = Keyboard.GetState();
 			newMouseState = Mouse.GetState();

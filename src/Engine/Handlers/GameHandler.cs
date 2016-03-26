@@ -33,6 +33,25 @@ namespace ProjectBueno.Engine
 			selectedEnemy = new AnimatedTexture(Main.content.Load<Texture2D>("selectedTargetTest"),2,1.0f/30,14,16);
 			selectedEnemySize = new Vector2(selectedEnemy.w, selectedEnemy.h);
 			//loadedChunks = new List<List<List<Tiles>>>();
+
+			outlineShader = Main.content.Load<Effect>("OutlineShader");
+
+			maskStencil = new DepthStencilState
+			{
+				StencilEnable = true,
+				StencilFunction = CompareFunction.Always,
+				StencilPass = StencilOperation.Replace,
+				ReferenceStencil = 1,
+				DepthBufferEnable = false,
+			};
+			drawStencil = new DepthStencilState
+			{
+				StencilEnable = true,
+				StencilFunction = CompareFunction.LessEqual,
+				StencilPass = StencilOperation.Keep,
+				ReferenceStencil = 1,
+				DepthBufferEnable = false,
+			};
 		}
 
 		private float _screenScale;
@@ -47,6 +66,9 @@ namespace ProjectBueno.Engine
 		public float screenScaleInv;
 		public Vector2 screenShift;
 		public Matrix screenMatrix;
+
+		protected static Effect outlineShader;
+		protected static DepthStencilState maskStencil, drawStencil;
 
 		protected AnimatedTexture selectedEnemy;
 		protected Vector2 selectedEnemySize;
@@ -92,8 +114,16 @@ namespace ProjectBueno.Engine
 
 		public void Draw()
 		{
-			Main.graphicsManager.GraphicsDevice.Clear(Color.CornflowerBlue);
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f))*screenMatrix);
+			var a = new AlphaTestEffect(Main.graphicsManager.GraphicsDevice);
+
+			Main.graphicsManager.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.Stencil, Color.Transparent, 0, 0);
+			//Main.graphicsManager.GraphicsDevice.Clear(Color.Green);
+
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, maskStencil,null,null, Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f)) * screenMatrix);
+			player.Draw();
+			Main.spriteBatch.End();
+
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, drawStencil, null, null, Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f))*screenMatrix);
 
 			//int xRight = Math.Min((int)((player.pos.X + Main.window.ClientBounds.Width * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.xSize);
 			//int yBottom = Math.Min((int)((player.pos.Y + Main.window.ClientBounds.Height * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.ySize);

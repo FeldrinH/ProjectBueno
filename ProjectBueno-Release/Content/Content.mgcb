@@ -21,3 +21,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.png
 
+#begin OutlineShader.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:OutlineShader.fx
+
