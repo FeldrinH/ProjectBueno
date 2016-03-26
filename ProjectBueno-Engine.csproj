@@ -63,7 +63,6 @@
   <PropertyGroup />
   <ItemGroup>
     <Compile Include="src\Engine\Handlers\PauseHandler.cs" />
-    <Compile Include="src\Engine\OutlinedTexture.cs" />
     <Compile Include="src\Game\Enemy.cs" />
     <Compile Include="src\Game\Projectiles\Projectile.cs" />
     <Compile Include="src\Game\Projectiles\ProjectileBall.cs" />
