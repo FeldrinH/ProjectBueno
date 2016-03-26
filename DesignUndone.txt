@@ -1,8 +1,6 @@
 The Player:
 
 F: interract
-(1)2345: spells
-Left click: choose target
 Whenever you cast a spell in combat gain a knowledge point
 Whenever you rummage gain a knowledge point
 
