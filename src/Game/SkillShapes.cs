@@ -87,10 +87,14 @@ namespace ProjectBueno.Game.Spells
 			duration = (int)skill["duration"];
 			length = (float)skill["length"];
 			cooldown = (int?)skill["cooldown"] ?? 0;
+			effectRate = (int?)skill["effectRate"] ?? 1;
+			effectTime = 0;
 		}
 
 		protected int partCount;
 		protected int duration;
+		protected int effectRate;
+		protected int effectTime;
 		protected float length;
 		private static Random random = new Random();
 
@@ -111,11 +115,17 @@ namespace ProjectBueno.Game.Spells
 				dir = game.player.dir.Vector();//dir = game.posFromScreenPos(Main.newMouseState.Position.ToVector2()) - pos;
 			}
 			dir.Normalize();
-			ProjectileStream projReturn = new ProjectileStream(spell, game, target, duration);
+			ProjectileStream projReturn = new ProjectileStream(spell, game, target, duration, effectTime == 0);
 			for (int i = 0; i < partCount; i++)
 			{
 				projReturn.addProjectile(pos + dir * (float)random.NextDouble() * length);
 			}
+
+			if (++effectTime >= effectRate)
+			{
+				effectTime = 0;
+			}
+
 			return projReturn;
 		}
 	}

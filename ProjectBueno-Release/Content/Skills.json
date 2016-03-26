@@ -226,7 +226,8 @@
 			"cooldown" : 1, //In ticks
 			"id" : "ShapeStream",
 			"class" : "ShapeStream",
-			"projCount" : 200,
+			"projCount" : 300,
+			"effectRate" : 15,
 			"duration" : 1,
 			"length" : 100,
 			"name" : "Stream",
