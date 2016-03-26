@@ -47,11 +47,22 @@ namespace ProjectBueno.Engine
 			drawStencil = new DepthStencilState
 			{
 				StencilEnable = true,
-				StencilFunction = CompareFunction.LessEqual,
+				StencilFunction = CompareFunction.GreaterEqual,
 				StencilPass = StencilOperation.Keep,
-				ReferenceStencil = 1,
+				ReferenceStencil = 0,
 				DepthBufferEnable = false,
 			};
+
+			blendTransparent = new BlendState
+			{
+				ColorWriteChannels = ColorWriteChannels.None
+			};
+
+			alphaTest = new AlphaTestEffect(Main.graphicsManager.GraphicsDevice)
+			{
+				Projection = Matrix.CreateOrthographicOffCenter(0, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferWidth, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferHeight, 0, 0, 1)
+			};
+			Console.WriteLine(BlendState.Opaque.ColorWriteChannels);
 		}
 
 		private float _screenScale;
@@ -69,6 +80,8 @@ namespace ProjectBueno.Engine
 
 		protected static Effect outlineShader;
 		protected static DepthStencilState maskStencil, drawStencil;
+		protected static AlphaTestEffect alphaTest;
+		protected static BlendState blendTransparent;
 
 		protected AnimatedTexture selectedEnemy;
 		protected Vector2 selectedEnemySize;
@@ -110,20 +123,21 @@ namespace ProjectBueno.Engine
 		{
 			screenShift = new Vector2((float)Math.Floor((Main.window.ClientBounds.Width - (player.size.X * screenScale)) * 0.5), (float)Math.Floor((Main.window.ClientBounds.Height - (player.size.Y * screenScale)) * 0.5));
 			screenMatrix = Matrix.CreateScale(screenScale)*Matrix.CreateTranslation(new Vector3(screenShift, 0.0f));
+
+			alphaTest = new AlphaTestEffect(Main.graphicsManager.GraphicsDevice)
+			{
+				Projection = Matrix.CreateOrthographicOffCenter(0, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferWidth, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferHeight, 0, 0, 1)
+			};
 		}
 
 		public void Draw()
 		{
-			var a = new AlphaTestEffect(Main.graphicsManager.GraphicsDevice);
+			Matrix matrixCache = Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f)) * screenMatrix;
 
-			Main.graphicsManager.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.Stencil, Color.Transparent, 0, 0);
-			//Main.graphicsManager.GraphicsDevice.Clear(Color.Green);
+			//Main.graphicsManager.GraphicsDevice.Clear(ClearOptions.Stencil, Color.Transparent, 0, 0);
+			Main.graphicsManager.GraphicsDevice.Clear(Color.Green);
 
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, maskStencil,null,null, Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f)) * screenMatrix);
-			player.Draw();
-			Main.spriteBatch.End();
-
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, drawStencil, null, null, Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f))*screenMatrix);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, matrixCache);
 
 			//int xRight = Math.Min((int)((player.pos.X + Main.window.ClientBounds.Width * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.xSize);
 			//int yBottom = Math.Min((int)((player.pos.Y + Main.window.ClientBounds.Height * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.ySize);
@@ -147,13 +161,23 @@ namespace ProjectBueno.Engine
 				ent.Draw();
 			}
 
+			Main.spriteBatch.End();
+
 			if (player.target != null)
 			{
-				selectedEnemy.incrementAnimation();
-				Main.spriteBatch.Draw(selectedEnemy.texture, player.target.pos+0.5f*(player.target.size-selectedEnemySize),selectedEnemy.getCurFrame(), Color.White);
-			}
+				alphaTest.World = matrixCache;
 
-			Main.spriteBatch.End();
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, blendTransparent, SamplerState.PointWrap, maskStencil, null, alphaTest, matrixCache);
+				player.target.DrawRaw();
+				Main.spriteBatch.End();
+
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, drawStencil, null, outlineShader, matrixCache);
+				player.target.DrawOutline(Color.Red);
+				Main.spriteBatch.End();
+
+				//selectedEnemy.incrementAnimation();
+				//Main.spriteBatch.Draw(selectedEnemy.texture, player.target.pos+0.5f*(player.target.size-selectedEnemySize),selectedEnemy.getCurFrame(), Color.White);
+			}
 
 			if (Main.newKeyState.IsKeyDown(Keys.M))
 			{

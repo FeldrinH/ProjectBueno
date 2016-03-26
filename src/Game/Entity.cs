@@ -203,5 +203,20 @@ namespace ProjectBueno.Game.Entities
 			curTexture.incrementAnimation();
 			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), damageCooldown > 0 ? Color.Red : Color.White);
 		}
+		public virtual void DrawRaw() //Draws without any effects, just for shape
+		{
+			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), Color.White);
+		}
+		public virtual void DrawOutline(Color outlineColor)
+		{
+			Main.spriteBatch.Draw(curTexture.texture, pos+new Vector2(1.0f,0.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(0.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(-1.0f, 0.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(0.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(1.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(-1.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(1.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(-1.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
+		}
 	}
 }
