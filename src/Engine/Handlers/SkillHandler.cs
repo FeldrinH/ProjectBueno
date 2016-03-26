@@ -51,7 +51,7 @@ namespace ProjectBueno.Engine
 					drawHeldText = skillButton;
 				}
 			}
-			player.spells[player.selectedSpell].DrawButtons(mouseX,mouseY);
+			drawHeldText = player.spells[player.selectedSpell].DrawButtons(mouseX, mouseY) ?? drawHeldText;
 			if (drawHeldText != null)
 			{
 				Main.spriteBatch.DrawString(Main.retroFont, drawHeldText.name, namePos, Color.Purple);

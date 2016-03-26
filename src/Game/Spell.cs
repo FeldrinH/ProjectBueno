@@ -21,11 +21,14 @@ namespace ProjectBueno.Game.Spells
 			else
 			{
 				cooldown = shape.modCooldown(modMid.modCooldown(modTop.modCooldown(modBottom.modCooldown(0))));
-				Console.WriteLine(cooldown/60);
+				Console.WriteLine(this);
 			}
 		}
 
-		
+		public override string ToString()
+		{
+			return cooldown < 0 ? "Uncastable spell" : string.Format("Cooldown: {0}s\nDamage: {1}\nHeal: {2}\nControl: {3}",cooldown/60,getDamage(null),getHeal(null),getControl(null));
+		}
 
 		public bool Contains(Skill test)
 		{
@@ -98,6 +101,11 @@ namespace ProjectBueno.Game.Spells
 			upArrowBounds = new Rectangle((int)Main.Config["upArrowBounds"]["x"], (int)Main.Config["upArrowBounds"]["y"], arrowSource.Width, arrowSource.Height);
 			downArrowBounds = new Rectangle((int)Main.Config["downArrowBounds"]["x"], (int)Main.Config["downArrowBounds"]["y"], arrowSource.Width, arrowSource.Height);
 			numPos = new Vector2((int)Main.Config["numPos"]["x"], (int)Main.Config["numPos"]["y"]);
+		}
+
+		public override string ToString()
+		{
+			return spell.ToString();
 		}
 
 		public Projectile createProjectile(Vector2 pos, GameHandler game, Entity target)
@@ -179,11 +187,15 @@ namespace ProjectBueno.Game.Spells
 			return true; //Return true if something was changed
 		}
 
-		public void DrawButtons(float mouseX, float mouseY)
+		public Skill DrawButtons(float mouseX, float mouseY) //Returns a skill if the mouse was hovering over it
 		{
+			Skill returnSkill = null;
 			if (spell.shape != null)
 			{
-				spell.shape.DrawHightlight(shapeBounds, mouseX, mouseY);
+				if (spell.shape.DrawHightlight(shapeBounds, mouseX, mouseY))
+				{
+					returnSkill = spell.shape;
+				}
 			}
 			else
 			{
@@ -191,7 +203,10 @@ namespace ProjectBueno.Game.Spells
 			}
 			if (spell.modMid != null)
 			{
-				spell.modMid.DrawHightlight(modMidBounds, mouseX, mouseY);
+				if(spell.modMid.DrawHightlight(modMidBounds, mouseX, mouseY))
+				{
+					returnSkill = spell.modMid;
+				}
 			}
 			else
 			{
@@ -199,7 +214,10 @@ namespace ProjectBueno.Game.Spells
 			}
 			if (spell.modTop != null)
 			{
-				spell.modTop.DrawHightlight(modTopBounds, mouseX, mouseY);
+				if(spell.modTop.DrawHightlight(modTopBounds, mouseX, mouseY))
+				{
+					returnSkill = spell.modTop;
+				}
 			}
 			else
 			{
@@ -207,7 +225,10 @@ namespace ProjectBueno.Game.Spells
 			}
 			if (spell.modBottom != null)
 			{
-				spell.modBottom.DrawHightlight(modBottomBounds, mouseX, mouseY);
+				if(spell.modBottom.DrawHightlight(modBottomBounds, mouseX, mouseY))
+				{
+					returnSkill = spell.modBottom;
+				}
 			}
 			else
 			{
@@ -220,6 +241,8 @@ namespace ProjectBueno.Game.Spells
 			DrawArrow(downArrowBounds, mouseX, mouseY);
 
 			Main.spriteBatch.DrawString(Main.retroFont, (player.selectedSpell + 1).ToString(), numPos, Color.Black);
+
+			return returnSkill;
 		}
 
 		public void DrawArrow(Rectangle rect,float mouseX, float mouseY)

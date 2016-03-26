@@ -50,7 +50,7 @@ namespace ProjectBueno.Engine
 			window.AllowUserResizing = true;
 			window.ClientSizeChanged += new EventHandler<EventArgs>(WindowSizeChanged);
 			IsMouseVisible = true;
-			IsFixedTimeStep = true;
+			IsFixedTimeStep = false;
 			//TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 5.0);
 			newKeyState = Keyboard.GetState();
 			newMouseState = Mouse.GetState();

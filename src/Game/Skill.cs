@@ -113,8 +113,7 @@ namespace ProjectBueno.Game.Spells
 		}
 
 		//Button Specialized Draw
-		//Returns true if mouse is hovering over button
-		public bool DrawButton(float mouseX,float mouseY)
+		public bool DrawButton(float mouseX,float mouseY) //Returns true if mouse is hovering over button
 		{
 			if (locked)
 			{
@@ -138,13 +137,15 @@ namespace ProjectBueno.Game.Spells
 		{
 			Main.spriteBatch.Draw(texture, pos, textureSource, Color.White);
 		}
-		public void DrawHightlight(Rectangle rect, float mouseX, float mouseY)
+		public bool DrawHightlight(Rectangle rect, float mouseX, float mouseY) //Returns true if mouse is hovering over button
 		{
 			Main.spriteBatch.Draw(texture, rect, textureSource, Color.White);
 			if (rect.Contains(mouseX, mouseY))
 			{
 				Main.spriteBatch.Draw(Main.boxel, rect, Color.White * (bought ? boughtHighlight : forsaleHighlight));
+				return true;
 			}
+			return false;
 		}
 	}
 
