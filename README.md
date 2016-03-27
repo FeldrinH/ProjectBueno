@@ -1,4 +1,8 @@
-# ProjectBueno
-Project Bueno Central Hub
+# Project Bueno
+Project Bueno - Currently in alpha
 
-Latest release: 0.1.0 Adelost
+## How to build
+1. Clone this repo (git clone https://github.com/FeldrinH/ProjectBueno.git)
+2. Open **ProjectBueno.sln** in Visual Studio 2015
+3. Build with **Release (Copy Deps)** configuration to copy dependencies into output folder
+4. Build with **Release** configuration unless you need to update dependencies
