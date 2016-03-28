@@ -62,7 +62,6 @@ namespace ProjectBueno.Engine
 			{
 				Projection = Matrix.CreateOrthographicOffCenter(0, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferWidth, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferHeight, 0, 0, 1)
 			};
-			Console.WriteLine(BlendState.Opaque.ColorWriteChannels);
 		}
 
 		private float _screenScale;

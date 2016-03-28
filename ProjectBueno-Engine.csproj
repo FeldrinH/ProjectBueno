@@ -145,7 +145,6 @@
     <None Include="ProjectBueno-Release\Content\Player.json" />
     <None Include="ProjectBueno-Release\Content\Skills.json" />
     <None Include="ProjectBueno-Release\Content\SkillTree.json" />
-    <None Include="newtonsoft.json.8.0.2.nupkg" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
