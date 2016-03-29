@@ -3,13 +3,16 @@ The Interface:
 Black bars on maximize
 Automatic scaling in game
 Start menu
-
+Respawning enemy(enemies)
+Speed-up button
 
 The Player:
 
 F: interract
 Whenever you cast a spell in combat gain a knowledge point
 Whenever you rummage gain a knowledge point
+
+Every spell must contain at least a shape
 
 Shapes:
 		Burst: Ring expands !!!3 blocks!!! around the character for one second +100% effect
