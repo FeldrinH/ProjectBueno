@@ -1,6 +1,22 @@
 # Project Bueno
 Project Bueno - Currently in alpha
 #### [Latest Compile](https://www.dropbox.com/sh/tylckc25tfdv41r/AAB4olM2lmImcnB-SQHdBNc7a?dl=1)
+#### [Todo List](DesignUndone.txt)
+
+## How to play
+####Controls: 
+* WASD - Move
+* 12345 - Cast spells
+* Backspace - Enter/Exit spell creation menu
+* P - Pause/Unpause
+* **In spell creation menu:**
+	* Left Mouse Button - Buy skill / pick up skill / place skill in spell
+	* Right Mouse Button - Clear picked up skill / remove skill from spell
+* **Debug Controls:**
+	* M - Show Minimap
+	* Left Shift - Increase speed to 6000 px/s
+	* Up Arrow - Double the zoom level
+	* Down Arrow - Halve the zoom level
 
 ## How to build
 1. Clone this repo (git clone https://github.com/FeldrinH/ProjectBueno.git).
