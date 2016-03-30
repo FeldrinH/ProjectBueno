@@ -51,7 +51,6 @@ namespace ProjectBueno.Engine
 			window = Window; //Bad workaround
 			content.RootDirectory = "Content";
 			window.AllowUserResizing = true;
-			window.ClientSizeChanged += new EventHandler<EventArgs>(WindowSizeChanged);
 			window.Title = "Project Bueno " + PB.VERSION;
 			IsMouseVisible = true;
 			IsFixedTimeStep = true;
@@ -73,7 +72,11 @@ namespace ProjectBueno.Engine
 		{
 			if (window.ClientBounds.Width != 0)
 			{
-				if (window.ClientBounds.Width < xRatio || window.ClientBounds.Height < yRatio)
+				if(windowForm.WindowState == FormWindowState.Maximized)
+				{
+					WindowMaximized();
+				}
+				else if (window.ClientBounds.Width < xRatio || window.ClientBounds.Height < yRatio)
 				{
 					graphicsManager.PreferredBackBufferWidth = xRatio;
 					graphicsManager.PreferredBackBufferHeight = yRatio;
@@ -139,7 +142,11 @@ namespace ProjectBueno.Engine
 		protected override void Initialize()
 		{
 			base.Initialize();
-			Console.WriteLine(Form.FromHandle(window.Handle));
+
+			windowForm = (Form)Control.FromHandle(window.Handle);
+			window.ClientSizeChanged += new EventHandler<EventArgs>(WindowSizeChanged);
+			WindowSizeChanged(null, null);
+
 			handler = new GameHandler();
 		}
 
@@ -178,8 +185,8 @@ namespace ProjectBueno.Engine
 			oldMouseState = newMouseState;
 			newKeyState = Keyboard.GetState();
 			newMouseState = Mouse.GetState();
+			newMouseState = new MouseState(newMouseState.X - graphicsManager.GraphicsDevice.Viewport.X, newMouseState.Y - graphicsManager.GraphicsDevice.Viewport.Y, newMouseState.ScrollWheelValue, newMouseState.LeftButton, newMouseState.MiddleButton, newMouseState.RightButton, newMouseState.XButton1, newMouseState.XButton2);
 			handler.Update();
-			Console.WriteLine(graphicsManager.PreferredBackBufferWidth + " " + graphicsManager.PreferredBackBufferHeight + " " + window.ClientBounds);
 		}
 
 		/// <summary>
@@ -192,14 +199,10 @@ namespace ProjectBueno.Engine
 			{
 				graphicsManager.ApplyChanges();
 				graphicsDirty = false;
-				Console.WriteLine(graphicsManager.PreferredBackBufferWidth + " " + graphicsManager.PreferredBackBufferHeight + " " + window.ClientBounds);
-				if (graphicsManager.PreferredBackBufferWidth != window.ClientBounds.Width || graphicsManager.PreferredBackBufferHeight != window.ClientBounds.Height)
-				{
-					Console.WriteLine("Plz");
-					WindowMaximized();
-					//graphicsManager.ApplyChanges();
-				}
+				//Console.WriteLine(graphicsManager.PreferredBackBufferWidth + " " + graphicsManager.PreferredBackBufferHeight + " " + window.ClientBounds);
 			}
+
+			graphicsManager.GraphicsDevice.Clear(Color.Black);
 			handler.Draw();
 		}
 	}

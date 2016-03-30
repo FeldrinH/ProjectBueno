@@ -12,7 +12,6 @@ namespace ProjectBueno.Engine
 		protected GameHandler game;
 		protected Texture2D background;
 		protected SoundEffectInstance music;
-		protected static readonly Color backColor = new Color(0, 0, 0);
 
 		public PauseHandler(GameHandler game)
 		{
@@ -21,13 +20,14 @@ namespace ProjectBueno.Engine
 			music = Main.content.Load<SoundEffect>("pauseMusic").CreateInstance();
 			music.IsLooped = true;
 			music.Play();
+
+			windowResize();
 		}
 
 		public void Draw()
 		{
-			Main.graphicsManager.GraphicsDevice.Clear(backColor);
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap);
-			Main.spriteBatch.Draw(background, new Rectangle(0,0,Main.window.ClientBounds.Width, Main.window.ClientBounds.Height), Color.White);
+			Main.spriteBatch.Draw(background, new Rectangle(0, 0, Main.graphicsManager.GraphicsDevice.Viewport.Width, Main.graphicsManager.GraphicsDevice.Viewport.Height), Color.White);
 			Main.spriteBatch.End();
 		}
 
@@ -37,6 +37,7 @@ namespace ProjectBueno.Engine
 			{
 				music.Stop();
 				music.Dispose();
+				game.windowResize();
 				Main.handler = game;
 			}
 		}

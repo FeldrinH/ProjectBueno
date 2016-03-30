@@ -27,6 +27,8 @@ namespace ProjectBueno.Engine
 			this.game = game;
 			background = Main.content.Load<Texture2D>("skillTree");
 			this.player = player;
+
+			windowResize();
 		}
 
 		static SkillHandler()
@@ -41,7 +43,6 @@ namespace ProjectBueno.Engine
 			float mouseX = Main.newMouseState.X * downscale;
 			float mouseY = Main.newMouseState.Y * downscale;
 			Skill drawHeldText = curHeld;
-			Main.graphicsManager.GraphicsDevice.Clear(Color.Gray);
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, screenScale);
 			Main.spriteBatch.Draw(background, Vector2.Zero, Color.White);
 			foreach (Skill skillButton in player.skills)
@@ -60,8 +61,6 @@ namespace ProjectBueno.Engine
 			}
 			if (curHeld != null)
 			{
-				mouseX = Mouse.GetState().X * downscale;
-				mouseY = Mouse.GetState().Y * downscale;
 				curHeld.Draw(new Vector2(mouseX-Skill.buttonSize*0.5f, mouseY-Skill.buttonSize*0.5f));
 			}
 
@@ -89,14 +88,15 @@ namespace ProjectBueno.Engine
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{
+				game.windowResize();
 				Main.handler = game;
 			}
 		}
 		
 		public void windowResize()
 		{
-			screenScale = Matrix.CreateScale((float)Main.window.ClientBounds.Width / Main.xRatio);
-			downscale = (float)Main.xRatio / Main.window.ClientBounds.Width;
+			screenScale = Matrix.CreateScale((float)Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio);
+			downscale = (float)Main.xRatio / Main.graphicsManager.GraphicsDevice.Viewport.Width;
 		}
 	}
 }
