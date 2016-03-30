@@ -3,7 +3,6 @@ The Interface:
 Black bars on maximize
 Automatic scaling in game
 Start menu
-Respawning enemy(enemies)
 
 The Player:
 

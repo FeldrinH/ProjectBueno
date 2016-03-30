@@ -8,6 +8,7 @@ using System;
 using ProjectBueno.Engine.World;
 using System.Diagnostics;
 using ProjectBueno.Game.Spells;
+using ProjectBueno.Utility;
 
 namespace ProjectBueno.Engine
 {
@@ -21,7 +22,6 @@ namespace ProjectBueno.Engine
 			screenScale = 2.0f;
 			projectiles = new List<Projectile>();
 			entities = new List<Entity>();
-			entities.Add(new Enemy(new Vector2((Terrain.xSize * 0.5f + 20.0f) * Tile.TILESIZE, (Terrain.ySize * 0.5f + 20.0f) * Tile.TILESIZE), this)); //Add enemy for testing
 
 			terrain = new Terrain();
 
@@ -30,8 +30,8 @@ namespace ProjectBueno.Engine
 			terrain.endPoint = terrain.getRandomForestChunk();
 			terrain.processBiome();
 
-			selectedEnemy = new AnimatedTexture(Main.content.Load<Texture2D>("selectedTargetTest"),2,1.0f/30,14,16);
-			selectedEnemySize = new Vector2(selectedEnemy.w, selectedEnemy.h);
+			//selectedEnemy = new AnimatedTexture(Main.content.Load<Texture2D>("selectedTargetTest"),2,1.0f/30,14,16);
+			//selectedEnemySize = new Vector2(selectedEnemy.w, selectedEnemy.h);
 			//loadedChunks = new List<List<List<Tiles>>>();
 
 			outlineShader = Main.content.Load<Effect>("OutlineShader");
@@ -84,6 +84,8 @@ namespace ProjectBueno.Engine
 
 		protected AnimatedTexture selectedEnemy;
 		protected Vector2 selectedEnemySize;
+
+		protected static readonly Random random = new Random();
 
 		public List<Entity> entities;
 		public List<Projectile> projectiles;
@@ -206,6 +208,16 @@ namespace ProjectBueno.Engine
 				terrain.startPoint = terrain.getRandomForestChunk();
 				terrain.endPoint = terrain.getRandomForestChunk();
 				terrain.processBiome();
+			}
+
+			if (Main.newKeyState.IsKeyDown(Keys.K) && !Main.oldKeyState.IsKeyDown(Keys.K))
+			{
+				entities.Clear();
+			}
+
+			while (entities.Count < 10)
+			{
+				entities.Add(new Enemy(player.pos + AngleVector.Vector(random.NextDouble()*360.0)*500.0f, this));
 			}
 
 			for (int i = 0; i < projectiles.Count; i++)

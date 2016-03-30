@@ -14,6 +14,7 @@ Project Bueno the Game - Currently in alpha
 	* Right Mouse Button - Clear picked up skill / remove skill from spell
 * **Debug Controls:**
 	* M - Show Minimap
+	* K - Clear all enemies
 	* Left Shift - Increase speed to 6000 px/s
 	* Up Arrow - Double the zoom level
 	* Down Arrow - Halve the zoom level
