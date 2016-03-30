@@ -4,7 +4,6 @@ Black bars on maximize
 Automatic scaling in game
 Start menu
 Respawning enemy(enemies)
-Speed-up button
 
 The Player:
 

@@ -57,10 +57,11 @@ namespace ProjectBueno.Game.Entities
 		{
 			base.Update();
 
+			float totalSpeed = Main.newKeyState.IsKeyDown(Keys.LeftShift) ? speed * 1000.0f : speed; 
 			Vector2 totalMove = new Vector2();
 			if (Main.newKeyState.IsKeyDown(Keys.W))
 			{
-				totalMove.Y -= speed;
+				totalMove.Y -= totalSpeed;
 				if (Main.oldKeyState.IsKeyUp(Keys.W))
 				{
 					moveHorizontal = false;
@@ -68,7 +69,7 @@ namespace ProjectBueno.Game.Entities
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.S))
 			{
-				totalMove.Y += speed;
+				totalMove.Y += totalSpeed;
 				if(Main.oldKeyState.IsKeyUp(Keys.S))
 				{
 					moveHorizontal = false;
@@ -76,7 +77,7 @@ namespace ProjectBueno.Game.Entities
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.A))
 			{
-				totalMove.X -= speed;
+				totalMove.X -= totalSpeed;
 				if (Main.oldKeyState.IsKeyUp(Keys.A))
 				{
 					moveHorizontal = true;
@@ -84,7 +85,7 @@ namespace ProjectBueno.Game.Entities
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.D))
 			{
-				totalMove.X += speed;
+				totalMove.X += totalSpeed;
 				if (Main.oldKeyState.IsKeyUp(Keys.D))
 				{
 					moveHorizontal = true;

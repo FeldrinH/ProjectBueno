@@ -198,6 +198,7 @@ namespace ProjectBueno.Engine
 				screenScale *= 0.5f;
 				windowResize();
 			}
+
 			if (Main.newKeyState.IsKeyDown(Keys.Enter) && !Main.oldKeyState.IsKeyDown(Keys.Enter))
 			{
 				terrain.clearChunks();
@@ -206,6 +207,7 @@ namespace ProjectBueno.Engine
 				terrain.endPoint = terrain.getRandomForestChunk();
 				terrain.processBiome();
 			}
+
 			for (int i = 0; i < projectiles.Count; i++)
 			{
 				projectiles[i].Update();
@@ -230,7 +232,7 @@ namespace ProjectBueno.Engine
 
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{
-				Main.graphicsDirty = true;
+				Main.graphicsDirty = true; //DON'T KNOW WHY THIS IS NEEDED
 				Main.handler = new SkillHandler(this,player);
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
