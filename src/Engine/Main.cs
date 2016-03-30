@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using ProjectBueno.Game.Spells;
 using System;
 using System.IO;
+using System.Windows.Forms;
 
 namespace ProjectBueno.Engine
 {
@@ -34,6 +35,8 @@ namespace ProjectBueno.Engine
 		private static Rectangle oldClientBounds;
 		public static bool graphicsDirty;
 
+		private static Form windowForm;
+
 		public static readonly JObject Config;
 
 		public static Texture2D boxel { get; private set; }
@@ -49,6 +52,7 @@ namespace ProjectBueno.Engine
 			content.RootDirectory = "Content";
 			window.AllowUserResizing = true;
 			window.ClientSizeChanged += new EventHandler<EventArgs>(WindowSizeChanged);
+			window.Title = "Project Bueno " + PB.VERSION;
 			IsMouseVisible = true;
 			IsFixedTimeStep = true;
 			//TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 5.0);
@@ -56,7 +60,7 @@ namespace ProjectBueno.Engine
 			newMouseState = Mouse.GetState();
 			graphicsManager.PreferredBackBufferWidth = xRatio * 5;
 			graphicsManager.PreferredBackBufferHeight = yRatio * 5;
-			oldClientBounds = Window.ClientBounds;
+			oldClientBounds = window.ClientBounds;
 			//IsFixedTimeStep = false;
 		}
 
@@ -67,32 +71,53 @@ namespace ProjectBueno.Engine
 
 		private void WindowSizeChanged(object sender, EventArgs e)
 		{
-			if (Window.ClientBounds.Width != 0)
+			if (window.ClientBounds.Width != 0)
 			{
-				if (Window.ClientBounds.Width < xRatio || Window.ClientBounds.Height < yRatio)
+				if (window.ClientBounds.Width < xRatio || window.ClientBounds.Height < yRatio)
 				{
 					graphicsManager.PreferredBackBufferWidth = xRatio;
 					graphicsManager.PreferredBackBufferHeight = yRatio;
 				}
-				else if (oldClientBounds.Width != Window.ClientBounds.Width && graphicsManager.PreferredBackBufferWidth != Window.ClientBounds.Width)
+				else if (oldClientBounds.Width != window.ClientBounds.Width && graphicsManager.PreferredBackBufferWidth != window.ClientBounds.Width)
 				{
-					graphicsManager.PreferredBackBufferWidth = Window.ClientBounds.Width;
-					graphicsManager.PreferredBackBufferHeight = (int)(Window.ClientBounds.Width * heightMult);
+					graphicsManager.PreferredBackBufferWidth = window.ClientBounds.Width;
+					graphicsManager.PreferredBackBufferHeight = (int)(window.ClientBounds.Width * heightMult);
 				}
-				else if (oldClientBounds.Height != Window.ClientBounds.Height && graphicsManager.PreferredBackBufferHeight != Window.ClientBounds.Height)
+				else if (oldClientBounds.Height != window.ClientBounds.Height && graphicsManager.PreferredBackBufferHeight != window.ClientBounds.Height)
 				{
-					graphicsManager.PreferredBackBufferHeight = Window.ClientBounds.Height;
-					graphicsManager.PreferredBackBufferWidth = (int)(Window.ClientBounds.Height * widthMult);
+					graphicsManager.PreferredBackBufferHeight = window.ClientBounds.Height;
+					graphicsManager.PreferredBackBufferWidth = (int)(window.ClientBounds.Height * widthMult);
 				}
-				oldClientBounds = Window.ClientBounds;
+				oldClientBounds = window.ClientBounds;
 				
 				if (handler != null)
 				{
 					handler.windowResize();
 				}
 				graphicsDirty = true;
-				//Console.WriteLine("Window resize");
+				//Console.WriteLine("window resize");
 			}
+		}
+
+		private void WindowMaximized()
+		{
+			graphicsManager.PreferredBackBufferHeight = window.ClientBounds.Height;
+			graphicsManager.PreferredBackBufferWidth = window.ClientBounds.Width;
+
+			Viewport viewport = graphicsManager.GraphicsDevice.Viewport;
+
+			if ((float)window.ClientBounds.Width / window.ClientBounds.Height < widthMult)
+			{
+				viewport.Height = (int)(window.ClientBounds.Width * heightMult);
+				viewport.Y = (window.ClientBounds.Height - viewport.Height) / 2;
+			}
+			else 
+			{
+				viewport.Width = (int)(window.ClientBounds.Height * widthMult);
+				viewport.X = (window.ClientBounds.Width - viewport.Width) / 2;
+			}
+
+			graphicsManager.GraphicsDevice.Viewport = viewport;
 		}
 
 		//Call static workaround exiting event
@@ -114,6 +139,7 @@ namespace ProjectBueno.Engine
 		protected override void Initialize()
 		{
 			base.Initialize();
+			Console.WriteLine(Form.FromHandle(window.Handle));
 			handler = new GameHandler();
 		}
 
@@ -153,6 +179,7 @@ namespace ProjectBueno.Engine
 			newKeyState = Keyboard.GetState();
 			newMouseState = Mouse.GetState();
 			handler.Update();
+			Console.WriteLine(graphicsManager.PreferredBackBufferWidth + " " + graphicsManager.PreferredBackBufferHeight + " " + window.ClientBounds);
 		}
 
 		/// <summary>
@@ -165,6 +192,13 @@ namespace ProjectBueno.Engine
 			{
 				graphicsManager.ApplyChanges();
 				graphicsDirty = false;
+				Console.WriteLine(graphicsManager.PreferredBackBufferWidth + " " + graphicsManager.PreferredBackBufferHeight + " " + window.ClientBounds);
+				if (graphicsManager.PreferredBackBufferWidth != window.ClientBounds.Width || graphicsManager.PreferredBackBufferHeight != window.ClientBounds.Height)
+				{
+					Console.WriteLine("Plz");
+					WindowMaximized();
+					//graphicsManager.ApplyChanges();
+				}
 			}
 			handler.Draw();
 		}
