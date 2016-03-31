@@ -11,7 +11,7 @@ namespace ProjectBueno.Game.Tiles
 	{
 		public Texture2D texture;
 
-		public const int TILESIZE = 16; //Size of one tile
+		public const int TILESIZE = 8; //Size of one tile
 		public const float TILEMULT = 1.0f / TILESIZE;
 	}
 }
