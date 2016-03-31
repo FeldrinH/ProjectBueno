@@ -235,11 +235,16 @@ namespace ProjectBueno.Game.Spells
 				EmptySkill.DrawHightlight(modBottomBounds, mouseX, mouseY);
 			}
 
-			arrowSource.Y = 0;
-			DrawArrow(upArrowBounds,mouseX, mouseY);
-			arrowSource.Y = arrowSource.Height;
-			DrawArrow(downArrowBounds, mouseX, mouseY);
-
+			if (player.selectedSpell > 0)
+			{
+				arrowSource.Y = 0;
+				DrawArrow(upArrowBounds, mouseX, mouseY);
+			}
+			if (player.selectedSpell < 4)
+			{
+				arrowSource.Y = arrowSource.Height;
+				DrawArrow(downArrowBounds, mouseX, mouseY);
+			}
 			Main.spriteBatch.DrawString(Main.retroFont, (player.selectedSpell + 1).ToString(), numPos, Color.Black);
 
 			return returnSkill;
