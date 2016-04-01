@@ -26,8 +26,6 @@ namespace ProjectBueno.Engine
 			terrain = new Terrain();
 
 			terrain.generateChunkMap();
-			terrain.startPoint = terrain.getRandomForestChunk();
-			terrain.endPoint = terrain.getRandomForestChunk();
 			terrain.processBiome();
 
 			//selectedEnemy = new AnimatedTexture(Main.content.Load<Texture2D>("selectedTargetTest"),2,1.0f/30,14,16);
@@ -137,7 +135,7 @@ namespace ProjectBueno.Engine
 		{
 			Matrix matrixCache = Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f)) * screenMatrix;
 
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, matrixCache);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, matrixCache);
 
 			//int xRight = Math.Min((int)((player.pos.X + Main.window.ClientBounds.Width * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.xSize);
 			//int yBottom = Math.Min((int)((player.pos.Y + Main.window.ClientBounds.Height * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.ySize);
@@ -167,11 +165,11 @@ namespace ProjectBueno.Engine
 			{
 				alphaTest.World = matrixCache;
 
-				Main.spriteBatch.Begin(SpriteSortMode.Deferred, blendTransparent, SamplerState.PointWrap, maskStencil, null, alphaTest, matrixCache);
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, blendTransparent, SamplerState.PointClamp, maskStencil, null, alphaTest, matrixCache);
 				player.target.DrawRaw();
 				Main.spriteBatch.End();
 
-				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, drawStencil, null, outlineShader, matrixCache);
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, drawStencil, null, outlineShader, matrixCache);
 				player.target.DrawOutline(Color.Red);
 				Main.spriteBatch.End();
 
@@ -181,7 +179,7 @@ namespace ProjectBueno.Engine
 
 			if (Main.newKeyState.IsKeyDown(Keys.M))
 			{
-				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap);
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 				terrain.drawChunkMap(player.pos);
 				Main.spriteBatch.End();
 			}
@@ -204,8 +202,6 @@ namespace ProjectBueno.Engine
 			{
 				terrain.clearChunks();
 				terrain.generateChunkMap();
-				terrain.startPoint = terrain.getRandomForestChunk();
-				terrain.endPoint = terrain.getRandomForestChunk();
 				terrain.processBiome();
 			}
 

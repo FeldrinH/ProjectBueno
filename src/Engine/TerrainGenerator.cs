@@ -10,30 +10,33 @@ namespace ProjectBueno.Engine.World
 {
 	public enum Tiles : byte
 	{
-		FilledForest, //Only in generation
-		Forest, //Currently only in generation
-		FloodedSea, //Currently unused
-		Sea,
-		ColdForest,
-		HotForest
+		Forest = 0,
+		Sea = 80,
+		Desert = 16,
+		Cold = 48,
+		FilledForest = 255 //Only during generation
 	}
 	public class Terrain
 	{
 		public Terrain()
 		{
-			chunks = new Dictionary<Point, Tiles[][]>();
+			chunks = new Dictionary<Point, byte[][]>();
+			terrainTex = Main.content.Load<Texture2D>("biomes2");
 		}
 
-		public static readonly List<Color> tileColors = new List<Color>() { Color.LightGreen, Color.LawnGreen, Color.Blue, Color.DarkBlue, Color.LightBlue, Color.Yellow };
+		//public static readonly List<Color> tileColors = new List<Color>() { Color.LightGreen, Color.LawnGreen, Color.Blue, Color.Yellow, Color.LightBlue };
 		protected static readonly int[] xShift = { -1, 0, 1, -1, 1, -1, 0, 1 };
 		protected static readonly int[] yShift = { -1, -1, -1, 0, 0, 1, 1, 1 };
 		protected static readonly int[] xSide = { 0, 0, -1, 1 };
 		protected static readonly int[] ySide = { -1, 1, 0, 0 };
 
+		public static Texture2D terrainTex;
+
 		public const int CHUNK_SIZE = 64;
+		public const int CHUNK_BLEED = 16;
 		public const float CHUNK_MULT = 1.0f / CHUNK_SIZE;
 		public const float CHUNK_SHIFT = CHUNK_SIZE * Tile.TILESIZE * 0.5f;
-		public const int BLOCK_SIZE = 16;
+		public const int BLOCK_SIZE = 32;
 		public const int BLOCKS_PER_CHUNK = CHUNK_SIZE / BLOCK_SIZE;
 
 		public static int xSize = 512;
@@ -41,22 +44,28 @@ namespace ProjectBueno.Engine.World
 		public static int xChunks = xSize / BLOCKS_PER_CHUNK;
 		public static int yChunks = ySize / BLOCKS_PER_CHUNK;
 		public static int tileLimit = 30000;
-		protected Tiles[][] chunkMap;
-		protected Dictionary<Point, Tiles[][]> chunks;
+		protected Tiles[][] blockMap;
+		protected Dictionary<Point, byte[][]> chunks;
 		protected Queue<Point> callqueue = new Queue<Point>();
 		public int tileCount;
 		public int seaCount;
-		public Vector2 startPoint;
-		public Vector2 endPoint;
+
+		public int terrainTop;
+		public int terrainBottom;
+
+		public Vector2 desertStart;
+		public Vector2 desertEnd;
+		public Vector2 coldStart;
+		public Vector2 coldEnd;
 
 		protected Random random = new Random();
 
 
 		#region Chunk Generation
-		public Tiles[][] getChunk(Point coords)
+		public byte[][] getChunk(Point coords)
 		{
-			
-			Tiles[][] returnChunk;
+
+			byte[][] returnChunk;
 			if (chunks.TryGetValue(coords, out returnChunk))
 			{
 				return returnChunk;
@@ -66,7 +75,7 @@ namespace ProjectBueno.Engine.World
 				return null;
 			}
 			else
-			{	
+			{
 				returnChunk = generateChunk(coords);
 				return returnChunk;
 			}
@@ -74,19 +83,23 @@ namespace ProjectBueno.Engine.World
 		public static Point getChunkFromPos(Vector2 pos)
 		{
 			pos *= CHUNK_MULT * Tile.TILEMULT;
-			return new Point((int)pos.X,(int)pos.Y);
+			return new Point((int)pos.X, (int)pos.Y);
 		}
 
-		protected Tiles[][] generateChunk(Point coords)
+		protected byte[][] generateChunk(Point coords)
 		{
-			Tiles[][] chunk = Enumerable.Range(0, CHUNK_SIZE).Select(x => Enumerable.Range(0, CHUNK_SIZE).Select(y => chunkMap[x / BLOCK_SIZE + coords.X * BLOCKS_PER_CHUNK][y / BLOCK_SIZE + coords.Y * BLOCKS_PER_CHUNK]).ToArray()).ToArray();
+			Tiles[][] chunk = Enumerable.Range(0, CHUNK_SIZE + CHUNK_BLEED * 2).Select(x => Enumerable.Range(0, CHUNK_SIZE + CHUNK_BLEED * 2).Select(y => getBlock(
+				(x - CHUNK_BLEED + CHUNK_SIZE * BLOCK_SIZE) / BLOCK_SIZE - CHUNK_SIZE + coords.X * BLOCKS_PER_CHUNK,
+				(y - CHUNK_BLEED + CHUNK_SIZE * BLOCK_SIZE) / BLOCK_SIZE - CHUNK_SIZE + coords.Y * BLOCKS_PER_CHUNK)
+				).ToArray()).ToArray();
+
 			for (int i = 0; i < 5; i++)
 			{
-				for (int xC = 0; xC < CHUNK_SIZE; xC++)
+				for (int xC = 0; xC < CHUNK_SIZE + CHUNK_BLEED * 2; xC++)
 				{
-					for (int yC = 0; yC < CHUNK_SIZE; yC++)
+					for (int yC = 0; yC < CHUNK_SIZE + CHUNK_BLEED * 2; yC++)
 					{
-						if (getPseudor(xC+coords.X*CHUNK_SIZE, yC+coords.Y*CHUNK_SIZE, (int)chunk[xC][yC] < (int)getAdjacentDifferent(chunk, xC, yC)))
+						if (getPseudor(xC - CHUNK_BLEED + coords.X * CHUNK_SIZE, yC - CHUNK_BLEED + coords.Y * CHUNK_SIZE, (int)chunk[xC][yC] < (int)getAdjacentDifferent(chunk, xC, yC)))
 						{
 							chunk[xC][yC] = getAdjacentDifferent(chunk, xC, yC);
 						}
@@ -94,19 +107,73 @@ namespace ProjectBueno.Engine.World
 				}
 			}
 
-			chunks.Add(coords, chunk);
-			return chunk;
+			byte[][] returnChunk = new byte[CHUNK_SIZE][];
+			for (int j = 0; j < CHUNK_SIZE; j++)
+			{
+				returnChunk[j] = new byte[CHUNK_SIZE];
+			}
+
+			int outTile;
+			for (int x = CHUNK_BLEED; x < CHUNK_SIZE + CHUNK_BLEED; x++)
+			{
+				for (int y = CHUNK_BLEED; y < CHUNK_SIZE + CHUNK_BLEED; y++)
+				{
+					if (chunk[x][y] == Tiles.Sea)
+					{
+						outTile = (int)(Tiles.Sea) + random.Next(0, 7);
+					}
+					else
+					{
+						outTile = getAdjacentByte(chunk, x, y, Tiles.Sea);
+						if (outTile == 0)
+						{
+							if (chunk[x][y] != Tiles.Forest)
+							{
+								outTile = getAdjacentByte(chunk, x, y, Tiles.Forest) + 16;
+							}
+						}
+						outTile += (int)chunk[x][y];
+					}
+
+					returnChunk[x - CHUNK_BLEED][y - CHUNK_BLEED] = (byte)outTile;
+				}
+			}
+
+			chunks.Add(coords, returnChunk);
+			return returnChunk;
 		}
-		
-		protected bool checkBlockBorders(int xB, int yB)
+
+
+		protected byte getAdjacentByte(Tiles[][] chunk, int x, int y, Tiles test)
 		{
-			Tiles center = chunkMap[xB][yB];
-			return (center != chunkMap[xB + 1][yB] || center != chunkMap[xB][yB + 1] || center != chunkMap[xB - 1][yB] || center != chunkMap[xB][yB - 1] ||
-				center != chunkMap[xB + 1][yB + 1] || center != chunkMap[xB - 1][yB - 1] || center != chunkMap[xB + 1][yB - 1] || center != chunkMap[xB - 1][yB + 1]);
+			byte outTile = 0;
+			if (chunk[x + 1][y] == test)
+			{
+				outTile |= 1;
+			}
+			if (chunk[x - 1][y] == test)
+			{
+				outTile |= 2;
+			}
+			if (chunk[x][y - 1] == test)
+			{
+				outTile |= 4;
+			}
+			if (chunk[x][y + 1] == test)
+			{
+				outTile |= 8;
+			}
+			return outTile;
 		}
+		/*protected bool checkBlockBorders(int xB, int yB)
+		{
+			Tiles center = blockMap[xB][yB];
+			return (center != blockMap[xB + 1][yB] || center != blockMap[xB][yB + 1] || center != blockMap[xB - 1][yB] || center != blockMap[xB][yB - 1] ||
+				center != blockMap[xB + 1][yB + 1] || center != blockMap[xB - 1][yB - 1] || center != blockMap[xB + 1][yB - 1] || center != blockMap[xB - 1][yB + 1]);
+		}*/
 		protected Tiles getAdjacentDifferent(Tiles[][] chunk, int x, int y)
 		{
-			if (x < 1 || y < 1 || x > CHUNK_SIZE-2 || y > CHUNK_SIZE-2) //Broken workaround. FIXME
+			if (x < 1 || y < 1 || x > CHUNK_SIZE - 2 || y > CHUNK_SIZE - 2) //Broken workaround. FIXME
 			{
 				return chunk[x][y];
 			}
@@ -128,7 +195,7 @@ namespace ProjectBueno.Engine.World
 		#region Draw
 		public void drawChunk(Point coords)
 		{
-			Tiles[][] chunk = getChunk(coords);
+			byte[][] chunk = getChunk(coords);
 			if (chunk == null)
 			{
 				return;
@@ -137,7 +204,7 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int y = 0; y < CHUNK_SIZE; y++)
 				{
-					Main.spriteBatch.Draw(Main.boxel, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), tileColors[(int)chunk[x][y]]);
+					Main.spriteBatch.Draw(terrainTex, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), new Rectangle((int)chunk[x][y] * Tile.TILESIZE, 0, Tile.TILESIZE, Tile.TILESIZE), Color.White);
 				}
 			}
 		}
@@ -148,7 +215,7 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int y = 1; y < ySize - 1; y++)
 				{
-					Main.spriteBatch.Draw(Main.boxel, new Rectangle(x, y, 1, 1), tileColors[(int)chunkMap[x][y]]);
+					Main.spriteBatch.Draw(terrainTex, new Rectangle(x, y, 1, 1), new Rectangle((int)blockMap[x][y] * Tile.TILESIZE, 0, 1, 1), Color.White);
 				}
 			}
 			Main.spriteBatch.Draw(Main.boxel, playerPos * Tile.TILEMULT / BLOCK_SIZE, Color.Red);
@@ -162,7 +229,7 @@ namespace ProjectBueno.Engine.World
 			{
 				tileCount++;
 			}
-			chunkMap[x][y] = type;
+			blockMap[x][y] = type;
 		}
 		public Vector2 getRandomForestChunk()
 		{
@@ -172,42 +239,81 @@ namespace ProjectBueno.Engine.World
 				x = random.Next(0, xSize);
 				y = random.Next(0, ySize);
 			}
-			while (chunkMap[x][y] != Tiles.Forest && chunkMap[x][y] != Tiles.FilledForest);
+			while (blockMap[x][y] != Tiles.Forest && blockMap[x][y] != Tiles.FilledForest);
 			return new Vector2(x, y);
 		}
 		protected bool emptyTile(int x, int y)
 		{
-			return chunkMap[x][y] == Tiles.FilledForest;
+			return blockMap[x][y] == Tiles.FilledForest;
 		}
 		protected void generateSea(int x, int y)
 		{
 			if (x > -1 && x < xSize && y > -1 && y < ySize)
 			{
-				if (chunkMap[x][y] == Tiles.FilledForest)
+				if (blockMap[x][y] == Tiles.FilledForest)
 				{
 					seaCount++;
-					chunkMap[x][y] = Tiles.Sea;
+					blockMap[x][y] = Tiles.Sea;
 					callqueue.Enqueue(new Point(x, y));
 				}
-				else if (chunkMap[x][y] == Tiles.Forest)
+				else if (blockMap[x][y] == Tiles.Forest)
 				{
 					seaCount++;
 					tileCount--;
-					chunkMap[x][y] = Tiles.Sea;
+					blockMap[x][y] = Tiles.Sea;
 				}
 			}
 		}
+		protected void fillForest()
+		{
+			for (int x = 1; x < xSize - 1; x++)
+			{
+				for (int y = 1; y < ySize - 1; y++)
+				{
+					if (blockMap[x][y] == Tiles.FilledForest)
+					{
+						blockMap[x][y] = Tiles.Forest;
+					}
+				}
+			}
+		}
+		protected void processSeaChunks(Point pos)
+		{
+			for (var i = 0; i < 4; i++)
+			{
+				generateSea(pos.X + xSide[i], pos.Y + ySide[i]);
+			}
+		}
+		protected void generateBiomes(Vector2 startPoint, Vector2 endPoint, Tiles replaceTile, bool isAbove)
+		{
+			float mult = (startPoint.Y - endPoint.Y) / (startPoint.X - endPoint.X);
+			float shift = startPoint.Y - mult * startPoint.X;
+			for (int x = 0; x < xSize; x++)
+			{
+				for (int y = 0; y < xSize; y++)
+				{
+					if (blockMap[x][y] == Tiles.Forest || blockMap[x][y] == Tiles.FilledForest)
+					{
+						if ((x * mult + shift > y) != isAbove)
+						{
+							blockMap[x][y] = replaceTile;
+						}
+					}
+				}
+			}
+		}
+
 		public void generateChunkMap()
 		{
 			//Reset variables
 			tileCount = 0;
 			seaCount = 1;
 			callqueue.Clear();
-			chunkMap = Enumerable.Range(0, xSize).Select(h => Enumerable.Range(0, ySize).Select(w => Tiles.FilledForest).ToArray()).ToArray();
+			blockMap = Enumerable.Range(0, xSize).Select(h => Enumerable.Range(0, ySize).Select(w => Tiles.FilledForest).ToArray()).ToArray();
 
 			//Process land
-			int x = xSize/2;
-			int y = ySize/2;
+			int x = xSize / 2;
+			int y = ySize / 2;
 			while (tileCount < tileLimit)
 			{
 				Tiles type = Tiles.Forest;
@@ -222,67 +328,66 @@ namespace ProjectBueno.Engine.World
 			}
 
 			//Process sea
-			chunkMap[0][0] = Tiles.Sea;
+			blockMap[0][0] = Tiles.Sea;
 			callqueue.Enqueue(new Point(0, 0));
 			while (callqueue.Count > 0)
 			{
 				processSeaChunks(callqueue.Dequeue());
 			}
+
+			fillForest();
+
 			Console.WriteLine("Total land count: " + (xSize * ySize - seaCount));
 			Console.WriteLine("Land count: " + tileCount);
 			Console.WriteLine("Filled land count: " + (xSize * ySize - seaCount - tileCount));
 		}
+
 		public void processBiome()
 		{
-			bool desertLeft = random.NextDouble() < 0.5;
-			float mult = (startPoint.Y - endPoint.Y) / (startPoint.X - endPoint.X);
-			if (float.IsInfinity(mult))
+			for (int y = 1; y < ySize - 1; y++)
 			{
-				for (int x = 0; x < xSize; x++)
+				for (int x = 1; x < xSize - 1; x++)
 				{
-					for (int y = 0; y < xSize; y++)
+					if (blockMap[x][y] == Tiles.FilledForest || blockMap[x][y] == Tiles.Forest)
 					{
-						if (chunkMap[x][y] == Tiles.Forest || chunkMap[x][y] == Tiles.FilledForest)
-						{
-							if ((x > startPoint.X) != desertLeft)
-							{
-								chunkMap[x][y] = Tiles.ColdForest;
-							}
-							else
-							{
-								chunkMap[x][y] = Tiles.HotForest;
-							}
-						}
+						terrainTop = y;
+						goto TerrainBottom;
 					}
 				}
 			}
-			float shift = startPoint.Y - mult * startPoint.X;
-			for (int x = 0; x < xSize; x++)
+			TerrainBottom:
+			for (int y = ySize - 1; y > 0; y--)
 			{
-				for (int y = 0; y < xSize; y++)
+				for (int x = 1; x < xSize - 1; x++)
 				{
-					if (chunkMap[x][y] == Tiles.Forest || chunkMap[x][y] == Tiles.FilledForest)
+					if (blockMap[x][y] == Tiles.FilledForest || blockMap[x][y] == Tiles.Forest)
 					{
-						if ((x * mult + shift > y) != desertLeft)
-						{
-							chunkMap[x][y] = Tiles.ColdForest;
-						}
-						else
-						{
-							chunkMap[x][y] = Tiles.HotForest;
-						}
+						terrainBottom = y;
+						goto ProcessBiome;
 					}
 				}
 			}
-		}
-		protected void processSeaChunks(Point pos)
-		{
-			for (var i = 0; i < xSide.Length; i++)
-			{
-				generateSea(pos.X + xSide[i], pos.Y + ySide[i]);
-			}
+
+			ProcessBiome:
+			int terrainDelta = terrainBottom - terrainTop;
+			desertStart = new Vector2(0.0f, (float)(terrainDelta * (1.0 / 3.0 + (random.NextDouble() - 0.5) * 0.3) + terrainTop));
+			desertEnd = new Vector2(xSize, (float)(terrainDelta * (1.0 / 3.0 + (random.NextDouble() - 0.5) * 0.3) + terrainTop));
+			coldStart = new Vector2(0.0f, (float)(terrainDelta * (2.0 / 3.0 + (random.NextDouble() - 0.5) * 0.3) + terrainTop));
+			coldEnd = new Vector2(xSize, (float)(terrainDelta * (2.0 / 3.0 + (random.NextDouble() - 0.5) * 0.3) + terrainTop));
+
+			generateBiomes(desertStart, desertEnd, Tiles.Desert, false);
+			generateBiomes(coldStart, coldEnd, Tiles.Cold, true);
 		}
 		#endregion
+
+		public Tiles getBlock(int x, int y)
+		{
+			if (x < 0 || y < 0 || x >= xSize || y >= ySize)
+			{
+				return Tiles.Sea;
+			}
+			return blockMap[x][y];
+		}
 
 		public void clearChunks()
 		{

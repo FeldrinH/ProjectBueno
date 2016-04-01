@@ -7,6 +7,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using ProjectBueno.Game.Spells;
+using ProjectBueno.Engine.World;
+using ProjectBueno.Game.Tiles;
 
 namespace ProjectBueno.Game.Entities
 {
@@ -32,14 +34,14 @@ namespace ProjectBueno.Game.Entities
 
 			health = (float)stats["Health"];
 			speed = (float)stats["Speed"];
-			size = new Vector2((float)stats["Width"],(float)stats["Height"]);
+			size = new Vector2((float)stats["Width"], (float)stats["Height"]);
 
 			state = (int)States.STANDING;
 			dir = Dir.DOWN;
 
 			knowledgePoints = int.MaxValue; //FOR TESTING
 
-			loadSkills(JArray.Parse(File.ReadAllText("Content/Skills.json")),JObject.Parse(File.ReadAllText("Content/SkillTree.json")));
+			loadSkills(JArray.Parse(File.ReadAllText("Content/Skills.json")), JObject.Parse(File.ReadAllText("Content/SkillTree.json")));
 		}
 
 		protected bool moveHorizontal;
@@ -57,7 +59,7 @@ namespace ProjectBueno.Game.Entities
 		{
 			base.Update();
 
-			float totalSpeed = Main.newKeyState.IsKeyDown(Keys.LeftShift) ? speed * 1000.0f : speed; 
+			float totalSpeed = Main.newKeyState.IsKeyDown(Keys.LeftShift) ? Terrain.BLOCK_SIZE * Tile.TILESIZE : speed;
 			Vector2 totalMove = new Vector2();
 			if (Main.newKeyState.IsKeyDown(Keys.W))
 			{
@@ -70,7 +72,7 @@ namespace ProjectBueno.Game.Entities
 			if (Main.newKeyState.IsKeyDown(Keys.S))
 			{
 				totalMove.Y += totalSpeed;
-				if(Main.oldKeyState.IsKeyUp(Keys.S))
+				if (Main.oldKeyState.IsKeyUp(Keys.S))
 				{
 					moveHorizontal = false;
 				}
@@ -92,7 +94,7 @@ namespace ProjectBueno.Game.Entities
 				}
 			}
 
-			if (totalMove != Vector2.Zero )
+			if (totalMove != Vector2.Zero)
 			{
 				state = (int)States.WALKING;
 			}
@@ -173,15 +175,15 @@ namespace ProjectBueno.Game.Entities
 			#endregion
 
 			Dictionary<string, Skill> skillMap = new Dictionary<string, Skill>();
-		
+
 			foreach (JObject skill in skillList)
 			{
-				skillMap.Add((string)skill["id"],(Skill)Type.GetType("ProjectBueno.Game.Spells."+(string)skill["class"]).GetConstructor(new Type[1] { typeof(JObject) }).Invoke(new object[1] { skill }));
+				skillMap.Add((string)skill["id"], (Skill)Type.GetType("ProjectBueno.Game.Spells." + (string)skill["class"]).GetConstructor(new Type[1] { typeof(JObject) }).Invoke(new object[1] { skill }));
 			}
-			
+
 			bool lastUp = false;
 			JProperty skillPointer = (JProperty)skillTree.First;
-			while(true)
+			while (true)
 			{
 				if (skillPointer.Value.HasValues && !lastUp)
 				{
@@ -189,7 +191,7 @@ namespace ProjectBueno.Game.Entities
 					continue;
 				}
 
-				skillMap[skillPointer.Name].populateDeps((JObject)skillPointer.Value,skillMap);
+				skillMap[skillPointer.Name].populateDeps((JObject)skillPointer.Value, skillMap);
 				//Console.WriteLine(skillPointer.Path);
 
 				lastUp = false;
@@ -227,7 +229,7 @@ namespace ProjectBueno.Game.Entities
 		{
 			foreach (States st in Enum.GetValues(typeof(States)))
 			{
-				loadTexture((JObject)animData[st.ToString()]);	
+				loadTexture((JObject)animData[st.ToString()]);
 			}
 		}
 
