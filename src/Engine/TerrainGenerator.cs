@@ -8,12 +8,25 @@ using System.Linq;
 
 namespace ProjectBueno.Engine.World
 {
+	public struct TilePoint
+	{
+		public TilePoint(int x, int y, Tiles tile)
+		{
+			this.x = x;
+			this.y = y;
+			this.tile = tile;
+		}
+
+		public Tiles tile;
+		public int x;
+		public int y;
+	}
 	public enum Tiles : byte
 	{
 		Forest = 0,
-		Sea = 80,
 		Desert = 16,
 		Cold = 48,
+		Sea = 80,
 		FilledForest = 255 //Only during generation
 	}
 	public class Terrain
@@ -33,10 +46,10 @@ namespace ProjectBueno.Engine.World
 		public static Texture2D terrainTex;
 
 		public const int CHUNK_SIZE = 64;
-		public const int CHUNK_BLEED = 16;
+		public const int CHUNK_BLEED = 8;
 		public const float CHUNK_MULT = 1.0f / CHUNK_SIZE;
 		public const float CHUNK_SHIFT = CHUNK_SIZE * Tile.TILESIZE * 0.5f;
-		public const int BLOCK_SIZE = 32;
+		public const int BLOCK_SIZE = 16;
 		public const int BLOCKS_PER_CHUNK = CHUNK_SIZE / BLOCK_SIZE;
 
 		public static int xSize = 512;
@@ -64,7 +77,6 @@ namespace ProjectBueno.Engine.World
 		#region Chunk Generation
 		public byte[][] getChunk(Point coords)
 		{
-
 			byte[][] returnChunk;
 			if (chunks.TryGetValue(coords, out returnChunk))
 			{
@@ -88,12 +100,13 @@ namespace ProjectBueno.Engine.World
 
 		protected byte[][] generateChunk(Point coords)
 		{
+			List<TilePoint> tileQueue = new List<TilePoint>();
 			Tiles[][] chunk = Enumerable.Range(0, CHUNK_SIZE + CHUNK_BLEED * 2).Select(x => Enumerable.Range(0, CHUNK_SIZE + CHUNK_BLEED * 2).Select(y => getBlock(
 				(x - CHUNK_BLEED + CHUNK_SIZE * BLOCK_SIZE) / BLOCK_SIZE - CHUNK_SIZE + coords.X * BLOCKS_PER_CHUNK,
 				(y - CHUNK_BLEED + CHUNK_SIZE * BLOCK_SIZE) / BLOCK_SIZE - CHUNK_SIZE + coords.Y * BLOCKS_PER_CHUNK)
 				).ToArray()).ToArray();
 
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				for (int xC = 0; xC < CHUNK_SIZE + CHUNK_BLEED * 2; xC++)
 				{
@@ -101,10 +114,15 @@ namespace ProjectBueno.Engine.World
 					{
 						if (getPseudor(xC - CHUNK_BLEED + coords.X * CHUNK_SIZE, yC - CHUNK_BLEED + coords.Y * CHUNK_SIZE, (int)chunk[xC][yC] < (int)getAdjacentDifferent(chunk, xC, yC)))
 						{
-							chunk[xC][yC] = getAdjacentDifferent(chunk, xC, yC);
+							tileQueue.Add(new TilePoint(xC, yC, getAdjacentDifferent(chunk, xC, yC)));
 						}
 					}
 				}
+				foreach (var upd in tileQueue)
+				{
+					chunk[upd.x][upd.y] = upd.tile;
+				}
+				tileQueue.Clear();
 			}
 
 			byte[][] returnChunk = new byte[CHUNK_SIZE][];
@@ -173,7 +191,7 @@ namespace ProjectBueno.Engine.World
 		}*/
 		protected Tiles getAdjacentDifferent(Tiles[][] chunk, int x, int y)
 		{
-			if (x < 1 || y < 1 || x > CHUNK_SIZE - 2 || y > CHUNK_SIZE - 2) //Broken workaround. FIXME
+			if (x < 1 || y < 1 || x > chunk.Length - 2 || y > chunk[0].Length - 2) //Broken workaround. FIXME
 			{
 				return chunk[x][y];
 			}
