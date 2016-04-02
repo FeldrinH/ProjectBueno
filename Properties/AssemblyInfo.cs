@@ -28,6 +28,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
+#pragma warning disable 7035
 [assembly: AssemblyVersion(PB.VERSION)]
 [assembly: AssemblyFileVersion(PB.VERSION + " " + PB.VERSION_NAME)]
 

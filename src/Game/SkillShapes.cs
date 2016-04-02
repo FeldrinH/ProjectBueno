@@ -38,7 +38,7 @@ namespace ProjectBueno.Game.Spells
 			}
 			else
 			{
-				dir = game.player.dir.Vector();//dir = game.posFromScreenPos(Main.newMouseState.Position.ToVector2()) - pos;
+				dir = game.posFromScreenPos(Main.newMouseState.Position.ToVector2()) - pos;//dir = game.player.dir.Vector();
 			}
 			dir.Normalize();
 			return new ProjectileBall(spell, game, target, pos, dir * speed);
@@ -112,7 +112,7 @@ namespace ProjectBueno.Game.Spells
 			}
 			else
 			{
-				dir = game.player.dir.Vector();//dir = game.posFromScreenPos(Main.newMouseState.Position.ToVector2()) - pos;
+				dir = game.posFromScreenPos(Main.newMouseState.Position.ToVector2()) - pos;//dir = game.player.dir.Vector();
 			}
 			dir.Normalize();
 			ProjectileStream projReturn = new ProjectileStream(spell, game, target, duration, effectTime == 0);
