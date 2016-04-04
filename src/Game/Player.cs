@@ -116,6 +116,7 @@ namespace ProjectBueno.Game.Entities
 			}
 
 			moveDir(totalMove);
+
 			pos += totalMove;
 
 			if (cooldown > 0)
@@ -232,6 +233,12 @@ namespace ProjectBueno.Game.Entities
 				loadTexture((JObject)animData[st.ToString()]);
 			}
 		}
+
+		/*public override void Draw()
+		{
+			curTexture.incrementAnimation();
+			Main.spriteBatch.Draw(curTexture.texture, new Vector2((float)Math.Floor(pos.X),(float)Math.Floor(pos.Y)), curTexture.getCurFrame(), damageCooldown > 0 ? Color.Red : Color.White);
+		}*/
 
 		public override void onPlayerCollide(Player player)
 		{

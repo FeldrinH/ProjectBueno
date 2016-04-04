@@ -46,21 +46,20 @@ namespace ProjectBueno.Engine
 
 		public Main()
 		{
-			graphicsManager = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = false, PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8 }; //Bad workaround
+			graphicsManager = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = false, PreferMultiSampling = false }; //Bad workaround
 			content = Content; //Bad workaround
 			window = Window; //Bad workaround
 			content.RootDirectory = "Content";
 			window.AllowUserResizing = true;
 			window.Title = "Project Bueno " + PB.VERSION;
 			IsMouseVisible = true;
-			IsFixedTimeStep = true;
+			IsFixedTimeStep = false;
 			//TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 5.0);
 			newKeyState = Keyboard.GetState();
 			newMouseState = Mouse.GetState();
 			graphicsManager.PreferredBackBufferWidth = xRatio * 5;
 			graphicsManager.PreferredBackBufferHeight = yRatio * 5;
 			oldClientBounds = window.ClientBounds;
-			//IsFixedTimeStep = false;
 		}
 
 		static Main()

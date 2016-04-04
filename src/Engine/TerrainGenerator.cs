@@ -34,7 +34,7 @@ namespace ProjectBueno.Engine.World
 		public Terrain()
 		{
 			chunks = new Dictionary<Point, byte[][]>();
-			terrainTex = Main.content.Load<Texture2D>("biomes2");
+			terrainTex = Main.content.Load<Texture2D>("biomes");
 		}
 
 		//public static readonly List<Color> tileColors = new List<Color>() { Color.LightGreen, Color.LawnGreen, Color.Blue, Color.Yellow, Color.LightBlue };
@@ -73,6 +73,11 @@ namespace ProjectBueno.Engine.World
 
 		protected Random random = new Random();
 
+
+		public bool isColliding(Vector2 pos, Vector2 size)
+		{
+			return false;
+		}
 
 		#region Chunk Generation
 		public byte[][] getChunk(Point coords)
@@ -222,18 +227,18 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int y = 0; y < CHUNK_SIZE; y++)
 				{
-					Main.spriteBatch.Draw(terrainTex, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), new Rectangle((int)chunk[x][y] * Tile.TILESIZE, 0, Tile.TILESIZE, Tile.TILESIZE), Color.White);
+					Main.spriteBatch.Draw(terrainTex, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), new Rectangle( (chunk[x][y]%16) * Tile.TILESIZE, (chunk[x][y]/16) * (Tile.TILESIZE+2), Tile.TILESIZE, Tile.TILESIZE), Color.White);
 				}
 			}
 		}
-		public void drawChunkMap(Vector2 playerPos)
+		public void drawBlockMap(Vector2 playerPos)
 		{
 			Main.spriteBatch.Draw(Main.boxel, new Rectangle(0, 0, xSize, ySize), Color.Black);
 			for (int x = 1; x < xSize - 1; x++)
 			{
 				for (int y = 1; y < ySize - 1; y++)
 				{
-					Main.spriteBatch.Draw(terrainTex, new Rectangle(x, y, 1, 1), new Rectangle((int)blockMap[x][y] * Tile.TILESIZE, 0, 1, 1), Color.White);
+					Main.spriteBatch.Draw(terrainTex, new Rectangle(x, y, 1, 1), new Rectangle(((int)blockMap[x][y] % 16) * Tile.TILESIZE, ((int)blockMap[x][y] / 16) * (Tile.TILESIZE + 2), 1, 1), Color.White);
 				}
 			}
 			Main.spriteBatch.Draw(Main.boxel, playerPos * Tile.TILEMULT / BLOCK_SIZE, Color.Red);
