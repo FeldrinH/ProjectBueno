@@ -46,7 +46,7 @@ namespace ProjectBueno.Engine
 
 		public Main()
 		{
-			graphicsManager = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = false, PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8 }; //Bad workaround
+			graphicsManager = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = true }; //Bad workaround
 			content = Content; //Bad workaround
 			window = Window; //Bad workaround
 			content.RootDirectory = "Content";
@@ -60,7 +60,6 @@ namespace ProjectBueno.Engine
 			graphicsManager.PreferredBackBufferWidth = xRatio * 5;
 			graphicsManager.PreferredBackBufferHeight = yRatio * 5;
 			oldClientBounds = window.ClientBounds;
-			//IsFixedTimeStep = false;
 		}
 
 		static Main()

@@ -34,7 +34,7 @@ namespace ProjectBueno.Engine.World
 		public Terrain()
 		{
 			chunks = new Dictionary<Point, byte[][]>();
-			terrainTex = Main.content.Load<Texture2D>("biomes2");
+			terrainTex = Main.content.Load<Texture2D>("biomes");
 		}
 
 		//public static readonly List<Color> tileColors = new List<Color>() { Color.LightGreen, Color.LawnGreen, Color.Blue, Color.Yellow, Color.LightBlue };
