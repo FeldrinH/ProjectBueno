@@ -133,7 +133,7 @@ namespace ProjectBueno.Engine
 
 		public void Draw()
 		{
-			Matrix matrixCache = Matrix.CreateTranslation(new Vector3(-player.pos/*(float)-Math.Floor(player.pos.X),(float)-Math.Floor(player.pos.Y)*/, 0.0f)) * screenMatrix;
+			Matrix matrixCache = Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f)) * screenMatrix;
 
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, matrixCache);
 
@@ -180,7 +180,7 @@ namespace ProjectBueno.Engine
 			if (Main.newKeyState.IsKeyDown(Keys.M))
 			{
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-				terrain.drawBlockMap(player.pos);
+				terrain.drawChunkMap(player.pos);
 				Main.spriteBatch.End();
 			}
 		}
