@@ -18,7 +18,7 @@ namespace ProjectBueno.Engine
 		{
 			Main.exiting += onExitSave;
 
-			player = new Player(new Vector2(Terrain.xSize*0.5f*Tile.TILESIZE,Terrain.ySize*0.5f*Tile.TILESIZE), this);
+			player = new Player(new Vector2(Terrain.xSize*Terrain.BLOCK_SIZE*Tile.TILESIZE*0.5f,Terrain.ySize*Terrain.BLOCK_SIZE*Tile.TILESIZE*0.5f), this);
 			screenScale = 2.0f;
 			projectiles = new List<Projectile>();
 			entities = new List<Entity>();
