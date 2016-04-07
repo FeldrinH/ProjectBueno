@@ -116,7 +116,10 @@ namespace ProjectBueno.Game.Entities
 			}
 
 			moveDir(totalMove);
-			pos += totalMove;
+			if(!game.terrain.isColliding(pos+totalMove, size) || Main.newKeyState.IsKeyDown(Keys.LeftShift))
+			{
+				pos += totalMove;
+			}
 
 			if (cooldown > 0)
 			{

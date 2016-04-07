@@ -73,6 +73,34 @@ namespace ProjectBueno.Engine.World
 
 		protected Random random = new Random();
 
+		public bool isColliding(Vector2 pos, Vector2 size)
+		{
+			Point topLeft = getChunkFromPos(pos);
+			Point bottomRight = getChunkFromPos(pos + size);
+			for (int xC = topLeft.X; xC <= bottomRight.X; xC++)
+			{
+				for (int yC = topLeft.Y; yC <= bottomRight.Y; yC++)
+				{
+
+					Point curChunk = new Point(xC, yC);
+					Point topLeftTile = getTileFromPos(curChunk, pos);
+					Point bottomRightTile = getTileFromPos(curChunk, pos + size);
+					byte[][] chunk = getChunk(curChunk);
+					for (int x = topLeftTile.X; x <= bottomRightTile.X; x++)
+					{
+						for (int y = topLeftTile.Y; y <= bottomRightTile.Y; y++)
+						{
+							if (chunk[x][y] >= (byte)Tiles.Sea)
+							{
+								return true;
+							}
+						}
+					}
+
+				}
+			}
+			return false;
+		}
 
 		#region Chunk Generation
 		public byte[][] getChunk(Point coords)
@@ -96,6 +124,11 @@ namespace ProjectBueno.Engine.World
 		{
 			pos *= CHUNK_MULT * Tile.TILEMULT;
 			return new Point((int)pos.X, (int)pos.Y);
+		}
+		public static Point getTileFromPos(Point chunk, Vector2 pos)
+		{
+			pos = (pos * Tile.TILEMULT) - chunk.ToVector2() * CHUNK_SIZE;
+			return new Point(MathHelper.Clamp((int)pos.X, 0, CHUNK_SIZE-1), MathHelper.Clamp((int)pos.Y, 0, CHUNK_SIZE-1));
 		}
 
 		protected byte[][] generateChunk(Point coords)
@@ -222,7 +255,7 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int y = 0; y < CHUNK_SIZE; y++)
 				{
-					Main.spriteBatch.Draw(terrainTex, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), new Rectangle((int)chunk[x][y] * Tile.TILESIZE, 0, Tile.TILESIZE, Tile.TILESIZE), Color.White);
+					Main.spriteBatch.Draw(terrainTex, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), new Rectangle(chunk[x][y] * Tile.TILESIZE, 0, Tile.TILESIZE, Tile.TILESIZE), Color.White);
 				}
 			}
 		}
