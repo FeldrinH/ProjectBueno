@@ -239,7 +239,6 @@ namespace ProjectBueno.Engine
 
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{
-				Main.graphicsDirty = true; //DON'T KNOW WHY THIS IS NEEDED
 				Main.handler = new SkillHandler(this,player);
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
