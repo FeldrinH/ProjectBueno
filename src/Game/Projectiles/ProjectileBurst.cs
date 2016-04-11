@@ -43,7 +43,6 @@ namespace ProjectBueno.Game.Spells
 
 		public override void Draw()
 		{
-			projTexture.incrementAnimation();
 			Rectangle frameCache = projTexture.getCurFrame();
 			for (int i = 0; i < projPos.Count; i++)
 			{
@@ -72,7 +71,7 @@ namespace ProjectBueno.Game.Spells
 							Vector2 knockback = projSpeed[i];
 							knockback.Normalize();
 							knockback *= 5.0f;
-							entity.dealDamage(spell.getDamage(entity), knockback);
+							entity.dealDamage(spell.getDamage(entity), knockback, spell.shape.dmgCooldown);
 						}
 
 						projPos.RemoveAt(i);
@@ -81,6 +80,8 @@ namespace ProjectBueno.Game.Spells
 					}
 				}
 			}
+
+			projTexture.incrementAnimation();
 		}
 	}
 }

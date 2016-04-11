@@ -53,6 +53,9 @@ namespace ProjectBueno.Game.Entities
 
 		public int knowledgePoints;
 
+		public bool hasMoved { get; protected set; }
+		public bool hasCastBurst;
+
 		public Entity target;
 
 		public override void Update()
@@ -94,43 +97,44 @@ namespace ProjectBueno.Game.Entities
 				}
 			}
 
+			hasMoved = false;
 			if (totalMove != Vector2.Zero)
 			{
 				state = (int)States.WALKING;
+
+				if (totalMove.X != 0.0f && totalMove.Y != 0.0f)
+				{
+					if (moveHorizontal)
+					{
+						totalMove.Y = 0.0f;
+					}
+					else
+					{
+						totalMove.X = 0.0f;
+					}
+				}
+
+				moveDir(totalMove);
+
+				if (!game.terrain.isColliding(pos + totalMove, size) || Main.newKeyState.IsKeyDown(Keys.LeftShift))
+				{
+					pos += totalMove;
+					hasMoved = true;
+					hasCastBurst = false;
+				}
+
 			}
 			else
 			{
 				state = (int)States.STANDING;
 			}
-
-			if (totalMove.X != 0.0f && totalMove.Y != 0.0f)
-			{
-				if (moveHorizontal)
-				{
-					totalMove.Y = 0.0f;
-				}
-				else
-				{
-					totalMove.X = 0.0f;
-				}
-			}
-
-			moveDir(totalMove);
-			if(!game.terrain.isColliding(pos+totalMove, size) || Main.newKeyState.IsKeyDown(Keys.LeftShift))
-			{
-				pos += totalMove;
-			}
-
-			if (cooldown > 0)
-			{
-				cooldown--;
-			}
+			
 
 			if (Main.newKeyState.IsKeyDown(Keys.D1)/* && !Main.oldKeyState.IsKeyDown(Keys.D1)*/)
 			{
 				if (spells[0].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[0].createProjectile(pos, game, target));
+					game.addProjectile(spells[0].createProjectile(pos, game, target));
 					cooldown = spells[0].cooldown;
 				}
 			}
@@ -138,7 +142,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (spells[1].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[1].createProjectile(pos, game, target));
+					game.addProjectile(spells[1].createProjectile(pos, game, target));
 					cooldown = spells[1].cooldown;
 				}
 			}
@@ -146,7 +150,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (spells[2].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[2].createProjectile(pos, game, target));
+					game.addProjectile(spells[2].createProjectile(pos, game, target));
 					cooldown = spells[2].cooldown;
 				}
 			}
@@ -154,7 +158,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (spells[3].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[3].createProjectile(pos, game, target));
+					game.addProjectile(spells[3].createProjectile(pos, game, target));
 					cooldown = spells[3].cooldown;
 				}
 			}
@@ -162,9 +166,14 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (spells[4].canCast && cooldown < 1)
 				{
-					game.projectiles.Add(spells[4].createProjectile(pos, game, target));
+					game.addProjectile(spells[4].createProjectile(pos, game, target));
 					cooldown = spells[4].cooldown;
 				}
+			}
+
+			if (cooldown > 0 && hasMoved)
+			{
+				cooldown--;
 			}
 		}
 

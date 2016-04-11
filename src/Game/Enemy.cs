@@ -80,7 +80,7 @@ namespace ProjectBueno.Game.Entities
 			Vector2 pushback = game.player.pos - pos;
 			pushback.Normalize();
 			pushback *= hitForce;
-			player.dealDamage(damage, pushback);
+			player.dealDamage(damage, pushback, 5); //HARDCODE COOLDOWN 5
 		}
 	}
 }

@@ -31,7 +31,6 @@ namespace ProjectBueno.Game.Spells
 
 		public override void Draw()
 		{
-			projTexture.incrementAnimation();
 			Main.spriteBatch.Draw(projTexture.texture, pos, projTexture.getCurFrame(), Color.White);
 		}
 
@@ -45,12 +44,14 @@ namespace ProjectBueno.Game.Spells
 					Vector2 pushback = speed;
 					pushback.Normalize();
 					pushback *= 5.0f; //To load
-					entity.dealDamage(spell.getDamage(entity), pushback);
+					entity.dealDamage(spell.getDamage(entity), pushback, spell.shape.dmgCooldown);
 					lifetime = 0;
 					break;
 				}
 			}
 			pos += speed;
+
+			projTexture.incrementAnimation();
 		}
 	}
 }

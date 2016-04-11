@@ -87,8 +87,8 @@ namespace ProjectBueno.Engine
 
 		protected static readonly Random random = new Random();
 
-		public List<Entity> entities;
-		public List<Projectile> projectiles;
+		public List<Entity> entities { get; protected set; }
+		public List<Projectile> projectiles { get; protected set; }
 		//protected Point ppChunk, mmChunk, mpChunk, pmChunk;
 		public Player player { get; protected set; }
 		public Terrain terrain { get; protected set; }
@@ -108,6 +108,14 @@ namespace ProjectBueno.Engine
 				}
 			}
 			return null;
+		}
+
+		public void addProjectile(Projectile proj)
+		{
+			//if (proj != null)
+			//{
+				projectiles.Add(proj);
+			//}
 		}
 
 		private void onExitSave(object sender, EventArgs args)
@@ -215,17 +223,22 @@ namespace ProjectBueno.Engine
 				entities.Add(new Enemy(player.pos + AngleVector.Vector(random.NextDouble()*360.0)*500.0f, this));
 			}
 
-			for (int i = 0; i < projectiles.Count; i++)
-			{
-				projectiles[i].Update();
-			}
-			foreach (var ent in entities)
-			{
-				ent.Update();
-			}
-			player.Update();
 			projectiles.RemoveAll(item => item.toRemove);
 			entities.RemoveAll(item => item.isDead);
+
+			player.Update();
+
+			if (player.hasMoved)
+			{
+				for (int i = 0; i < projectiles.Count; i++)
+				{
+					projectiles[i].Update();
+				}
+				foreach (var ent in entities)
+				{
+					ent.Update();
+				}
+			}
 
 			if (player.target != null && player.target.isDead)
 			{

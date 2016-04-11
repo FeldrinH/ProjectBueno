@@ -123,13 +123,13 @@ namespace ProjectBueno.Game.Entities
 		{
 			return pos.X + size.X > entPos.X && entPos.X + entSize.X > pos.X && pos.Y + size.Y > entPos.Y && entPos.Y + entSize.Y > pos.Y;
 		}
-		public virtual void dealDamage(float amount, Vector2 direction)
+		public virtual void dealDamage(float amount, Vector2 direction, int dmgCooldown)
 		{
 			if (damageCooldown <= 0)
 			{
 				knockback += direction;
 				health -= amount;
-				damageCooldown = DAMAGECOOLDOWN;
+				damageCooldown = dmgCooldown;
 			}
 		}
 
@@ -184,7 +184,10 @@ namespace ProjectBueno.Game.Entities
 		///</summary>
 		public virtual void Update()
 		{
-			pos += knockback;
+			if (!game.terrain.isColliding(pos + knockback, size))
+			{
+				pos += knockback;
+			}
 			if (damageCooldown > 0)
 			{
 				--damageCooldown;
@@ -197,10 +200,11 @@ namespace ProjectBueno.Game.Entities
 			{
 				knockback = Vector2.Zero;
 			}
+
+			curTexture.incrementAnimation();
 		}
 		public virtual void Draw()
 		{
-			curTexture.incrementAnimation();
 			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), damageCooldown > 0 ? Color.Red : Color.White);
 		}
 		public virtual void DrawRaw() //Draws without any effects, just for shape
