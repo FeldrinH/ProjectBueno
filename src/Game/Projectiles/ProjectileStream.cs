@@ -59,7 +59,6 @@ namespace ProjectBueno.Game.Spells
 							entity.dealDamage(spell.getDamage(entity), knockback, spell.shape.dmgCooldown);
 						}
 
-						projectiles.RemoveAt(i);
 						break;
 					}
 				}
