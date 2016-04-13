@@ -1,6 +1,8 @@
 The Interface:
 
-Black bars on maximize
+Colored projectiles based on properties
+Debug collision boxes draw
+Spell, health and score HUD
 Automatic scaling in game
 Start menu
 
