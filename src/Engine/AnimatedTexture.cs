@@ -8,9 +8,9 @@ namespace ProjectBueno.Engine
 	//Animated Entity Texture with frames(horizontal)
 	public class AnimatedTexture
 	{
-		public AnimatedTexture(JObject anim, int yShift) : this(anim)
+		public AnimatedTexture(JObject anim, int hShift) : this(anim)
 		{
-			yShift = yShift * h;
+			this.hShift = hShift * h;
 		}
 
 		public AnimatedTexture(JObject anim)
@@ -20,20 +20,18 @@ namespace ProjectBueno.Engine
 			h = (int)anim["Height"];
 			maxFrame = (float)anim["Frames"];
 			speed = (float)anim["Speed"];
-			
-			xOffset = (float?)anim["xOffset"] ?? 0.0f;
-			yOffset = (float?)anim["yOffset"] ?? 0.0f;
 
-			yShift = 0;
+			offset = new Vector2((float?)anim["xOffset"] ?? 0.0f, (float?)anim["yOffset"] ?? 0.0f);
+
+			hShift = 0;
 			curFrame = 0.0f;
 		}
 
-		public AnimatedTexture(Texture2D texture, int frameCount, float speed, int w, int h, int yShift=0, float xOffset=0.0f, float yOffset=0.0f)
+		public AnimatedTexture(Texture2D texture, int frameCount, float speed, int w, int h, int hShift=0, float xOffset=0.0f, float yOffset=0.0f)
 		{
 			this.texture = texture;
-			this.yShift = yShift * h;
-			this.xOffset = xOffset;
-			this.yOffset = yOffset;
+			this.hShift = hShift * h;
+			this.offset = new Vector2(xOffset,yOffset);
 			this.w = w;
 			this.h = h;
 			this.curFrame = 0.0f;
@@ -43,9 +41,8 @@ namespace ProjectBueno.Engine
 
 		public readonly Texture2D texture;
 
-		public readonly int yShift;
-		public readonly float xOffset;
-		public readonly float yOffset;
+		public readonly int hShift;
+		public readonly Vector2 offset;
 		public readonly int w;
 		public readonly int h;
 
@@ -55,7 +52,7 @@ namespace ProjectBueno.Engine
 
 		public Rectangle getCurFrame()
 		{
-			return new Rectangle(w * (int)curFrame, yShift, w, h);
+			return new Rectangle(w * (int)curFrame, hShift, w, h);
 		}
 		public void incrementAnimation()
 		{

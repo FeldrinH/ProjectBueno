@@ -23,6 +23,8 @@ namespace ProjectBueno.Engine
 			projectiles = new List<Projectile>();
 			entities = new List<Entity>();
 
+			drawDebug = false;
+
 			terrain = new Terrain();
 
 			terrain.generateChunkMap();
@@ -76,6 +78,8 @@ namespace ProjectBueno.Engine
 		public float screenScaleInv;
 		public Vector2 screenShift;
 		public Matrix screenMatrix;
+
+		protected bool drawDebug;
 
 		protected static Effect outlineShader;
 		protected static DepthStencilState maskStencil, drawStencil;
@@ -167,7 +171,22 @@ namespace ProjectBueno.Engine
 				ent.Draw();
 			}
 
+			if (drawDebug)
+			{
+				player.DrawDebug();
+				for (int i = 0; i < projectiles.Count; i++)
+				{
+					projectiles[i].DrawDebug();
+				}
+
+				foreach (var ent in entities)
+				{
+					ent.DrawDebug();
+				}
+			}
+
 			Main.spriteBatch.End();
+
 
 			if (player.target != null)
 			{
@@ -257,6 +276,11 @@ namespace ProjectBueno.Engine
 			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
 			{
 				Main.handler = new PauseHandler(this);
+			}
+
+			if (Main.newKeyState.IsKeyDown(Keys.C) && !Main.oldKeyState.IsKeyDown(Keys.C))
+			{
+				drawDebug = !drawDebug;
 			}
 
 			/*Stopwatch s1 = new Stopwatch();

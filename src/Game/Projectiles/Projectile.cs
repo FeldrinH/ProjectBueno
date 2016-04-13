@@ -18,6 +18,7 @@ namespace ProjectBueno.Game.Spells
 
 		public abstract void Draw();
 		public abstract void Update();
+		public abstract void DrawDebug();
 
 		public abstract bool toRemove { get; }
 

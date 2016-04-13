@@ -53,5 +53,10 @@ namespace ProjectBueno.Game.Spells
 
 			projTexture.incrementAnimation();
 		}
+
+		public override void DrawDebug()
+		{
+			Main.spriteBatch.Draw(Main.boxel, pos, new Rectangle(0, 0, (int)size.X, (int)size.Y), Color.Red * 0.5f);
+		}
 	}
 }

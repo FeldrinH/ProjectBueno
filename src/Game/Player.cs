@@ -237,6 +237,7 @@ namespace ProjectBueno.Game.Entities
 			spells = new List<SpellContainer>() { new SpellContainer(this), new SpellContainer(this), new SpellContainer(this), new SpellContainer(this), new SpellContainer(this) };
 			selectedSpell = 0;
 		}
+
 		public override void loadTextures(JObject animData)
 		{
 			foreach (States st in Enum.GetValues(typeof(States)))

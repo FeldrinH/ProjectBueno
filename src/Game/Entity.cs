@@ -172,9 +172,11 @@ namespace ProjectBueno.Game.Entities
 			Texture2D loadedTex = Main.content.Load<Texture2D>((string)anim["Texture"]);
 			int w = (int)anim["Width"];
 			int h = (int)anim["Height"];
+			float xOffset = (float?)anim["xOffset"] ?? 0.0f;
+			float yOffset = (float?)anim["yOffset"] ?? 0.0f;
 			foreach (Dir dr in Enum.GetValues(typeof(Dir)))
 			{
-				textures.Add(new AnimatedTexture(loadedTex, (int)anim[dr.ToString()]["Frames"], (float)anim[dr.ToString()]["Speed"], w, h, (int)dr));
+				textures.Add(new AnimatedTexture(loadedTex, (int)anim[dr.ToString()]["Frames"], (float)anim[dr.ToString()]["Speed"], w, h, (int)dr,xOffset,yOffset));
 			}
 		}
 
@@ -205,11 +207,11 @@ namespace ProjectBueno.Game.Entities
 		}
 		public virtual void Draw()
 		{
-			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), damageCooldown > 0 ? Color.Red : Color.White);
+			Main.spriteBatch.Draw(curTexture.texture, pos+curTexture.offset, curTexture.getCurFrame(), damageCooldown > 0 ? Color.Red : Color.White);
 		}
 		public virtual void DrawRaw() //Draws without any effects, just for shape
 		{
-			Main.spriteBatch.Draw(curTexture.texture, pos, curTexture.getCurFrame(), Color.White);
+			Main.spriteBatch.Draw(curTexture.texture, pos+curTexture.offset, curTexture.getCurFrame(), Color.White);
 		}
 		public virtual void DrawOutline(Color outlineColor)
 		{
@@ -221,6 +223,11 @@ namespace ProjectBueno.Game.Entities
 			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(-1.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
 			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(1.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
 			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(-1.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
+		}
+
+		public void DrawDebug()
+		{
+			Main.spriteBatch.Draw(Main.boxel, pos, new Rectangle(0, 0, (int)size.X, (int)size.Y), Color.Red * 0.5f);
 		}
 	}
 }
