@@ -16,6 +16,7 @@ Project Bueno the Exploration Simulator - Currently in alpha
 * **Debug Controls:**
 	* M - Show Minimap
 	* K - Clear all enemies
+	* C - Toggle collision box drawing
 	* Left Shift - Increase speed to 60 blocks/s (60 pixels/s on minimap) and ignore collision with sea
 	* Up Arrow - Double the zoom level
 	* Down Arrow - Halve the zoom level
