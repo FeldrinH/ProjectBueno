@@ -4,14 +4,18 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectBueno.Engine
 {
-	public class PauseHandler : IHandler
+	public class PauseHandler : MenuHandler
 	{
 		protected GameHandler game;
 		protected Texture2D background;
 		protected SoundEffectInstance music;
+
+		protected List<IButton> buttons;
 
 		public PauseHandler(GameHandler game)
 		{
@@ -19,31 +23,51 @@ namespace ProjectBueno.Engine
 			background = Main.content.Load<Texture2D>("pauseScreen");
 			music = Main.content.Load<SoundEffect>("pauseMusic").CreateInstance();
 			music.IsLooped = true;
-			music.Play();
 
-			windowResize();
+			buttons = new List<IButton>() { new TextMoveButton(new HelpMenuHandler(this, "backBtnPause", game), (JObject)Main.Config["helpBtn2"], true), new TextMoveButton(game, (JObject)Main.Config["resumeBtn"]) };
 		}
 
-		public void Draw()
+		public override void Draw()
 		{
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap);
-			Main.spriteBatch.Draw(background, new Rectangle(0, 0, Main.graphicsManager.GraphicsDevice.Viewport.Width, Main.graphicsManager.GraphicsDevice.Viewport.Height), Color.White);
+			float mouseX = Main.newMouseState.X * downscale;
+			float mouseY = Main.newMouseState.Y * downscale;
+
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, screenScale);
+			Main.spriteBatch.Draw(background, Vector2.Zero, Color.White);
+			foreach (var btn in buttons)
+			{
+				btn.Draw(mouseX, mouseY);
+			}
 			Main.spriteBatch.End();
 		}
 
-		public void Update()
+		public override void Update()
 		{
+			float mouseX = Main.newMouseState.X * downscale;
+			float mouseY = Main.newMouseState.Y * downscale;
+
+			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
+			{
+				foreach (var btn in buttons)
+				{
+					btn.OnClick(mouseX, mouseY);
+				}
+			}
+
 			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
 			{
-				music.Stop();
-				music.Dispose();
-				game.windowResize();
 				Main.handler = game;
 			}
 		}
 
-		public void windowResize()
+		public override void Initialize()
 		{
+			music.Play();
+		}
+
+		public override void Deinitialize()
+		{
+			music.Stop();
 		}
 	}
 }

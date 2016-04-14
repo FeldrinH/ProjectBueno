@@ -62,8 +62,6 @@ namespace ProjectBueno.Engine
 			{
 				Projection = Matrix.CreateOrthographicOffCenter(0, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferWidth, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferHeight, 0, 0, 1)
 			};
-
-			windowResize();
 		}
 
 		private float _screenScale;
@@ -129,6 +127,7 @@ namespace ProjectBueno.Engine
 
 		public void closeGameHandler()
 		{
+			onExitSave(null, null);
 			Main.exiting -= onExitSave;
 		}
 
@@ -320,6 +319,14 @@ namespace ProjectBueno.Engine
 				Console.WriteLine("Check: " + s1.ElapsedTicks);
 			}
 			s1.Stop();*/
+		}
+
+		public void Initialize()
+		{
+		}
+
+		public void Deinitialize()
+		{
 		}
 	}
 }

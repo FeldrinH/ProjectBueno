@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -8,31 +9,29 @@ using System.Threading.Tasks;
 
 namespace ProjectBueno.Engine
 {
-	class TextMoveButton : IButton
+	class MoveButton : IButton
 	{
-		public TextMoveButton(IHandler moveTo, JObject data, bool bypass = false)
+		public MoveButton(IHandler moveTo, JObject data, bool bypass = false)
 		{
-			text = (string)data["text"];
+			texture = Main.content.Load<Texture2D>((string)data["texture"]);
 			bounds = new Rectangle((int)data["x"], (int)data["y"], (int)data["w"], (int)data["h"]);
-			pos = new Vector2((float)data["x"], (float)data["y"] - 1.0f);
 			this.moveTo = moveTo;
 
 			this.bypass = bypass;
 		}
 
 		public Rectangle bounds;
-		public Vector2 pos;
-		public string text;
+		public Texture2D texture;
 		public IHandler moveTo;
 
-		protected bool bypass;
+		protected bool bypass; //Bypass Initialize and Deinitialize
 
 		public static readonly Color textColor = new Color(255,250,204);
 		public static readonly Color highlightColor = new Color(66,147,0);
 
 		public void Draw(float mouseX, float mouseY)
 		{
-			Main.spriteBatch.DrawString(Main.retroFont, text, pos, bounds.Contains(mouseX, mouseY) ? highlightColor : textColor);
+			Main.spriteBatch.Draw(texture, bounds, new Rectangle(bounds.Contains(mouseX, mouseY) ? bounds.Width : 0, 0, bounds.Width, bounds.Height), Color.White);
 		}
 
 		public void OnClick(float mouseX, float mouseY)

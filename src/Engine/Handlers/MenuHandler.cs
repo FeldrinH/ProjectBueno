@@ -10,11 +10,6 @@ namespace ProjectBueno.Engine
 {
 	public abstract class MenuHandler : IHandler
 	{
-		public MenuHandler()
-		{
-			windowResize();
-		}
-
 		protected Texture2D background;
 		public float downscale { get; protected set; }
 		protected Matrix screenScale;
@@ -27,6 +22,14 @@ namespace ProjectBueno.Engine
 		{
 			screenScale = Matrix.CreateScale((float)Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio);
 			downscale = (float)Main.xRatio / Main.graphicsManager.GraphicsDevice.Viewport.Width;
+		}
+
+		public virtual void Initialize()
+		{
+		}
+
+		public virtual void Deinitialize()
+		{
 		}
 	}
 }

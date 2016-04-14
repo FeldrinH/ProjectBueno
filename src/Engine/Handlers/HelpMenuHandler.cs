@@ -10,16 +10,18 @@ using System.Threading.Tasks;
 
 namespace ProjectBueno.Engine
 {
-	class StartMenuHandler : MenuHandler
+	class HelpMenuHandler : MenuHandler
 	{
-		public StartMenuHandler()
+		public HelpMenuHandler(IHandler returnTo, string buttonName, GameHandler game = null)
 		{
-			background = Main.content.Load<Texture2D>("startMenu");
+			background = Main.content.Load<Texture2D>((string)Main.Config[buttonName]["background"]);
 
-			buttons = new List<IButton>() { new TextMoveButton(new GameHandler(), (JObject)Main.Config["startBtn"]), new TextMoveButton(new HelpMenuHandler(this, "backBtnStart"), (JObject)Main.Config["helpBtn"]) };
+			returnButton = new MoveButton(returnTo, (JObject)Main.Config[buttonName], true);
+			this.game = game;
 		}
 
-		protected List<IButton> buttons;
+		MoveButton returnButton;
+		GameHandler game;
 
 		public override void Draw()
 		{
@@ -28,10 +30,7 @@ namespace ProjectBueno.Engine
 
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, screenScale);
 			Main.spriteBatch.Draw(background, Vector2.Zero, Color.White);
-			foreach (var btn in buttons)
-			{
-				btn.Draw(mouseX, mouseY);
-			}
+			returnButton.Draw(mouseX, mouseY);
 			Main.spriteBatch.End();
 		}
 
@@ -39,13 +38,14 @@ namespace ProjectBueno.Engine
 		{
 			float mouseX = Main.newMouseState.X * downscale;
 			float mouseY = Main.newMouseState.Y * downscale;
-
 			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
 			{
-				foreach (var btn in buttons)
-				{
-					btn.OnClick(mouseX, mouseY);
-				}
+				returnButton.OnClick(mouseX, mouseY);
+			}
+			if (game != null && Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
+			{
+				returnButton.moveTo.Deinitialize();
+				Main.handler = game;
 			}
 		}
 	}

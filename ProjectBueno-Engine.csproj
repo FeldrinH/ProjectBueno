@@ -89,6 +89,8 @@
     </Reference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Compile Include="src\Engine\Handlers\HelpMenuHandler.cs" />
+    <Compile Include="src\Engine\MoveButton.cs" />
     <Compile Include="src\Engine\TextMoveButton.cs" />
     <Compile Include="src\Engine\Handlers\PauseHandler.cs" />
     <Compile Include="src\Engine\Handlers\MenuHandler.cs" />

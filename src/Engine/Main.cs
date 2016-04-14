@@ -20,7 +20,22 @@ namespace ProjectBueno.Engine
 		public static SpriteBatch spriteBatch { get; private set; }
 		public static ContentManager content { get; private set; }
 		public static GameWindow window { get; private set; }
-		public static IHandler handler { get; set; }
+		private static IHandler _handler;
+		public static IHandler handlerBP { //Bypass Initialize and Deinitialize
+			set {
+				value.windowResize();
+				_handler = value;
+			}
+		}
+		public static IHandler handler {
+			get { return _handler; }
+			set {
+				_handler?.Deinitialize();
+				value.Initialize();
+				value.windowResize();
+				_handler = value;
+			}
+		}
 
 		public static KeyboardState oldKeyState { get; private set; }
 		public static KeyboardState newKeyState { get; private set; }
@@ -185,7 +200,7 @@ namespace ProjectBueno.Engine
 			newKeyState = Keyboard.GetState();
 			newMouseState = Mouse.GetState();
 			newMouseState = new MouseState(newMouseState.X - graphicsManager.GraphicsDevice.Viewport.X, newMouseState.Y - graphicsManager.GraphicsDevice.Viewport.Y, newMouseState.ScrollWheelValue, newMouseState.LeftButton, newMouseState.MiddleButton, newMouseState.RightButton, newMouseState.XButton1, newMouseState.XButton2);
-			handler.Update();
+			_handler.Update();
 		}
 
 		/// <summary>
@@ -202,7 +217,7 @@ namespace ProjectBueno.Engine
 			}
 
 			graphicsManager.GraphicsDevice.Clear(Color.Black);
-			handler.Draw();
+			_handler.Draw();
 		}
 	}
 }

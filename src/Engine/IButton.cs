@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectBueno.Engine
 {
-	interface IButton
+	public interface IButton
 	{
 		void Draw(float mouseX, float mouseY);
 

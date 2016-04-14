@@ -85,7 +85,6 @@ namespace ProjectBueno.Engine
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{
-				game.windowResize();
 				Main.handler = game;
 			}
 		}

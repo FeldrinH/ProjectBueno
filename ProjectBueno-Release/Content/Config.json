@@ -15,5 +15,9 @@
 
 	"startBtn" : {"x" : 16, "y" : 72, "w" : 19, "h" : 5, "text" : "start"},
 	"helpBtn" : {"x" : 16, "y" : 78, "w" : 15, "h" : 5, "text" : "help"},
-	"quitBtn" : {"x" : 16, "y" : 84, "w" : 16, "h" : 5, "text" : "quit"}
+	"resumeBtn" : {"x" : 56, "y" : 57, "w" : 19, "h" : 5, "text" : "resume"},
+	"helpBtn2" : {"x" : 62, "y" : 64, "w" : 15, "h" : 5, "text" : "help"},
+	"backBtnStart" : {"x" : 14, "y" : 87, "w" : 9, "h" : 7, "texture" : "backBtn", "background" : "startMenuHelp"},
+	"backBtnPause" : {"x" : 14, "y" : 86, "w" : 9, "h" : 7, "texture" : "backBtn", "background" : "pauseScreenHelp"}
+
 }
