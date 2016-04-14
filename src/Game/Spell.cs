@@ -32,7 +32,7 @@ namespace ProjectBueno.Game.Spells
 
 		public bool Contains(Skill test)
 		{
-			return shape == test || modMid == test || modTop == test || modBottom == test;
+			return (test != null) && (shape == test || modMid == test || modTop == test || modBottom == test);
 		}
 
 		public float getDamage(Entity target)
@@ -113,7 +113,7 @@ namespace ProjectBueno.Game.Spells
 			return spell.shape.generateProjectiles(pos, spell, game, target);
 		}
 
-		public void onPlaceClick(float mouseX, float mouseY, ref Skill curHeld)
+		public bool onPlaceClick(float mouseX, float mouseY, ref Skill curHeld)
 		{
 			if (upArrowBounds.Contains(mouseX, mouseY))
 			{
@@ -131,11 +131,11 @@ namespace ProjectBueno.Game.Spells
 			}
 			else if (!spell.Contains(curHeld))
 			{
-				if (curHeld is SkillShape && shapeBounds.Contains(mouseX, mouseY))
+				if ((curHeld is SkillShape || curHeld == null) && shapeBounds.Contains(mouseX, mouseY))
 				{
 					spell = new Spell((SkillShape)curHeld, spell.modMid, spell.modTop, spell.modBottom);
 				}
-				else if (curHeld is SkillProp)
+				else if (curHeld is SkillProp || curHeld == null)
 				{
 					if (modMidBounds.Contains(mouseX, mouseY))
 					{
@@ -151,17 +151,20 @@ namespace ProjectBueno.Game.Spells
 					}
 					else
 					{
-						return;
+						return false;
 					}
 				}
 				else
 				{
-					return;
+					return false;
 				}
 				curHeld = null;
+				return true;
 			}
+			return false;
 		}
 
+		//Deprecated
 		public bool onClearClick(float mouseX, float mouseY)
 		{
 			if (shapeBounds.Contains(mouseX, mouseY))

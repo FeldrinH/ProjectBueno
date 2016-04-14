@@ -66,17 +66,19 @@ namespace ProjectBueno.Engine
 		{
 			float mouseX = Main.newMouseState.X * downscale;
 			float mouseY = Main.newMouseState.Y * downscale;
+			bool clearHeld = true;
+
 			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
 			{
 				foreach (Skill skill in player.skills)
 				{
-					skill.onClick(mouseX, mouseY, ref player.knowledgePoints, ref curHeld);
+					if (skill.onClick(mouseX, mouseY, ref player.knowledgePoints, ref curHeld))
+					{
+						clearHeld = false;
+					}
 				}
-				player.spells[player.selectedSpell].onPlaceClick(mouseX, mouseY, ref curHeld);
-			}
-			if (Main.newMouseState.RightButton == ButtonState.Pressed && Main.oldMouseState.RightButton == ButtonState.Released)
-			{
-				if (!player.spells[player.selectedSpell].onClearClick(mouseX, mouseY))
+				
+				if (!player.spells[player.selectedSpell].onPlaceClick(mouseX, mouseY, ref curHeld) && clearHeld)
 				{
 					curHeld = null;
 				}

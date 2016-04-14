@@ -95,21 +95,24 @@ namespace ProjectBueno.Game.Spells
 			return (cooldownIn + cooldown);
 		}
 
-		public void onClick(float mouseX, float mouseY, ref int knowledgePoints, ref Skill curHeld)
+		public bool onClick(float mouseX, float mouseY, ref int knowledgePoints, ref Skill curHeld)
 		{
 			if (buttonBounds.Contains(mouseX, mouseY))
 			{
 				if (bought)
 				{
 					curHeld = this;
+					return true;
 				}
 				else if (knowledgePoints >= cost && !locked)
 				{
 					knowledgePoints -= cost;
 					bought = true;
 					unlockDeps();
+					return true;
 				}
 			}
+			return false;
 		}
 
 		//Button Specialized Draw

@@ -11,8 +11,8 @@ Project Bueno the Exploration Simulator - Currently in alpha
 * Backspace - Enter/Exit spell creation menu
 * P - Pause/Unpause
 * **In spell creation menu:**
-	* Left Mouse Button - Buy skill / pick up skill / place skill in spell
-	* Right Mouse Button - Clear picked up skill / remove skill from spell
+	* Left Mouse Button - Buy skill / Pick up skill / Place skill in spell / Clear picked up skill (when clicking on empty space) / Remove skill from spell (when clicking with no picked up spell)
+	* Right Mouse Button - 
 * **Debug Controls:**
 	* M - Show Minimap
 	* K - Clear all enemies
