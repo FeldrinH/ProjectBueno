@@ -16,7 +16,7 @@ namespace ProjectBueno.Engine
 		{
 			background = Main.content.Load<Texture2D>("startMenu");
 
-			buttons = new List<IButton>() { new TextMoveButton(new GameHandler(), (JObject)Main.Config["startBtn"]), new TextMoveButton(new HelpMenuHandler(this, "backBtnStart"), (JObject)Main.Config["helpBtn"]) };
+			buttons = new List<IButton>() { new TextMoveButton(new GameHandler(), (JObject)Main.Config["startBtn"]), new TextMoveButton(new HelpMenuHandler(this, "backBtnStart"), (JObject)Main.Config["helpBtn"]), new QuitButton((JObject)Main.Config["quitBtn"]) };
 		}
 
 		protected List<IButton> buttons;

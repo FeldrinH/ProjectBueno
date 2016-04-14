@@ -37,6 +37,8 @@ namespace ProjectBueno.Engine
 			}
 		}
 
+		public static Main self { get; private set; }
+
 		public static KeyboardState oldKeyState { get; private set; }
 		public static KeyboardState newKeyState { get; private set; }
 		public static MouseState oldMouseState { get; private set; }
@@ -75,6 +77,7 @@ namespace ProjectBueno.Engine
 			graphicsManager.PreferredBackBufferWidth = xRatio * 5;
 			graphicsManager.PreferredBackBufferHeight = yRatio * 5;
 			oldClientBounds = window.ClientBounds;
+			self = this; //Bad workaround
 		}
 
 		static Main()
@@ -112,7 +115,6 @@ namespace ProjectBueno.Engine
 					handler.windowResize();
 				}
 				graphicsDirty = true;
-				//Console.WriteLine("window resize");
 			}
 		}
 
