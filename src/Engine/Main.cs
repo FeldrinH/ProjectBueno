@@ -146,7 +146,7 @@ namespace ProjectBueno.Engine
 			window.ClientSizeChanged += new EventHandler<EventArgs>(WindowSizeChanged);
 			WindowSizeChanged(null, null);
 
-			handler = new GameHandler();
+			handler = new StartMenuHandler();
 		}
 
 		/// <summary>

@@ -7,14 +7,11 @@ using System;
 
 namespace ProjectBueno.Engine
 {
-	public class SkillHandler : IHandler
+	public class SkillHandler : MenuHandler
 	{
 		public GameHandler game;
 
-		protected Texture2D background;
 		protected Player player;
-		public float downscale { get; protected set; }
-		protected Matrix screenScale;
 
 		public static readonly Vector2 namePos;
 		public static readonly Vector2 descPos;
@@ -27,8 +24,6 @@ namespace ProjectBueno.Engine
 			this.game = game;
 			background = Main.content.Load<Texture2D>("skillTree");
 			this.player = player;
-
-			windowResize();
 		}
 
 		static SkillHandler()
@@ -38,7 +33,7 @@ namespace ProjectBueno.Engine
 			costPos = new Vector2((int)Main.Config["costPos"]["x"], (int)Main.Config["costPos"]["y"]);
 		}
 
-		public void Draw()
+		public override void Draw()
 		{
 			float mouseX = Main.newMouseState.X * downscale;
 			float mouseY = Main.newMouseState.Y * downscale;
@@ -67,7 +62,7 @@ namespace ProjectBueno.Engine
 			Main.spriteBatch.End();
 		}
 
-		public void Update()
+		public override void Update()
 		{
 			float mouseX = Main.newMouseState.X * downscale;
 			float mouseY = Main.newMouseState.Y * downscale;
@@ -91,12 +86,6 @@ namespace ProjectBueno.Engine
 				game.windowResize();
 				Main.handler = game;
 			}
-		}
-		
-		public void windowResize()
-		{
-			screenScale = Matrix.CreateScale((float)Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio);
-			downscale = (float)Main.xRatio / Main.graphicsManager.GraphicsDevice.Viewport.Width;
 		}
 	}
 }

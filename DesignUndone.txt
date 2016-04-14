@@ -3,7 +3,8 @@ The Interface:
 Colored projectiles based on properties
 Spell, health and score HUD
 Automatic scaling in game
-Start menu
+Help menu
+Quit button
 
 The Player:
 

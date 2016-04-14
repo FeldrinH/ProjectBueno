@@ -11,5 +11,9 @@
 	"arrowSize" : {"w" : 6, "h" : 5},
 	"upArrowBounds" : {"x" : 100, "y" : 12},
 	"downArrowBounds" : {"x" : 100, "y" : 29},
-	"numPos" : {"x" : 92, "y" : 20}
+	"numPos" : {"x" : 92, "y" : 20},
+
+	"startBtn" : {"x" : 16, "y" : 72, "w" : 19, "h" : 5, "text" : "start"},
+	"helpBtn" : {"x" : 16, "y" : 78, "w" : 15, "h" : 5, "text" : "help"},
+	"quitBtn" : {"x" : 16, "y" : 84, "w" : 16, "h" : 5, "text" : "quit"}
 }

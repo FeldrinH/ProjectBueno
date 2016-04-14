@@ -89,7 +89,11 @@
     </Reference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Compile Include="src\Engine\TextMoveButton.cs" />
     <Compile Include="src\Engine\Handlers\PauseHandler.cs" />
+    <Compile Include="src\Engine\Handlers\MenuHandler.cs" />
+    <Compile Include="src\Engine\Handlers\StartMenuHandler.cs" />
+    <Compile Include="src\Engine\IButton.cs" />
     <Compile Include="src\Game\Enemy.cs" />
     <Compile Include="src\Game\Projectiles\Projectile.cs" />
     <Compile Include="src\Game\Projectiles\ProjectileBall.cs" />
