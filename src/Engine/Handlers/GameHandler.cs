@@ -235,13 +235,6 @@ namespace ProjectBueno.Engine
 				//Main.spriteBatch.Draw(selectedEnemy.texture, player.target.pos+0.5f*(player.target.size-selectedEnemySize),selectedEnemy.getCurFrame(), Color.White);
 			}
 
-			if (Main.newKeyState.IsKeyDown(Keys.M))
-			{
-				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-				terrain.drawChunkMap(player.pos);
-				Main.spriteBatch.End();
-			}
-
 
 			//HUD
 
@@ -257,6 +250,13 @@ namespace ProjectBueno.Engine
 
 			Main.spriteBatch.End();
 
+
+			if (Main.newKeyState.IsKeyDown(Keys.M))
+			{
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+				terrain.drawChunkMap(player.pos);
+				Main.spriteBatch.End();
+			}
 		}
 
 		public void Update()

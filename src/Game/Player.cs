@@ -39,7 +39,7 @@ namespace ProjectBueno.Game.Entities
 			state = (int)States.STANDING;
 			dir = Dir.DOWN;
 
-			knowledgePoints = int.MaxValue; //FOR TESTING
+			knowledgePoints = 10000; //FOR TESTING
 
 			loadSkills(JArray.Parse(File.ReadAllText("Content/Skills.json")), JObject.Parse(File.ReadAllText("Content/SkillTree.json")));
 		}
