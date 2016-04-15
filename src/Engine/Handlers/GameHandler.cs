@@ -166,7 +166,7 @@ namespace ProjectBueno.Engine
 			screenShift = new Vector2((float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Width - (player.size.X * screenScale)) * 0.5), (float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Height - (player.size.Y * screenScale)) * 0.5));
 			screenMatrix = Matrix.CreateScale(screenScale) * Matrix.CreateTranslation(new Vector3(screenShift, 0.0f));
 
-			hudScale = Matrix.CreateScale((float)Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio);
+			hudScale = Matrix.CreateScale((float)Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio * 0.5f);
 
 			alphaTest = new AlphaTestEffect(Main.graphicsManager.GraphicsDevice)
 			{
@@ -251,11 +251,12 @@ namespace ProjectBueno.Engine
 
 			Main.spriteBatch.DrawString(Main.retroFont, player.knowledgePoints + "KP", hudKpPos, Color.White);
 
-			Main.spriteBatch.Draw(hudHealthTexture, hudHealthBar.ToVector(), hudHealthBar.ScaleSize(player.Health*player.maxHealthMult), Color.White);
+			Main.spriteBatch.Draw(hudHealthTexture, hudHealthBar.ToVector(), hudHealthBar.ScaleSize(player.Health * player.maxHealthMult), Color.White);
 
-			//Main.spriteBatch.Draw(hudCooldownTexture, hudCooldownBar.ToVector(), hudCooldownBar.Scale(player.cooldown * player.maxHealthMult), Color.White);
+			Main.spriteBatch.Draw(hudCooldownTexture, hudCooldownBar.ToVector(), player.lastCast == null ? hudCooldownBar.ToSize() : hudCooldownBar.ScaleSize(player.lastCast.cooldown - player.cooldown, player.lastCast.cooldown), Color.White);
 
 			Main.spriteBatch.End();
+
 		}
 
 		public void Update()

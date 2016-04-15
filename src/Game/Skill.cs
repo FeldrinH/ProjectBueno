@@ -23,7 +23,7 @@ namespace ProjectBueno.Game.Spells
 			description = (string)skill["desc"];
 			cost = (int)skill["cost"];
 
-			cooldown = ((int?)skill["cooldown"] ?? 0) * /*60*/ 5;
+			cooldown = ((int?)skill["cooldown"] ?? 0) * 5;
 
 			if ((bool?)skill["bought"] == true)
 			{

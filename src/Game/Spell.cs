@@ -23,12 +23,11 @@ namespace ProjectBueno.Game.Spells
 				cooldown = shape.modCooldown(modMid.modCooldown(modTop.modCooldown(modBottom.modCooldown(0))));
 				Console.WriteLine(this);
 			}
-			cooldownMult = 1.0f / cooldown;
 		}
 
 		public override string ToString()
 		{
-			return cooldown < 0 ? "Uncastable spell" : string.Format("Cooldown: {0}s\nDamage: {1}\nHeal: {2}\nControl: {3}",cooldown/60,getDamage(null),getHeal(null),getControl(null));
+			return cooldown < 0 ? "Uncastable spell" : string.Format("Cooldown: {0}s\nDamage: {1}\nHeal: {2}\nControl: {3}",cooldown/60.0f,getDamage(null),getHeal(null),getControl(null));
 		}
 
 		public bool Contains(Skill test)
@@ -61,7 +60,6 @@ namespace ProjectBueno.Game.Spells
 		public readonly SkillProp modTop;
 		public readonly SkillProp modBottom;
 		public readonly int cooldown;
-		public readonly float cooldownMult;
 	}
 
 	public class SpellContainer //Wrapper for player spells
@@ -112,6 +110,7 @@ namespace ProjectBueno.Game.Spells
 
 		public Projectile createProjectile(Vector2 pos, GameHandler game, Entity target)
 		{
+			game.player.lastCast = spell;
 			return spell.shape.generateProjectiles(pos, spell, game, target);
 		}
 

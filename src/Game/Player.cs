@@ -48,7 +48,7 @@ namespace ProjectBueno.Game.Entities
 		public List<Skill> skills { get; protected set; }
 		public List<SpellContainer> spells { get; protected set; }
 
-		public Skill lastCast;
+		public Spell lastCast;
 
 		public int selectedSpell;
 		public int cooldown;
@@ -62,6 +62,11 @@ namespace ProjectBueno.Game.Entities
 
 		public override void Update()
 		{
+			if (cooldown > 0 && hasMoved)
+			{
+				cooldown--;
+			}
+
 			base.Update();
 
 			float totalSpeed = Main.newKeyState.IsKeyDown(Keys.LeftShift) ? Terrain.BLOCK_SIZE * Tile.TILESIZE : speed;
@@ -171,11 +176,6 @@ namespace ProjectBueno.Game.Entities
 					game.addProjectile(spells[4].createProjectile(pos, game, target));
 					cooldown = spells[4].cooldown;
 				}
-			}
-
-			if (cooldown > 0 && hasMoved)
-			{
-				cooldown--;
 			}
 		}
 

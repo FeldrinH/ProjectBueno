@@ -23,5 +23,15 @@ namespace ProjectBueno.Utility
 		{
 			return new Rectangle(0, 0, (int)(rect.Width * scale), rect.Height);
 		}
+
+		public static Rectangle ScaleSize(this Rectangle rect, int scale, int div)
+		{
+			return new Rectangle(0, 0, rect.Width * scale / div, rect.Height);
+		}
+
+		public static Rectangle ToSize(this Rectangle rect)
+		{
+			return new Rectangle(0, 0, rect.Width, rect.Height);
+		}
 	}
 }
