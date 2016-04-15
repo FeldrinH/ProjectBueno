@@ -119,6 +119,7 @@
     <Compile Include="src\Game\Tile.cs" />
     <Compile Include="src\Utility\Noise.cs" />
     <Compile Include="src\Utility\AngleVector.cs" />
+    <Compile Include="src\Utility\RectangleHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.5.0.1678, Culture=neutral, processorArchitecture=MSIL">
@@ -135,16 +136,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ProjectBueno-Release\Content\arrows.png" />
+    <Content Include="ProjectBueno-Release\Content\backBtn.png" />
     <Content Include="ProjectBueno-Release\Content\biomes.png" />
+    <Content Include="ProjectBueno-Release\Content\cooldownBar.png" />
     <Content Include="ProjectBueno-Release\Content\flyingProj.png" />
     <Content Include="ProjectBueno-Release\Content\Font.png" />
+    <Content Include="ProjectBueno-Release\Content\healthBar.png" />
+    <Content Include="ProjectBueno-Release\Content\hudBackground.png" />
     <Content Include="ProjectBueno-Release\Content\OutlineShader.fx" />
     <Content Include="ProjectBueno-Release\Content\pauseScreen.png" />
+    <Content Include="ProjectBueno-Release\Content\pauseScreenHelp.png" />
     <Content Include="ProjectBueno-Release\Content\plStand.png" />
     <Content Include="ProjectBueno-Release\Content\plWalk.png" />
+    <Content Include="ProjectBueno-Release\Content\selectedTarget.png" />
+    <Content Include="ProjectBueno-Release\Content\selectedTargetTest.png" />
     <Content Include="ProjectBueno-Release\Content\Skills.png" />
     <Content Include="ProjectBueno-Release\Content\skillTree.png" />
     <Content Include="Icon.ico" />
+    <Content Include="ProjectBueno-Release\Content\startMenu.png" />
+    <Content Include="ProjectBueno-Release\Content\startMenuHelp.png" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="ProjectBueno-Release\Content\Content.mgcb" />

@@ -23,6 +23,7 @@ namespace ProjectBueno.Game.Spells
 				cooldown = shape.modCooldown(modMid.modCooldown(modTop.modCooldown(modBottom.modCooldown(0))));
 				Console.WriteLine(this);
 			}
+			cooldownMult = 1.0f / cooldown;
 		}
 
 		public override string ToString()
@@ -60,6 +61,7 @@ namespace ProjectBueno.Game.Spells
 		public readonly SkillProp modTop;
 		public readonly SkillProp modBottom;
 		public readonly int cooldown;
+		public readonly float cooldownMult;
 	}
 
 	public class SpellContainer //Wrapper for player spells

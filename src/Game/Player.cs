@@ -48,6 +48,8 @@ namespace ProjectBueno.Game.Entities
 		public List<Skill> skills { get; protected set; }
 		public List<SpellContainer> spells { get; protected set; }
 
+		public Skill lastCast;
+
 		public int selectedSpell;
 		public int cooldown;
 

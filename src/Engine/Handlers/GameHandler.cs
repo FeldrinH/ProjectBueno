@@ -9,6 +9,7 @@ using ProjectBueno.Engine.World;
 using System.Diagnostics;
 using ProjectBueno.Game.Spells;
 using ProjectBueno.Utility;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectBueno.Engine
 {
@@ -18,10 +19,14 @@ namespace ProjectBueno.Engine
 		{
 			Main.exiting += onExitSave;
 
-			player = new Player(new Vector2(Terrain.xSize*Terrain.BLOCK_SIZE*Tile.TILESIZE*0.5f,Terrain.ySize*Terrain.BLOCK_SIZE*Tile.TILESIZE*0.5f), this);
+			player = new Player(new Vector2(Terrain.xSize * Terrain.BLOCK_SIZE * Tile.TILESIZE * 0.5f, Terrain.ySize * Terrain.BLOCK_SIZE * Tile.TILESIZE * 0.5f), this);
 			screenScale = 2.0f;
 			projectiles = new List<Projectile>();
 			entities = new List<Entity>();
+
+			hudHealthTexture = Main.content.Load<Texture2D>("healthBar");
+			hudCooldownTexture = Main.content.Load<Texture2D>("cooldownBar");
+			hudBackground = Main.content.Load<Texture2D>("hudBackground");
 
 			drawDebug = false;
 
@@ -64,11 +69,34 @@ namespace ProjectBueno.Engine
 			};
 		}
 
+		static GameHandler()
+		{
+			JObject data = (JObject)Main.Config["hudHealthBar"];
+			hudHealthBar = new Rectangle((int)data["x"], (int)data["y"], (int)data["w"], (int)data["h"]);
+
+			data = (JObject)Main.Config["hudCooldownBar"];
+			hudCooldownBar = new Rectangle((int)data["x"], (int)data["y"], (int)data["w"], (int)data["h"]);
+
+			data = (JObject)Main.Config["hudKp"];
+			hudKpPos = new Vector2((float)data["x"], (float)data["y"] - 1.0f);
+		}
+
+		protected static Texture2D hudBackground;
+
+		protected static readonly Vector2 hudKpPos;
+
+		protected static Texture2D hudHealthTexture;
+		protected static readonly Rectangle hudHealthBar;
+
+		protected static Texture2D hudCooldownTexture;
+		protected static readonly Rectangle hudCooldownBar;
+
 		private float _screenScale;
 		public float screenScale
 		{
 			get { return _screenScale; }
-			set {
+			set
+			{
 				screenScaleInv = 1 / value;
 				_screenScale = value;
 			}
@@ -76,6 +104,8 @@ namespace ProjectBueno.Engine
 		public float screenScaleInv;
 		public Vector2 screenShift;
 		public Matrix screenMatrix;
+
+		protected Matrix hudScale;
 
 		protected bool drawDebug;
 
@@ -116,7 +146,7 @@ namespace ProjectBueno.Engine
 		{
 			//if (proj != null)
 			//{
-				projectiles.Add(proj);
+			projectiles.Add(proj);
 			//}
 		}
 
@@ -134,7 +164,9 @@ namespace ProjectBueno.Engine
 		public void windowResize()
 		{
 			screenShift = new Vector2((float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Width - (player.size.X * screenScale)) * 0.5), (float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Height - (player.size.Y * screenScale)) * 0.5));
-			screenMatrix = Matrix.CreateScale(screenScale)*Matrix.CreateTranslation(new Vector3(screenShift, 0.0f));
+			screenMatrix = Matrix.CreateScale(screenScale) * Matrix.CreateTranslation(new Vector3(screenShift, 0.0f));
+
+			hudScale = Matrix.CreateScale((float)Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio);
 
 			alphaTest = new AlphaTestEffect(Main.graphicsManager.GraphicsDevice)
 			{
@@ -209,6 +241,21 @@ namespace ProjectBueno.Engine
 				terrain.drawChunkMap(player.pos);
 				Main.spriteBatch.End();
 			}
+
+
+			//HUD
+
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, hudScale);
+
+			Main.spriteBatch.Draw(hudBackground, Vector2.Zero, Color.White);
+
+			Main.spriteBatch.DrawString(Main.retroFont, player.knowledgePoints + "KP", hudKpPos, Color.White);
+
+			Main.spriteBatch.Draw(hudHealthTexture, hudHealthBar.ToVector(), hudHealthBar.ScaleSize(player.Health*player.maxHealthMult), Color.White);
+
+			//Main.spriteBatch.Draw(hudCooldownTexture, hudCooldownBar.ToVector(), hudCooldownBar.Scale(player.cooldown * player.maxHealthMult), Color.White);
+
+			Main.spriteBatch.End();
 		}
 
 		public void Update()
@@ -238,7 +285,7 @@ namespace ProjectBueno.Engine
 
 			while (entities.Count < 10)
 			{
-				entities.Add(new Enemy(player.pos + AngleVector.Vector(random.NextDouble()*360.0)*500.0f, this));
+				entities.Add(new Enemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
 			}
 
 			projectiles.RemoveAll(item => item.toRemove);
@@ -270,7 +317,7 @@ namespace ProjectBueno.Engine
 
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{
-				Main.handler = new SkillHandler(this,player);
+				Main.handler = new SkillHandler(this, player);
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
 			{

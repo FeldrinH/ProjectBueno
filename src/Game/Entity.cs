@@ -37,6 +37,8 @@ namespace ProjectBueno.Game.Entities
 		{
 			this.pos = pos;
 			this.game = game;
+			maxHealth = 100.0f;
+			maxHealthMult = 1.0f / maxHealth;
 			_state = -1; //Set initial value to be non-zero, so setting state detects change
 		}
 
@@ -45,22 +47,28 @@ namespace ProjectBueno.Game.Entities
 		public Vector2 knockback { get; protected set; }
 		public int damageCooldown { get; protected set; }
 		protected float speed;
-		public float health { get; protected set; }
+		protected float health;
+		public float maxHealth { get; protected set; }
+		public float maxHealthMult { get; protected set; }
 		public bool canDamage { get { return damageCooldown <= 0; } }
+
+		public float Health
+		{
+			get
+			{
+				return health;
+			}
+			set
+			{
+				health = MathHelper.Min(value, maxHealth);
+			}
+		}
 
 		public bool isDead
 		{
 			get
 			{
-				if (health > 0.0f)
-				{
-					return false;
-				}
-				else
-				{
-					game.player.knowledgePoints += 3;
-					return true;
-				}
+				return health <= 0.0f;
 			}
 		}
 
@@ -80,7 +88,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (value != _state)
 				{
-					curTexture = textures[value*4+(int)dir];
+					curTexture = textures[value * 4 + (int)dir];
 					curTexture.resetFrame();
 					_state = value;
 				}
@@ -96,7 +104,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (value != _dir)
 				{
-					curTexture = textures[state*4+(int)value];
+					curTexture = textures[state * 4 + (int)value];
 					curTexture.resetFrame();
 					_dir = value;
 				}
@@ -118,7 +126,7 @@ namespace ProjectBueno.Game.Entities
 		{
 
 		}*/
-			
+
 		public bool checkCollision(Vector2 entPos, Vector2 entSize)
 		{
 			return pos.X + size.X > entPos.X && entPos.X + entSize.X > pos.X && pos.Y + size.Y > entPos.Y && entPos.Y + entSize.Y > pos.Y;
@@ -133,7 +141,7 @@ namespace ProjectBueno.Game.Entities
 			}
 		}
 
-		#warning Enemy method onPlayerCollide() in Entity class. To move.
+#warning Enemy method onPlayerCollide() in Entity class. To move.
 		public abstract void onPlayerCollide(Player player);
 
 		public void moveDir(Vector2 vec)
@@ -176,7 +184,7 @@ namespace ProjectBueno.Game.Entities
 			float yOffset = (float?)anim["yOffset"] ?? 0.0f;
 			foreach (Dir dr in Enum.GetValues(typeof(Dir)))
 			{
-				textures.Add(new AnimatedTexture(loadedTex, (int)anim[dr.ToString()]["Frames"], (float)anim[dr.ToString()]["Speed"], w, h, (int)dr,xOffset,yOffset));
+				textures.Add(new AnimatedTexture(loadedTex, (int)anim[dr.ToString()]["Frames"], (float)anim[dr.ToString()]["Speed"], w, h, (int)dr, xOffset, yOffset));
 			}
 		}
 
@@ -207,15 +215,15 @@ namespace ProjectBueno.Game.Entities
 		}
 		public virtual void Draw()
 		{
-			Main.spriteBatch.Draw(curTexture.texture, pos+curTexture.offset, curTexture.getCurFrame(), damageCooldown > 0 ? Color.Red : Color.White);
+			Main.spriteBatch.Draw(curTexture.texture, pos + curTexture.offset, curTexture.getCurFrame(), damageCooldown > 0 ? Color.Red : Color.White);
 		}
 		public virtual void DrawRaw() //Draws without any effects, just for shape
 		{
-			Main.spriteBatch.Draw(curTexture.texture, pos+curTexture.offset, curTexture.getCurFrame(), Color.White);
+			Main.spriteBatch.Draw(curTexture.texture, pos + curTexture.offset, curTexture.getCurFrame(), Color.White);
 		}
 		public virtual void DrawOutline(Color outlineColor)
 		{
-			Main.spriteBatch.Draw(curTexture.texture, pos+new Vector2(1.0f,0.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(1.0f, 0.0f), curTexture.getCurFrame(), outlineColor);
 			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(0.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
 			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(-1.0f, 0.0f), curTexture.getCurFrame(), outlineColor);
 			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(0.0f, -1.0f), curTexture.getCurFrame(), outlineColor);

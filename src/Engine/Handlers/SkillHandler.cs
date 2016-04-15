@@ -16,6 +16,7 @@ namespace ProjectBueno.Engine
 		public static readonly Vector2 namePos;
 		public static readonly Vector2 descPos;
 		public static readonly Vector2 costPos;
+		public static readonly Vector2 kpPos;
 
 		protected Skill curHeld;
 
@@ -31,6 +32,7 @@ namespace ProjectBueno.Engine
 			namePos = new Vector2((int)Main.Config["namePos"]["x"], (int)Main.Config["namePos"]["y"]);
 			descPos = new Vector2((int)Main.Config["descPos"]["x"], (int)Main.Config["descPos"]["y"]);
 			costPos = new Vector2((int)Main.Config["costPos"]["x"], (int)Main.Config["costPos"]["y"]);
+			kpPos = new Vector2((int)Main.Config["kpPos"]["x"], (int)Main.Config["kpPos"]["y"]);
 		}
 
 		public override void Draw()
@@ -38,7 +40,7 @@ namespace ProjectBueno.Engine
 			float mouseX = Main.newMouseState.X * downscale;
 			float mouseY = Main.newMouseState.Y * downscale;
 			Skill drawHeldText = curHeld;
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null, screenScale);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, screenScale);
 			Main.spriteBatch.Draw(background, Vector2.Zero, Color.White);
 			foreach (Skill skillButton in player.skills)
 			{
@@ -52,12 +54,14 @@ namespace ProjectBueno.Engine
 			{
 				Main.spriteBatch.DrawString(Main.retroFont, drawHeldText.name, namePos, Color.Purple);
 				Main.spriteBatch.DrawString(Main.retroFont, drawHeldText.description, descPos, Color.Black);
-				Main.spriteBatch.DrawString(Main.retroFont, drawHeldText.cost.ToString() + " KP", costPos, Color.Green);
+				Main.spriteBatch.DrawString(Main.retroFont, drawHeldText.cost + "KP", costPos, Color.Green);
 			}
 			if (curHeld != null)
 			{
 				curHeld.Draw(new Vector2(mouseX-Skill.buttonSize*0.5f, mouseY-Skill.buttonSize*0.5f));
 			}
+
+			Main.spriteBatch.DrawString(Main.retroFont, player.knowledgePoints + "KP", kpPos, Color.Green);
 
 			Main.spriteBatch.End();
 		}
