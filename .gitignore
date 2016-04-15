@@ -202,3 +202,5 @@ ProjectBueno-Release/*
 !ProjectBueno-Release/Content/
 ProjectBueno-Release/Content/bin
 ProjectBueno-Release/Content/obj
+
+PB.smproj
