@@ -51,6 +51,8 @@ namespace ProjectBueno.Game.Entities
 		public float maxHealth { get; protected set; }
 		public float maxHealthMult { get; protected set; }
 		public bool canDamage { get { return damageCooldown <= 0; } }
+		public int control;
+		public bool isAlly { get { return control >= 90; } }
 
 		public float Health
 		{
@@ -113,19 +115,6 @@ namespace ProjectBueno.Game.Entities
 		protected AnimatedTexture curTexture;
 
 		protected List<AnimatedTexture> textures = new List<AnimatedTexture>();
-
-		/*public bool checkTilesCollision()
-		{
-			#warning Does not work
-			return game.colMap[(int)((pos.X + size.X) * Tile.TILEMULT)][(int)((pos.Y + size.Y) * Tile.TILEMULT)]
-				|| game.colMap[(int)(pos.X * Tile.TILEMULT)][(int)((pos.Y + size.Y) * Tile.TILEMULT)] 
-				|| game.colMap[(int)((pos.X + size.X) * Tile.TILEMULT)][(int)(pos.Y * Tile.TILEMULT)] 
-				|| game.colMap[(int)(pos.X * Tile.TILEMULT)][(int)(pos.Y * Tile.TILEMULT)];
-		}
-		public void resolveTilesCollision()
-		{
-
-		}*/
 
 		public bool checkCollision(Vector2 entPos, Vector2 entSize)
 		{

@@ -72,6 +72,7 @@ namespace ProjectBueno.Game.Spells
 							knockback.Normalize();
 							knockback *= 5.0f;
 							entity.dealDamage(spell.getDamage(entity), knockback, spell.shape.dmgCooldown);
+							entity.control += spell.getControl(entity);
 						}
 
 						projPos.RemoveAt(i);

@@ -27,6 +27,9 @@ namespace ProjectBueno.Engine.World
 		Desert = 16,
 		Cold = 48,
 		Sea = 80,
+		ForestTree = 88,
+		DesertTree = 96,
+		ColdTree = 104,
 		FilledForest = 255 //Only during generation
 	}
 	public class Terrain
@@ -81,7 +84,6 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int yC = topLeft.Y; yC <= bottomRight.Y; yC++)
 				{
-
 					Point curChunk = new Point(xC, yC);
 					Point topLeftTile = getTileFromPos(curChunk, pos);
 					Point bottomRightTile = getTileFromPos(curChunk, pos + size);

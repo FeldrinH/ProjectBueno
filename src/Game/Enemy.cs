@@ -17,7 +17,7 @@ namespace ProjectBueno.Game.Entities
 			WALKING
 		}
 
-		public Enemy(Vector2 pos, GameHandler game) : base(pos,game)
+		public Enemy(Vector2 pos, GameHandler game) : base(pos, game)
 		{
 			JObject data = JObject.Parse(File.ReadAllText("Content/EnemyTest.json"));
 			JObject stats = (JObject)data["Stats"];
@@ -34,8 +34,17 @@ namespace ProjectBueno.Game.Entities
 			dir = Dir.DOWN;
 		}
 
+		static Enemy()
+		{
+			random = new Random();
+		}
+
 		public float damage { get; protected set; }
 		public float hitForce { get; protected set; }
+
+		public Entity target;
+
+		protected static readonly Random random;
 
 		public override void Update()
 		{
@@ -45,7 +54,17 @@ namespace ProjectBueno.Game.Entities
 
 		public void AI() //Make abstract after testing
 		{
-			Vector2 totalMove = game.player.pos - pos;
+			if (isAlly && (target == null || target.isDead || target == game.player))
+			{
+				var targetList = game.entities.FindAll(ent => !ent.isAlly);
+				target = targetList[random.Next(targetList.Count)];
+			}
+			else if (target == null)
+			{
+				target = game.player;
+			}
+
+			Vector2 totalMove = target.pos - pos;
 			totalMove.Normalize();
 			totalMove *= speed;
 
