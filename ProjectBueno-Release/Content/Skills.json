@@ -210,7 +210,7 @@
 			"y" : 76,
 			"cost" : 100,
 			"cooldown" : 1,
-			"cooldownMult" : 2,
+			"cooldownMult" : 3,
 			"id" : "ShapeBurst",
 			"class" : "ShapeBurst",	
 			"projCount" : 10000,
@@ -224,6 +224,7 @@
 			"y" : 64,
 			"cost" : 100,
 			"cooldown" : 1, //In ticks
+			"potencyMult" : 0.25,
 			"id" : "ShapeStream",
 			"class" : "ShapeStream",
 			"projCount" : 300,

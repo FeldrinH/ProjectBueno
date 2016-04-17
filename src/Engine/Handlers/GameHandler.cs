@@ -166,7 +166,7 @@ namespace ProjectBueno.Engine
 			screenShift = new Vector2((float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Width - (player.size.X * screenScale)) * 0.5), (float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Height - (player.size.Y * screenScale)) * 0.5));
 			screenMatrix = Matrix.CreateScale(screenScale) * Matrix.CreateTranslation(new Vector3(screenShift, 0.0f));
 
-			hudScale = Matrix.CreateScale((float)Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio * 0.5f);
+			hudScale = Matrix.CreateScale((float)Math.Round(0.5 * Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio,MidpointRounding.AwayFromZero));
 
 			alphaTest = new AlphaTestEffect(Main.graphicsManager.GraphicsDevice)
 			{

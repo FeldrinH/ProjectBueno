@@ -223,14 +223,15 @@ namespace ProjectBueno.Game.Entities
 		}
 		public virtual void DrawOutline(Color outlineColor)
 		{
-			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(1.0f, 0.0f), curTexture.getCurFrame(), outlineColor);
-			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(0.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
-			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(-1.0f, 0.0f), curTexture.getCurFrame(), outlineColor);
-			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(0.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
-			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(1.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
-			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(-1.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
-			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(1.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
-			Main.spriteBatch.Draw(curTexture.texture, pos + new Vector2(-1.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
+			Vector2 cpos = pos + curTexture.offset;
+			Main.spriteBatch.Draw(curTexture.texture, cpos + new Vector2(1.0f, 0.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, cpos + new Vector2(0.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, cpos + new Vector2(-1.0f, 0.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, cpos + new Vector2(0.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, cpos + new Vector2(1.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, cpos + new Vector2(-1.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, cpos + new Vector2(1.0f, -1.0f), curTexture.getCurFrame(), outlineColor);
+			Main.spriteBatch.Draw(curTexture.texture, cpos + new Vector2(-1.0f, 1.0f), curTexture.getCurFrame(), outlineColor);
 		}
 
 		public void DrawDebug()

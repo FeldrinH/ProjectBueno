@@ -14,7 +14,6 @@ Every spell must contain at least a shape
 
 Shapes:
 		Burst: Ring expands !!!3 blocks!!! around the character for one second +100% effect
-		Stream: effect refreshing every second, heal or damage happens every 0.25 second with 1/4 the potency. -70% effect
 Properties and modifiers:
 			Arcing: Spells bounce from target to targets of same type losing 40% effectiveness every time.
 			Rebound: Effects granted on others give you a point of life for every two points of effect

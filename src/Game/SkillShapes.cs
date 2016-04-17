@@ -12,7 +12,7 @@ namespace ProjectBueno.Game.Spells
 		protected SkillShape(JObject skill) : base(skill)
 		{
 			#warning To load
-			potencyMult = 1.0f;
+			potencyMult = (float?)skill["potencyMult"] ?? 1.0f;
 			dmgCooldown = 15;
 		}
 		public AnimatedTexture projTexture;
