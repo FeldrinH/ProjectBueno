@@ -1,7 +1,7 @@
 The Interface:
 
 Colored projectiles based on properties
-Spell, health and score HUD
+(Spell and) score HUD
 Automatic scaling in game
 
 The Player:
