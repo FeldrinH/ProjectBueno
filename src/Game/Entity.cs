@@ -46,7 +46,7 @@ namespace ProjectBueno.Game.Entities
 		public Vector2 size { get; protected set; }
 		public Vector2 knockback { get; protected set; }
 		public int damageCooldown { get; protected set; }
-		protected float speed;
+		public float speed { get; protected set; }
 		protected float health;
 		public float maxHealth { get; protected set; }
 		public float maxHealthMult { get; protected set; }
@@ -116,6 +116,10 @@ namespace ProjectBueno.Game.Entities
 
 		protected List<AnimatedTexture> textures = new List<AnimatedTexture>();
 
+		public virtual void updateState()
+		{
+		}
+
 		public bool checkCollision(Vector2 entPos, Vector2 entSize)
 		{
 			return pos.X + size.X > entPos.X && entPos.X + entSize.X > pos.X && pos.Y + size.Y > entPos.Y && entPos.Y + entSize.Y > pos.Y;
@@ -131,7 +135,7 @@ namespace ProjectBueno.Game.Entities
 		}
 
 #warning Enemy method onPlayerCollide() in Entity class. To move.
-		public abstract void onPlayerCollide(Player player);
+		public abstract void onTargetCollide(Entity target);
 
 		public void moveDir(Vector2 vec)
 		{

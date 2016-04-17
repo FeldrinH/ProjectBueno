@@ -248,7 +248,7 @@ namespace ProjectBueno.Game.Entities
 			}
 		}
 
-		public override void onPlayerCollide(Player player)
+		public override void onTargetCollide(Entity target)
 		{
 			Console.WriteLine("Whoa! Multiplayer magically implemented itself. Or this is a serious error.");
 		}

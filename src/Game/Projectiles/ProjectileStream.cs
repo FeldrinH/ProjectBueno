@@ -58,6 +58,7 @@ namespace ProjectBueno.Game.Spells
 							knockback *= 5.0f;
 							entity.dealDamage(spell.getDamage(entity), knockback, spell.shape.dmgCooldown);
 							entity.control += spell.getControl(entity);
+							entity.updateState();
 						}
 
 						break;

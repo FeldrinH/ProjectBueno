@@ -3,6 +3,10 @@
 	"modMidBounds" : {"x" : 113 , "y" : 18},
 	"modTopBounds" : {"x" : 127, "y" : 12},
 	"modBottomBounds" : {"x" : 127, "y" : 24},
+
+	"treeForest" : {"x" :  8, "y" : 32},
+	"treeDesert" : {"x" : 1, "y" : 2},
+	"treeCold" : {"x" : 1, "y" : 2},
 	
 	"namePos" : {"x" : 69, "y" : 41},
 	"descPos" : {"x" : 69, "y" : 51},

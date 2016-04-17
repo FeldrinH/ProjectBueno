@@ -46,6 +46,7 @@ namespace ProjectBueno.Game.Spells
 					pushback *= 5.0f; //To load
 					entity.dealDamage(spell.getDamage(entity), pushback, spell.shape.dmgCooldown);
 					entity.control += spell.getControl(entity);
+					entity.updateState();
 					lifetime = 0;
 					break;
 				}

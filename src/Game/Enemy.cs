@@ -46,6 +46,18 @@ namespace ProjectBueno.Game.Entities
 
 		protected static readonly Random random;
 
+		public override void updateState()
+		{
+			if (isAlly)
+			{
+				speed = game.player.speed;
+				if (target == game.player)
+				{
+					target = null;
+				}
+			}
+		}
+
 		public override void Update()
 		{
 			AI();
@@ -54,7 +66,7 @@ namespace ProjectBueno.Game.Entities
 
 		public void AI() //Make abstract after testing
 		{
-			if (isAlly && (target == null || target.isDead || target == game.player))
+			if (isAlly && (target == null || target.isDead || target.isAlly))
 			{
 				var targetList = game.entities.FindAll(ent => !ent.isAlly);
 				target = targetList[random.Next(targetList.Count)];
@@ -80,9 +92,9 @@ namespace ProjectBueno.Game.Entities
 
 			pos += totalMove;
 
-			if (checkCollision(game.player.pos, game.player.size))
+			if (checkCollision(target.pos, target.size))
 			{
-				onPlayerCollide(game.player);
+				onTargetCollide(target);
 			}
 		}
 
@@ -94,12 +106,12 @@ namespace ProjectBueno.Game.Entities
 			}
 		}
 
-		public override void onPlayerCollide(Player player)
+		public override void onTargetCollide(Entity target)
 		{
-			Vector2 pushback = game.player.pos - pos;
+			Vector2 pushback = target.pos - pos;
 			pushback.Normalize();
 			pushback *= hitForce;
-			player.dealDamage(damage, pushback, 5); //HARDCODE COOLDOWN 5
+			target.dealDamage(damage, pushback, 5); //HARDCODE COOLDOWN 5
 		}
 	}
 }

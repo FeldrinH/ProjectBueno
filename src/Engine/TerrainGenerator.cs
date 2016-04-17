@@ -36,8 +36,9 @@ namespace ProjectBueno.Engine.World
 	{
 		public Terrain()
 		{
-			chunks = new Dictionary<Point, byte[][]>();
+			chunks = new Dictionary<Point, Chunk>();
 			terrainTex = Main.content.Load<Texture2D>("biomes");
+			treeTex = Main.content.Load<Texture2D>("forestTree");
 		}
 
 		//public static readonly List<Color> tileColors = new List<Color>() { Color.LightGreen, Color.LawnGreen, Color.Blue, Color.Yellow, Color.LightBlue };
@@ -47,6 +48,7 @@ namespace ProjectBueno.Engine.World
 		protected static readonly int[] ySide = { -1, 1, 0, 0 };
 
 		public static Texture2D terrainTex;
+		public static Texture2D treeTex;
 
 		public const int CHUNK_SIZE = 64;
 		public const int CHUNK_BLEED = 8;
@@ -61,7 +63,7 @@ namespace ProjectBueno.Engine.World
 		public static int yChunks = ySize / BLOCKS_PER_CHUNK;
 		public static int tileLimit = 30000;
 		protected Tiles[][] blockMap;
-		protected Dictionary<Point, byte[][]> chunks;
+		protected Dictionary<Point, Chunk> chunks;
 		protected Queue<Point> callqueue = new Queue<Point>();
 		public int tileCount;
 		public int seaCount;
@@ -87,7 +89,7 @@ namespace ProjectBueno.Engine.World
 					Point curChunk = new Point(xC, yC);
 					Point topLeftTile = getTileFromPos(curChunk, pos);
 					Point bottomRightTile = getTileFromPos(curChunk, pos + size);
-					byte[][] chunk = getChunk(curChunk);
+					byte[][] chunk = getChunk(curChunk).tiles;
 					for (int x = topLeftTile.X; x <= bottomRightTile.X; x++)
 					{
 						for (int y = topLeftTile.Y; y <= bottomRightTile.Y; y++)
@@ -105,9 +107,9 @@ namespace ProjectBueno.Engine.World
 		}
 
 		#region Chunk Generation
-		public byte[][] getChunk(Point coords)
+		public Chunk getChunk(Point coords)
 		{
-			byte[][] returnChunk;
+			Chunk returnChunk;
 			if (chunks.TryGetValue(coords, out returnChunk))
 			{
 				return returnChunk;
@@ -130,10 +132,10 @@ namespace ProjectBueno.Engine.World
 		public static Point getTileFromPos(Point chunk, Vector2 pos)
 		{
 			pos = (pos * Tile.TILEMULT) - chunk.ToVector2() * CHUNK_SIZE;
-			return new Point(MathHelper.Clamp((int)pos.X, 0, CHUNK_SIZE-1), MathHelper.Clamp((int)pos.Y, 0, CHUNK_SIZE-1));
+			return new Point(MathHelper.Clamp((int)pos.X, 0, CHUNK_SIZE - 1), MathHelper.Clamp((int)pos.Y, 0, CHUNK_SIZE - 1));
 		}
 
-		protected byte[][] generateChunk(Point coords)
+		protected Chunk generateChunk(Point coords)
 		{
 			List<TilePoint> tileQueue = new List<TilePoint>();
 			Tiles[][] chunk = Enumerable.Range(0, CHUNK_SIZE + CHUNK_BLEED * 2).Select(x => Enumerable.Range(0, CHUNK_SIZE + CHUNK_BLEED * 2).Select(y => getBlock(
@@ -160,11 +162,12 @@ namespace ProjectBueno.Engine.World
 				tileQueue.Clear();
 			}
 
-			byte[][] returnChunk = new byte[CHUNK_SIZE][];
+			byte[][] rawChunk = new byte[CHUNK_SIZE][];
 			for (int j = 0; j < CHUNK_SIZE; j++)
 			{
-				returnChunk[j] = new byte[CHUNK_SIZE];
+				rawChunk[j] = new byte[CHUNK_SIZE];
 			}
+			Chunk returnChunk = new Chunk(rawChunk, new List<Tree>());
 
 			int outTile;
 			for (int x = CHUNK_BLEED; x < CHUNK_SIZE + CHUNK_BLEED; x++)
@@ -173,7 +176,7 @@ namespace ProjectBueno.Engine.World
 				{
 					if (chunk[x][y] == Tiles.Sea)
 					{
-						outTile = (int)(Tiles.Sea) + random.Next(0, 7);
+						outTile = (int)Tiles.Sea + random.Next(0, 7);
 					}
 					else
 					{
@@ -182,13 +185,21 @@ namespace ProjectBueno.Engine.World
 						{
 							if (chunk[x][y] != Tiles.Forest)
 							{
-								outTile = getAdjacentByte(chunk, x, y, Tiles.Forest) + 16;
+								outTile = getAdjacentByte(chunk, x, y, Tiles.Forest) + 16 + (int)chunk[x][y];
+							}
+							else if (random.Next(50) == 0)
+							{
+								outTile = (int)Tiles.ForestTree;
+								returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, 0));
 							}
 						}
-						outTile += (int)chunk[x][y];
+						else
+						{
+							outTile += (int)chunk[x][y];
+						}
 					}
 
-					returnChunk[x - CHUNK_BLEED][y - CHUNK_BLEED] = (byte)outTile;
+					rawChunk[x - CHUNK_BLEED][y - CHUNK_BLEED] = (byte)outTile;
 				}
 			}
 
@@ -248,11 +259,11 @@ namespace ProjectBueno.Engine.World
 		#region Draw
 		public void drawChunk(Point coords)
 		{
-			byte[][] chunk = getChunk(coords);
-			if (chunk == null)
+			byte[][] chunk = getChunk(coords).tiles;
+			/*if (chunk == null)
 			{
 				return;
-			}
+			}*/
 			for (int x = 0; x < CHUNK_SIZE; x++)
 			{
 				for (int y = 0; y < CHUNK_SIZE; y++)
@@ -261,6 +272,19 @@ namespace ProjectBueno.Engine.World
 				}
 			}
 		}
+		public void drawTrees(Point coords)
+		{
+			List<Tree> chunk = getChunk(coords).trees;
+			/*if (chunk == null)
+			{
+				return;
+			}*/
+			foreach (var tree in chunk)
+			{
+				Main.spriteBatch.Draw(treeTex, tree.pos + (coords.ToVector2() * CHUNK_SIZE * Tile.TILESIZE) - Tree.treeOrigins[(int)tree.id], Color.White);
+			}
+		}
+
 		public void drawChunkMap(Vector2 playerPos)
 		{
 			Main.spriteBatch.Draw(Main.boxel, new Rectangle(0, 0, xSize, ySize), Color.Black);
