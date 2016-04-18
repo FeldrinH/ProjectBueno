@@ -14,6 +14,12 @@ namespace ProjectBueno.Utility
 			return new Vector2(rect.X, rect.Y);
 		}
 
+		public static Rectangle XShift(this Rectangle rect, int xshift)
+		{
+			rect.X += xshift;
+			return rect;
+		}
+
 		public static Rectangle Scale(this Rectangle rect, float scale)
 		{
 			return new Rectangle(rect.X, rect.Y, (int)(rect.Width * scale), rect.Height);

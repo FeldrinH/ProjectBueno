@@ -20,16 +20,9 @@ namespace ProjectBueno.Engine.World
 		public List<Tree> trees;
 	}
 
-	public enum TreeId
-	{
-		Forest,
-		Desert,
-		Cold
-	}
-
 	public struct Tree
 	{
-		public Tree(int x, int y, TreeId treeId)
+		public Tree(int x, int y, int treeId)
 		{
 			this.pos = new Vector2(x, y) * Tile.TILESIZE;
 			this.id = treeId;
@@ -37,12 +30,14 @@ namespace ProjectBueno.Engine.World
 
 		static Tree()
 		{
-			treeOrigins = new Vector2[3] { new Vector2((float)Main.Config["treeForest"]["x"], (float)Main.Config["treeForest"]["y"]), new Vector2((float)Main.Config["treeDesert"]["x"], (float)Main.Config["treeDesert"]["y"]), new Vector2((float)Main.Config["treeCold"]["x"], (float)Main.Config["treeCold"]["y"]) };
+			treeOrigin = new Vector2((float)Main.Config["tree"]["x"], (float)Main.Config["tree"]["y"]);
+			treeRect = new Rectangle(0, 0, (int)Main.Config["tree"]["w"], (int)Main.Config["tree"]["h"]);
 		}
 
-		public static readonly Vector2[] treeOrigins;
+		public static readonly Vector2 treeOrigin;
+		public static readonly Rectangle treeRect;
 
 		public readonly Vector2 pos;
-		public readonly TreeId id;
+		public readonly int id;
 	}
 }

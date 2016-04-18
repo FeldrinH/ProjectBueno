@@ -6,6 +6,8 @@ using Newtonsoft.Json.Linq;
 using ProjectBueno.Engine;
 using Microsoft.Xna.Framework;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
+using ProjectBueno.Utility;
 
 namespace ProjectBueno.Game.Entities
 {
@@ -32,10 +34,14 @@ namespace ProjectBueno.Game.Entities
 
 			state = (int)States.STANDING;
 			dir = Dir.DOWN;
+
+			barOffset = new Vector2((size.X - barSize.X) * 0.5f, size.Y + barDistance);
 		}
 
 		static Enemy()
 		{
+			barSize = new Vector2((float)Main.Config["healthBar"]["w"], (float)Main.Config["healthBar"]["h"]);
+			barDistance = (float)Main.Config["healthBar"]["d"];
 			random = new Random();
 		}
 
@@ -44,6 +50,9 @@ namespace ProjectBueno.Game.Entities
 
 		public Entity target;
 
+		protected Vector2 barOffset;
+		protected static readonly Vector2 barSize;
+		protected static readonly float barDistance;
 		protected static readonly Random random;
 
 		public override void updateState()
@@ -69,16 +78,20 @@ namespace ProjectBueno.Game.Entities
 			if (isAlly && (target == null || target.isDead || target.isAlly))
 			{
 				var targetList = game.entities.FindAll(ent => !ent.isAlly);
-				target = targetList[random.Next(targetList.Count)];
+				target = targetList.Count == 0 ? null : targetList[random.Next(targetList.Count)];
 			}
 			else if (target == null)
 			{
 				target = game.player;
 			}
 
-			Vector2 totalMove = target.pos - pos;
-			totalMove.Normalize();
-			totalMove *= speed;
+			Vector2 totalMove = Vector2.Zero;
+			if (target != null)
+			{
+				totalMove = target.pos - pos;
+				totalMove.Normalize();
+				totalMove *= speed;
+			}
 
 			moveDir(totalMove);
 			if (totalMove != Vector2.Zero)
@@ -92,7 +105,7 @@ namespace ProjectBueno.Game.Entities
 
 			pos += totalMove;
 
-			if (checkCollision(target.pos, target.size))
+			if (target != null && checkCollision(target.pos, target.size))
 			{
 				onTargetCollide(target);
 			}
@@ -104,6 +117,13 @@ namespace ProjectBueno.Game.Entities
 			{
 				loadTexture((JObject)animData[st.ToString()]);
 			}
+		}
+
+		public override void Draw()
+		{
+			base.Draw();
+			Main.spriteBatch.Draw(Main.boxel, pos + barOffset, null, isAlly ? Color.DarkGreen : Color.DarkRed, 0f, Vector2.Zero, barSize, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(Main.boxel, pos + barOffset, null, isAlly ? Color.Lime : Color.Red, 0f, Vector2.Zero, barSize.MultX(health * maxHealthMult), SpriteEffects.None, 0f);
 		}
 
 		public override void onTargetCollide(Entity target)

@@ -64,7 +64,7 @@ namespace ProjectBueno.Game.Spells
 				projPos[i] += projSpeed[i];
 				foreach (var entity in game.entities)
 				{
-					if (entity.checkCollision(projPos[i], size))
+					if (!entity.isAlly && entity.checkCollision(projPos[i], size))
 					{
 						if (entity.canDamage)
 						{

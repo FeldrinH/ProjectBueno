@@ -39,7 +39,7 @@ namespace ProjectBueno.Game.Spells
 			--lifetime;
 			foreach (var entity in game.entities)
 			{
-				if (entity.checkCollision(pos, size))
+				if (!entity.isAlly && entity.checkCollision(pos, size))
 				{
 					Vector2 pushback = speed;
 					pushback.Normalize();

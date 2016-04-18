@@ -5,7 +5,7 @@
 		"Health" : 100.0,
 		"Speed" : 0.35, //Speed in pixels/tick
 		"Damage" : 10,
-		"HitForce" : 10 //Speed of knockback in pixels/tick
+		"HitForce" : 6 //Speed of knockback in pixels/tick
 	},
 	"Animations" : {
 		"WALKING" : {

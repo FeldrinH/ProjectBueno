@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectBueno.Game.Entities;
 using ProjectBueno.Game.Tiles;
 using ProjectBueno.Utility;
 using System;
@@ -27,9 +28,10 @@ namespace ProjectBueno.Engine.World
 		Desert = 16,
 		Cold = 48,
 		Sea = 80,
+		Trees = 88,
 		ForestTree = 88,
-		DesertTree = 96,
-		ColdTree = 104,
+		DesertTree = 90,
+		ColdTree = 92,
 		FilledForest = 255 //Only during generation
 	}
 	public class Terrain
@@ -38,7 +40,7 @@ namespace ProjectBueno.Engine.World
 		{
 			chunks = new Dictionary<Point, Chunk>();
 			terrainTex = Main.content.Load<Texture2D>("biomes");
-			treeTex = Main.content.Load<Texture2D>("forestTree");
+			treeTex = Main.content.Load<Texture2D>("trees");
 		}
 
 		//public static readonly List<Color> tileColors = new List<Color>() { Color.LightGreen, Color.LawnGreen, Color.Blue, Color.Yellow, Color.LightBlue };
@@ -185,12 +187,25 @@ namespace ProjectBueno.Engine.World
 						{
 							if (chunk[x][y] != Tiles.Forest)
 							{
-								outTile = getAdjacentByte(chunk, x, y, Tiles.Forest) + 16 + (int)chunk[x][y];
+								if (random.Next(400) == 0 && chunk[x][y] == Tiles.Desert)
+								{
+									outTile = (int)Tiles.DesertTree + random.Next(2);
+									returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, outTile - (int)Tiles.Trees));
+								}
+								else if (random.Next(200) == 0 && chunk[x][y] == Tiles.Cold)
+								{
+									outTile = (int)Tiles.ColdTree + random.Next(2);
+									returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, outTile - (int)Tiles.Trees));
+								}
+								else
+								{
+									outTile = getAdjacentByte(chunk, x, y, Tiles.Forest) + 16 + (int)chunk[x][y];
+								}
 							}
 							else if (random.Next(50) == 0)
 							{
-								outTile = (int)Tiles.ForestTree;
-								returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, 0));
+								outTile = (int)Tiles.ForestTree + random.Next(2);
+								returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, outTile - (int)Tiles.Trees));
 							}
 						}
 						else
@@ -281,7 +296,7 @@ namespace ProjectBueno.Engine.World
 			}*/
 			foreach (var tree in chunk)
 			{
-				Main.spriteBatch.Draw(treeTex, tree.pos + (coords.ToVector2() * CHUNK_SIZE * Tile.TILESIZE) - Tree.treeOrigins[(int)tree.id], Color.White);
+				Main.spriteBatch.Draw(treeTex, tree.pos + (coords.ToVector2() * CHUNK_SIZE * Tile.TILESIZE) - Tree.treeOrigin, Tree.treeRect.XShift(tree.id * Tree.treeRect.Width), Color.White);
 			}
 		}
 
