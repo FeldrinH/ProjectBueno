@@ -172,9 +172,9 @@ namespace ProjectBueno.Engine.World
 			Chunk returnChunk = new Chunk(rawChunk, new List<Tree>());
 
 			int outTile;
-			for (int x = CHUNK_BLEED; x < CHUNK_SIZE + CHUNK_BLEED; x++)
+			for (int y = CHUNK_BLEED; y < CHUNK_SIZE + CHUNK_BLEED; y++)
 			{
-				for (int y = CHUNK_BLEED; y < CHUNK_SIZE + CHUNK_BLEED; y++)
+				for (int x = CHUNK_BLEED; x < CHUNK_SIZE + CHUNK_BLEED; x++)
 				{
 					if (chunk[x][y] == Tiles.Sea)
 					{

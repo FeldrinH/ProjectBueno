@@ -229,10 +229,18 @@ namespace ProjectBueno.Engine
 				ent.Draw();
 			}
 
-			terrain.drawTrees(playerChunk);
-			terrain.drawTrees(new Point(playerChunk.X + hShift, playerChunk.Y));
+			if (vShift == 1)
+			{
+				terrain.drawTrees(playerChunk);
+				terrain.drawTrees(new Point(playerChunk.X + hShift, playerChunk.Y));
+			}
 			terrain.drawTrees(new Point(playerChunk.X, playerChunk.Y + vShift));
 			terrain.drawTrees(new Point(playerChunk.X + hShift, playerChunk.Y + vShift));
+			if (vShift == -1)
+			{
+				terrain.drawTrees(playerChunk);
+				terrain.drawTrees(new Point(playerChunk.X + hShift, playerChunk.Y));
+			}
 
 			if (drawDebug)
 			{
