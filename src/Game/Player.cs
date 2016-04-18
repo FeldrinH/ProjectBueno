@@ -55,14 +55,13 @@ namespace ProjectBueno.Game.Entities
 
 		public int knowledgePoints;
 
-		public bool hasMoved { get; protected set; }
 		public bool hasCastBurst;
 
 		public Entity target;
 
 		public override void Update()
 		{
-			if (cooldown > 0 && hasMoved)
+			if (cooldown > 0 && game.doUpdate)
 			{
 				cooldown--;
 			}
@@ -104,7 +103,7 @@ namespace ProjectBueno.Game.Entities
 				}
 			}
 
-			hasMoved = false;
+			game.doUpdate = false;
 			if (totalMove != Vector2.Zero)
 			{
 				state = (int)States.WALKING;
@@ -126,7 +125,7 @@ namespace ProjectBueno.Game.Entities
 				if (!game.terrain.isColliding(pos + totalMove, size) || Main.newKeyState.IsKeyDown(Keys.LeftShift))
 				{
 					pos += totalMove;
-					hasMoved = true;
+					game.doUpdate = true;
 					hasCastBurst = false;
 				}
 

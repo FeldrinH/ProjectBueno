@@ -27,3 +27,9 @@
 /processorParam:DebugMode=Auto
 /build:OutlineShader.fx
 
+#begin tiktok.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:tiktok.wav
+

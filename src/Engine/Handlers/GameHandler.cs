@@ -10,6 +10,7 @@ using System.Diagnostics;
 using ProjectBueno.Game.Spells;
 using ProjectBueno.Utility;
 using Newtonsoft.Json.Linq;
+using Microsoft.Xna.Framework.Audio;
 
 namespace ProjectBueno.Engine
 {
@@ -27,6 +28,9 @@ namespace ProjectBueno.Engine
 			hudHealthTexture = Main.content.Load<Texture2D>("healthBar");
 			hudCooldownTexture = Main.content.Load<Texture2D>("cooldownBar");
 			hudBackground = Main.content.Load<Texture2D>("hudBackground");
+
+			clockTick = Main.content.Load<SoundEffect>("tiktok").CreateInstance();
+			clockTick.IsLooped = true;
 
 			drawDebug = false;
 
@@ -109,6 +113,29 @@ namespace ProjectBueno.Engine
 
 		protected bool drawDebug;
 
+		protected static SoundEffectInstance clockTick;
+
+		protected bool _doUpdate;
+		public bool doUpdate
+		{
+			get { return _doUpdate; }
+			set
+			{
+				if (_doUpdate != value)
+				{
+					if (value)
+					{
+						clockTick.Stop();
+					}
+					else
+					{
+						clockTick.Play();
+					}
+					_doUpdate = value;
+				}
+			}
+		}
+
 		protected static Effect outlineShader;
 		protected static DepthStencilState maskStencil, drawStencil;
 		protected static AlphaTestEffect alphaTest;
@@ -166,7 +193,7 @@ namespace ProjectBueno.Engine
 			screenShift = new Vector2((float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Width - (player.size.X * screenScale)) * 0.5), (float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Height - (player.size.Y * screenScale)) * 0.5));
 			screenMatrix = Matrix.CreateScale(screenScale) * Matrix.CreateTranslation(new Vector3(screenShift, 0.0f));
 
-			hudScale = Matrix.CreateScale((float)Math.Round(0.5 * Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio,MidpointRounding.AwayFromZero));
+			hudScale = Matrix.CreateScale((float)Math.Round(0.5 * Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio, MidpointRounding.AwayFromZero));
 
 			alphaTest = new AlphaTestEffect(Main.graphicsManager.GraphicsDevice)
 			{
@@ -299,7 +326,7 @@ namespace ProjectBueno.Engine
 
 			player.Update();
 
-			if (player.hasMoved)
+			if (doUpdate)
 			{
 				for (int i = 0; i < projectiles.Count; i++)
 				{
@@ -376,10 +403,15 @@ namespace ProjectBueno.Engine
 
 		public void Initialize()
 		{
+			if(!doUpdate)
+			{
+				clockTick.Play();
+			}
 		}
 
 		public void Deinitialize()
 		{
+			clockTick.Stop();
 		}
 	}
 }
