@@ -8,6 +8,18 @@ namespace ProjectBueno.Engine
 	//Animated Entity Texture with frames(horizontal)
 	public class AnimatedTexture
 	{
+		public AnimatedTexture(AnimatedTexture anim) //Clone constructor
+		{
+			texture = anim.texture;
+			hShift = anim.hShift;
+			offset = anim.offset;
+			w = anim.w;
+			h = anim.h;
+			curFrame = 0.0f;
+			maxFrame = anim.maxFrame;
+			speed = anim.speed;
+		}
+
 		public AnimatedTexture(JObject anim, int hShift) : this(anim)
 		{
 			this.hShift = hShift * h;

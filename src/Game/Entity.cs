@@ -36,7 +36,8 @@ namespace ProjectBueno.Game.Entities
 		{
 			this.pos = pos;
 			this.game = game;
-			maxHealth = 100.0f;
+
+			maxHealth = 100.0f; //Set default maxHealth
 			maxHealthMult = 1.0f / maxHealth;
 			_state = -1; //Set initial value to be non-zero, so setting state detects change
 		}
@@ -76,7 +77,7 @@ namespace ProjectBueno.Game.Entities
 		protected const int DAMAGECOOLDOWN = 5;
 		protected const float KNOCKBACKDAMPENING = 0.75f;
 
-		protected readonly GameHandler game;
+		protected GameHandler game;
 		private int _state;
 		private Dir _dir;
 		public int state

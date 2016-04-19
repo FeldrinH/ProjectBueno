@@ -164,6 +164,7 @@ namespace ProjectBueno.Engine
 			window.ClientSizeChanged += new EventHandler<EventArgs>(WindowSizeChanged);
 			WindowSizeChanged(null, null);
 
+			EnemyManager.Initialize();
 			handler = new StartMenuHandler();
 		}
 

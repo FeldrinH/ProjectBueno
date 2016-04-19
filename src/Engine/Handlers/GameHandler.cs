@@ -325,7 +325,7 @@ namespace ProjectBueno.Engine
 
 			while (entities.Count < 10)
 			{
-				entities.Add(new Enemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
+				entities.Add(EnemyManager.SpawnEnemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
 			}
 
 			projectiles.RemoveAll(item => item.toRemove);

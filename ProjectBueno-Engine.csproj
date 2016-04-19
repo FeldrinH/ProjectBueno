@@ -90,6 +90,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Compile Include="src\Engine\Chunk.cs" />
+    <Compile Include="src\Engine\EnemyManager.cs" />
     <Compile Include="src\Engine\Handlers\HelpMenuHandler.cs" />
     <Compile Include="src\Engine\MoveButton.cs" />
     <Compile Include="src\Engine\QuitButton.cs" />

@@ -8,10 +8,11 @@ using Microsoft.Xna.Framework;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectBueno.Utility;
+using ProjectBueno.Game.Entities;
 
-namespace ProjectBueno.Game.Entities
+namespace ProjectBueno.Game.Enemies
 {
-	class Enemy : Entity //Make abstract after testing
+	public class Enemy : Entity //Make abstract after testing
 	{
 		public enum States : int
 		{
@@ -19,12 +20,13 @@ namespace ProjectBueno.Game.Entities
 			WALKING
 		}
 
-		public Enemy(Vector2 pos, GameHandler game) : base(pos, game)
+		public Enemy(JObject data) : base(Vector2.Zero, null) //Template enemy constructor
 		{
-			JObject data = JObject.Parse(File.ReadAllText("Content/EnemyTest.json"));
 			JObject stats = (JObject)data["Stats"];
 
 			loadTextures((JObject)data["Animations"]);
+
+			id = (string)data["id"];
 
 			health = (float)stats["Health"];
 			speed = (float)stats["Speed"];
@@ -38,12 +40,35 @@ namespace ProjectBueno.Game.Entities
 			barOffset = new Vector2((size.X - barSize.X) * 0.5f, size.Y + barDistance);
 		}
 
+		protected Enemy(Enemy data, Vector2 pos, GameHandler game) : base(pos, game) //Instance enemy constructor. To be called by Spawn()
+		{
+			foreach (AnimatedTexture tex in data.textures)
+			{
+				textures.Add(new AnimatedTexture(tex));
+			}
+
+			id = data.id;
+
+			health = data.health;
+			speed = data.speed;
+			size = data.size;
+			damage = data.damage;
+			hitForce = data.hitForce;
+
+			state = (int)States.STANDING;
+			dir = Dir.DOWN;
+
+			barOffset = data.barOffset;
+		}
+
 		static Enemy()
 		{
 			barSize = new Vector2((float)Main.Config["healthBar"]["w"], (float)Main.Config["healthBar"]["h"]);
 			barDistance = (float)Main.Config["healthBar"]["d"];
 			random = new Random();
 		}
+
+		public string id;
 
 		public float damage { get; protected set; }
 		public float hitForce { get; protected set; }
@@ -54,6 +79,18 @@ namespace ProjectBueno.Game.Entities
 		protected static readonly Vector2 barSize;
 		protected static readonly float barDistance;
 		protected static readonly Random random;
+
+		//Spawn new enemy using current enemy as a template.
+		public virtual Enemy Spawn(Vector2 pos, GameHandler game) //For EnemyManager, to be overridden to use derived constructor.
+		{
+			return new Enemy(this, pos, game);
+		}
+
+		public int GetSpawnChance(GameHandler game)
+		{
+			return 1; //For testing. Change later.
+		}
+
 
 		public override void updateState()
 		{
@@ -117,6 +154,11 @@ namespace ProjectBueno.Game.Entities
 			{
 				loadTexture((JObject)animData[st.ToString()]);
 			}
+		}
+
+		public void loadTextures(List<AnimatedTexture> animData)
+		{
+			
 		}
 
 		public override void Draw()
