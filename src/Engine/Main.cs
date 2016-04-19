@@ -143,6 +143,7 @@ namespace ProjectBueno.Engine
 		protected override void OnExiting(object sender, EventArgs args)
 		{
 			//base.OnExiting(sender, args);
+			handler?.Deinitialize();
 			if (exiting != null)
 			{
 				exiting(sender, args);
