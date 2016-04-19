@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using ProjectBueno.Game.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +23,7 @@ namespace ProjectBueno.Engine.World
 	{
 		public Tree(int x, int y, int treeId)
 		{
-			this.pos = new Vector2(x, y) * Tile.TILESIZE;
+			this.pos = new Vector2(x, y) * Terrain.TILESIZE;
 			this.id = treeId;
 		}
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectBueno.Game.Entities;
-using ProjectBueno.Game.Tiles;
 using ProjectBueno.Utility;
 using System;
 using System.Collections.Generic;
@@ -11,18 +10,18 @@ namespace ProjectBueno.Engine.World
 {
 	public struct TilePoint
 	{
-		public TilePoint(int x, int y, Tiles tile)
+		public TilePoint(int x, int y, Tile tile)
 		{
 			this.x = x;
 			this.y = y;
 			this.tile = tile;
 		}
 
-		public Tiles tile;
+		public Tile tile;
 		public int x;
 		public int y;
 	}
-	public enum Tiles : byte
+	public enum Tile : byte
 	{
 		Forest = 0,
 		Desert = 16,
@@ -52,10 +51,13 @@ namespace ProjectBueno.Engine.World
 		public static Texture2D terrainTex;
 		public static Texture2D treeTex;
 
+		public const int TILESIZE = 8; //Size of one tile
+		public const float TILEMULT = 1.0f / TILESIZE;
+
 		public const int CHUNK_SIZE = 64;
 		public const int CHUNK_BLEED = 8;
 		public const float CHUNK_MULT = 1.0f / CHUNK_SIZE;
-		public const float CHUNK_SHIFT = CHUNK_SIZE * Tile.TILESIZE * 0.5f;
+		public const float CHUNK_SHIFT = CHUNK_SIZE * TILESIZE * 0.5f;
 		public const int BLOCK_SIZE = 16;
 		public const int BLOCKS_PER_CHUNK = CHUNK_SIZE / BLOCK_SIZE;
 
@@ -64,7 +66,7 @@ namespace ProjectBueno.Engine.World
 		public static int xChunks = xSize / BLOCKS_PER_CHUNK;
 		public static int yChunks = ySize / BLOCKS_PER_CHUNK;
 		public static int tileLimit = 30000;
-		protected Tiles[][] blockMap;
+		protected Tile[][] blockMap;
 		protected Dictionary<Point, Chunk> chunks;
 		protected Queue<Point> callqueue = new Queue<Point>();
 		public int tileCount;
@@ -96,7 +98,7 @@ namespace ProjectBueno.Engine.World
 					{
 						for (int y = topLeftTile.Y; y <= bottomRightTile.Y; y++)
 						{
-							if (chunk[x][y] >= (byte)Tiles.Sea)
+							if (chunk[x][y] >= (byte)Tile.Sea)
 							{
 								return true;
 							}
@@ -128,19 +130,19 @@ namespace ProjectBueno.Engine.World
 		}
 		public static Point getChunkFromPos(Vector2 pos)
 		{
-			pos *= CHUNK_MULT * Tile.TILEMULT;
+			pos *= CHUNK_MULT * Terrain.TILEMULT;
 			return new Point((int)pos.X, (int)pos.Y);
 		}
 		public static Point getTileFromPos(Point chunk, Vector2 pos)
 		{
-			pos = (pos * Tile.TILEMULT) - chunk.ToVector2() * CHUNK_SIZE;
+			pos = (pos * Terrain.TILEMULT) - chunk.ToVector2() * CHUNK_SIZE;
 			return new Point(MathHelper.Clamp((int)pos.X, 0, CHUNK_SIZE - 1), MathHelper.Clamp((int)pos.Y, 0, CHUNK_SIZE - 1));
 		}
 
 		protected Chunk generateChunk(Point coords)
 		{
 			List<TilePoint> tileQueue = new List<TilePoint>();
-			Tiles[][] chunk = Enumerable.Range(0, CHUNK_SIZE + CHUNK_BLEED * 2).Select(x => Enumerable.Range(0, CHUNK_SIZE + CHUNK_BLEED * 2).Select(y => getBlock(
+			Tile[][] chunk = Enumerable.Range(0, CHUNK_SIZE + CHUNK_BLEED * 2).Select(x => Enumerable.Range(0, CHUNK_SIZE + CHUNK_BLEED * 2).Select(y => getBlock(
 				(x - CHUNK_BLEED + CHUNK_SIZE * BLOCK_SIZE) / BLOCK_SIZE - CHUNK_SIZE + coords.X * BLOCKS_PER_CHUNK,
 				(y - CHUNK_BLEED + CHUNK_SIZE * BLOCK_SIZE) / BLOCK_SIZE - CHUNK_SIZE + coords.Y * BLOCKS_PER_CHUNK)
 				).ToArray()).ToArray();
@@ -176,36 +178,36 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int x = CHUNK_BLEED; x < CHUNK_SIZE + CHUNK_BLEED; x++)
 				{
-					if (chunk[x][y] == Tiles.Sea)
+					if (chunk[x][y] == Tile.Sea)
 					{
-						outTile = (int)Tiles.Sea + random.Next(0, 7);
+						outTile = (int)Tile.Sea + random.Next(0, 7);
 					}
 					else
 					{
-						outTile = getAdjacentByte(chunk, x, y, Tiles.Sea);
+						outTile = getAdjacentByte(chunk, x, y, Tile.Sea);
 						if (outTile == 0)
 						{
-							if (chunk[x][y] != Tiles.Forest)
+							if (chunk[x][y] != Tile.Forest)
 							{
-								if (random.Next(400) == 0 && chunk[x][y] == Tiles.Desert)
+								if (random.Next(400) == 0 && chunk[x][y] == Tile.Desert)
 								{
-									outTile = (int)Tiles.DesertTree + random.Next(2);
-									returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, outTile - (int)Tiles.Trees));
+									outTile = (int)Tile.DesertTree + random.Next(2);
+									returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, outTile - (int)Tile.Trees));
 								}
-								else if (random.Next(200) == 0 && chunk[x][y] == Tiles.Cold)
+								else if (random.Next(200) == 0 && chunk[x][y] == Tile.Cold)
 								{
-									outTile = (int)Tiles.ColdTree + random.Next(2);
-									returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, outTile - (int)Tiles.Trees));
+									outTile = (int)Tile.ColdTree + random.Next(2);
+									returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, outTile - (int)Tile.Trees));
 								}
 								else
 								{
-									outTile = getAdjacentByte(chunk, x, y, Tiles.Forest) + 16 + (int)chunk[x][y];
+									outTile = getAdjacentByte(chunk, x, y, Tile.Forest) + 16 + (int)chunk[x][y];
 								}
 							}
 							else if (random.Next(50) == 0)
 							{
-								outTile = (int)Tiles.ForestTree + random.Next(2);
-								returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, outTile - (int)Tiles.Trees));
+								outTile = (int)Tile.ForestTree + random.Next(2);
+								returnChunk.trees.Add(new Tree(x - CHUNK_BLEED, y - CHUNK_BLEED, outTile - (int)Tile.Trees));
 							}
 						}
 						else
@@ -223,7 +225,7 @@ namespace ProjectBueno.Engine.World
 		}
 
 
-		protected byte getAdjacentByte(Tiles[][] chunk, int x, int y, Tiles test)
+		protected byte getAdjacentByte(Tile[][] chunk, int x, int y, Tile test)
 		{
 			byte outTile = 0;
 			if (chunk[x + 1][y] == test)
@@ -250,7 +252,7 @@ namespace ProjectBueno.Engine.World
 			return (center != blockMap[xB + 1][yB] || center != blockMap[xB][yB + 1] || center != blockMap[xB - 1][yB] || center != blockMap[xB][yB - 1] ||
 				center != blockMap[xB + 1][yB + 1] || center != blockMap[xB - 1][yB - 1] || center != blockMap[xB + 1][yB - 1] || center != blockMap[xB - 1][yB + 1]);
 		}*/
-		protected Tiles getAdjacentDifferent(Tiles[][] chunk, int x, int y)
+		protected Tile getAdjacentDifferent(Tile[][] chunk, int x, int y)
 		{
 			if (x < 1 || y < 1 || x > chunk.Length - 2 || y > chunk[0].Length - 2) //Broken workaround. FIXME
 			{
@@ -283,7 +285,7 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int y = 0; y < CHUNK_SIZE; y++)
 				{
-					Main.spriteBatch.Draw(terrainTex, new Rectangle((x + coords.X * CHUNK_SIZE) * Tile.TILESIZE, (y + coords.Y * CHUNK_SIZE) * Tile.TILESIZE, Tile.TILESIZE, Tile.TILESIZE), new Rectangle(chunk[x][y] * Tile.TILESIZE, 0, Tile.TILESIZE, Tile.TILESIZE), Color.White);
+					Main.spriteBatch.Draw(terrainTex, new Rectangle((x + coords.X * CHUNK_SIZE) * TILESIZE, (y + coords.Y * CHUNK_SIZE) * TILESIZE, TILESIZE, TILESIZE), new Rectangle(chunk[x][y] * TILESIZE, 0, TILESIZE, TILESIZE), Color.White);
 				}
 			}
 		}
@@ -296,7 +298,7 @@ namespace ProjectBueno.Engine.World
 			}*/
 			foreach (var tree in chunk)
 			{
-				Main.spriteBatch.Draw(treeTex, tree.pos + (coords.ToVector2() * CHUNK_SIZE * Tile.TILESIZE) - Tree.treeOrigin, Tree.treeRect.XShift(tree.id * Tree.treeRect.Width), Color.White);
+				Main.spriteBatch.Draw(treeTex, tree.pos + (coords.ToVector2() * CHUNK_SIZE * TILESIZE) - Tree.treeOrigin, Tree.treeRect.XShift(tree.id * Tree.treeRect.Width), Color.White);
 			}
 		}
 
@@ -307,15 +309,15 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int y = 1; y < ySize - 1; y++)
 				{
-					Main.spriteBatch.Draw(terrainTex, new Rectangle(x, y, 1, 1), new Rectangle((int)blockMap[x][y] * Tile.TILESIZE, 0, 1, 1), Color.White);
+					Main.spriteBatch.Draw(terrainTex, new Rectangle(x, y, 1, 1), new Rectangle((int)blockMap[x][y] * TILESIZE, 0, 1, 1), Color.White);
 				}
 			}
-			Main.spriteBatch.Draw(Main.boxel, playerPos * Tile.TILEMULT / BLOCK_SIZE, Color.Red);
+			Main.spriteBatch.Draw(Main.boxel, playerPos * TILEMULT / BLOCK_SIZE, Color.Red);
 		}
 		#endregion
 
 		#region Generate ChunkMap
-		protected void setChunk(int x, int y, Tiles type)
+		protected void setChunk(int x, int y, Tile type)
 		{
 			if (emptyTile(x, y))
 			{
@@ -331,28 +333,28 @@ namespace ProjectBueno.Engine.World
 				x = random.Next(0, xSize);
 				y = random.Next(0, ySize);
 			}
-			while (blockMap[x][y] != Tiles.Forest && blockMap[x][y] != Tiles.FilledForest);
+			while (blockMap[x][y] != Tile.Forest && blockMap[x][y] != Tile.FilledForest);
 			return new Vector2(x, y);
 		}
 		protected bool emptyTile(int x, int y)
 		{
-			return blockMap[x][y] == Tiles.FilledForest;
+			return blockMap[x][y] == Tile.FilledForest;
 		}
 		protected void generateSea(int x, int y)
 		{
 			if (x > -1 && x < xSize && y > -1 && y < ySize)
 			{
-				if (blockMap[x][y] == Tiles.FilledForest)
+				if (blockMap[x][y] == Tile.FilledForest)
 				{
 					seaCount++;
-					blockMap[x][y] = Tiles.Sea;
+					blockMap[x][y] = Tile.Sea;
 					callqueue.Enqueue(new Point(x, y));
 				}
-				else if (blockMap[x][y] == Tiles.Forest)
+				else if (blockMap[x][y] == Tile.Forest)
 				{
 					seaCount++;
 					tileCount--;
-					blockMap[x][y] = Tiles.Sea;
+					blockMap[x][y] = Tile.Sea;
 				}
 			}
 		}
@@ -362,9 +364,9 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int y = 1; y < ySize - 1; y++)
 				{
-					if (blockMap[x][y] == Tiles.FilledForest)
+					if (blockMap[x][y] == Tile.FilledForest)
 					{
-						blockMap[x][y] = Tiles.Forest;
+						blockMap[x][y] = Tile.Forest;
 					}
 				}
 			}
@@ -376,7 +378,7 @@ namespace ProjectBueno.Engine.World
 				generateSea(pos.X + xSide[i], pos.Y + ySide[i]);
 			}
 		}
-		protected void generateBiomes(Vector2 startPoint, Vector2 endPoint, Tiles replaceTile, bool isAbove)
+		protected void generateBiomes(Vector2 startPoint, Vector2 endPoint, Tile replaceTile, bool isAbove)
 		{
 			float mult = (startPoint.Y - endPoint.Y) / (startPoint.X - endPoint.X);
 			float shift = startPoint.Y - mult * startPoint.X;
@@ -384,7 +386,7 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int y = 0; y < xSize; y++)
 				{
-					if (blockMap[x][y] == Tiles.Forest || blockMap[x][y] == Tiles.FilledForest)
+					if (blockMap[x][y] == Tile.Forest || blockMap[x][y] == Tile.FilledForest)
 					{
 						if ((x * mult + shift > y) != isAbove)
 						{
@@ -401,14 +403,14 @@ namespace ProjectBueno.Engine.World
 			tileCount = 0;
 			seaCount = 1;
 			callqueue.Clear();
-			blockMap = Enumerable.Range(0, xSize).Select(h => Enumerable.Range(0, ySize).Select(w => Tiles.FilledForest).ToArray()).ToArray();
+			blockMap = Enumerable.Range(0, xSize).Select(h => Enumerable.Range(0, ySize).Select(w => Tile.FilledForest).ToArray()).ToArray();
 
 			//Process land
 			int x = xSize / 2;
 			int y = ySize / 2;
 			while (tileCount < tileLimit)
 			{
-				Tiles type = Tiles.Forest;
+				Tile type = Tile.Forest;
 				if (x < 1 || x > xSize - 2 || y < 1 || y > ySize - 2)
 				{
 					break;
@@ -420,7 +422,7 @@ namespace ProjectBueno.Engine.World
 			}
 
 			//Process sea
-			blockMap[0][0] = Tiles.Sea;
+			blockMap[0][0] = Tile.Sea;
 			callqueue.Enqueue(new Point(0, 0));
 			while (callqueue.Count > 0)
 			{
@@ -440,7 +442,7 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int x = 1; x < xSize - 1; x++)
 				{
-					if (blockMap[x][y] == Tiles.FilledForest || blockMap[x][y] == Tiles.Forest)
+					if (blockMap[x][y] == Tile.FilledForest || blockMap[x][y] == Tile.Forest)
 					{
 						terrainTop = y;
 						goto TerrainBottom;
@@ -452,7 +454,7 @@ namespace ProjectBueno.Engine.World
 			{
 				for (int x = 1; x < xSize - 1; x++)
 				{
-					if (blockMap[x][y] == Tiles.FilledForest || blockMap[x][y] == Tiles.Forest)
+					if (blockMap[x][y] == Tile.FilledForest || blockMap[x][y] == Tile.Forest)
 					{
 						terrainBottom = y;
 						goto ProcessBiome;
@@ -467,16 +469,16 @@ namespace ProjectBueno.Engine.World
 			coldStart = new Vector2(0.0f, (float)(terrainDelta * (2.0 / 3.0 + (random.NextDouble() - 0.5) * 0.3) + terrainTop));
 			coldEnd = new Vector2(xSize, (float)(terrainDelta * (2.0 / 3.0 + (random.NextDouble() - 0.5) * 0.3) + terrainTop));
 
-			generateBiomes(desertStart, desertEnd, Tiles.Desert, false);
-			generateBiomes(coldStart, coldEnd, Tiles.Cold, true);
+			generateBiomes(desertStart, desertEnd, Tile.Desert, false);
+			generateBiomes(coldStart, coldEnd, Tile.Cold, true);
 		}
 		#endregion
 
-		public Tiles getBlock(int x, int y)
+		public Tile getBlock(int x, int y)
 		{
 			if (x < 0 || y < 0 || x >= xSize || y >= ySize)
 			{
-				return Tiles.Sea;
+				return Tile.Sea;
 			}
 			return blockMap[x][y];
 		}

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectBueno.Game.Entities;
-using ProjectBueno.Game.Tiles;
 using System.Collections.Generic;
 using System;
 using ProjectBueno.Engine.World;
@@ -20,7 +19,7 @@ namespace ProjectBueno.Engine
 		{
 			Main.exiting += onExitSave;
 
-			player = new Player(new Vector2(Terrain.xSize * Terrain.BLOCK_SIZE * Tile.TILESIZE * 0.5f, Terrain.ySize * Terrain.BLOCK_SIZE * Tile.TILESIZE * 0.5f), this);
+			player = new Player(new Vector2(Terrain.xSize * Terrain.BLOCK_SIZE * Terrain.TILESIZE * 0.5f, Terrain.ySize * Terrain.BLOCK_SIZE * Terrain.TILESIZE * 0.5f), this);
 			screenScale = 2.0f;
 			projectiles = new List<Projectile>();
 			entities = new List<Entity>();
@@ -211,8 +210,8 @@ namespace ProjectBueno.Engine
 			//int yBottom = Math.Min((int)((player.pos.Y + Main.window.ClientBounds.Height * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.ySize);
 
 			Point playerChunk = Terrain.getChunkFromPos(player.pos);
-			int hShift = (player.pos.X - playerChunk.ToVector2().X * Terrain.CHUNK_SIZE * Tile.TILESIZE) > Terrain.CHUNK_SHIFT ? 1 : -1;
-			int vShift = (player.pos.Y - playerChunk.ToVector2().Y * Terrain.CHUNK_SIZE * Tile.TILESIZE) > Terrain.CHUNK_SHIFT ? 1 : -1;
+			int hShift = (player.pos.X - playerChunk.ToVector2().X * Terrain.CHUNK_SIZE * Terrain.TILESIZE) > Terrain.CHUNK_SHIFT ? 1 : -1;
+			int vShift = (player.pos.Y - playerChunk.ToVector2().Y * Terrain.CHUNK_SIZE * Terrain.TILESIZE) > Terrain.CHUNK_SHIFT ? 1 : -1;
 			terrain.drawChunk(playerChunk);
 			terrain.drawChunk(new Point(playerChunk.X + hShift, playerChunk.Y));
 			terrain.drawChunk(new Point(playerChunk.X, playerChunk.Y + vShift));

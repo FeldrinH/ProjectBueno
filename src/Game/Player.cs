@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ProjectBueno.Game.Spells;
 using ProjectBueno.Engine.World;
-using ProjectBueno.Game.Tiles;
 
 namespace ProjectBueno.Game.Entities
 {
@@ -68,7 +67,7 @@ namespace ProjectBueno.Game.Entities
 
 			base.Update();
 
-			float totalSpeed = Main.newKeyState.IsKeyDown(Keys.LeftShift) ? Terrain.BLOCK_SIZE * Tile.TILESIZE : speed;
+			float totalSpeed = Main.newKeyState.IsKeyDown(Keys.LeftShift) ? Terrain.BLOCK_SIZE * Terrain.TILESIZE : speed;
 			Vector2 totalMove = new Vector2();
 			if (Main.newKeyState.IsKeyDown(Keys.W))
 			{
