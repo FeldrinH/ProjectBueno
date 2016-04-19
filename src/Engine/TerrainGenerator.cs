@@ -33,6 +33,19 @@ namespace ProjectBueno.Engine.World
 		ColdTree = 92,
 		FilledForest = 255 //Only during generation
 	}
+	public enum Biome
+	{
+		Forest,
+		Desert,
+		Cold,
+		Solid
+	}
+	public static class TileConverter {
+		public static Biome ToBiome(this Tile tile)
+		{
+			return tile < Tile.Desert ? Biome.Forest : tile < Tile.Cold ? Biome.Desert : tile < Tile.Cold ? Biome.Cold : Biome.Solid ; 
+		}
+	}
 	public class Terrain
 	{
 		public Terrain()
@@ -82,6 +95,13 @@ namespace ProjectBueno.Engine.World
 
 		protected Random random = new Random();
 
+		public Tile getTileAtPos(Vector2 pos)
+		{
+			Point coords = getChunkFromPos(pos);
+			Point tilePos = getTileFromPos(coords, pos);
+			return (Tile)getChunk(coords).tiles[tilePos.X][tilePos.Y];
+		}
+
 		public bool isColliding(Vector2 pos, Vector2 size)
 		{
 			Point topLeft = getChunkFromPos(pos);
@@ -130,12 +150,12 @@ namespace ProjectBueno.Engine.World
 		}
 		public static Point getChunkFromPos(Vector2 pos)
 		{
-			pos *= CHUNK_MULT * Terrain.TILEMULT;
+			pos *= CHUNK_MULT * TILEMULT;
 			return new Point((int)pos.X, (int)pos.Y);
 		}
 		public static Point getTileFromPos(Point chunk, Vector2 pos)
 		{
-			pos = (pos * Terrain.TILEMULT) - chunk.ToVector2() * CHUNK_SIZE;
+			pos = (pos * TILEMULT) - chunk.ToVector2() * CHUNK_SIZE;
 			return new Point(MathHelper.Clamp((int)pos.X, 0, CHUNK_SIZE - 1), MathHelper.Clamp((int)pos.Y, 0, CHUNK_SIZE - 1));
 		}
 

@@ -22,7 +22,7 @@ namespace ProjectBueno.Game.Entities
 			return Math.Abs(vec.X) > Math.Abs(vec.Y) ? (vec.X < 0.0f ? Dir.LEFT : Dir.RIGHT) : (vec.Y < 0.0f ? Dir.UP : Dir.DOWN);
 		}
 	}
-	public enum Dir : int
+	public enum Dir
 	{
 		UP = 0,
 		DOWN = 1,
