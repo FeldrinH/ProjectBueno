@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json.Linq;
@@ -16,8 +17,13 @@ namespace ProjectBueno.Engine
 		{
 			background = Main.content.Load<Texture2D>("startMenu");
 
-			buttons = new List<IButton>() { new TextMoveButton(new GameHandler(), (JObject)Main.Config["startBtn"]), new TextMoveButton(new HelpMenuHandler(this, "backBtnStart"), (JObject)Main.Config["helpBtn"]), new QuitButton((JObject)Main.Config["quitBtn"]) };
+			music = Main.content.Load<SoundEffect>("patternfin").CreateInstance();
+			music.IsLooped = true;
+
+			buttons = new List<IButton>() { new TextMoveButton(new GameHandler(), (JObject)Main.Config["startBtn"]), new TextMoveButton(new HelpMenuHandler(this, "backBtnStart"), (JObject)Main.Config["helpBtn"],true), new QuitButton((JObject)Main.Config["quitBtn"]) };
 		}
+
+		protected SoundEffectInstance music;
 
 		protected List<IButton> buttons;
 
@@ -47,6 +53,16 @@ namespace ProjectBueno.Engine
 					btn.OnClick(mouseX, mouseY);
 				}
 			}
+		}
+
+		public override void Initialize()
+		{
+			music.Play();
+		}
+
+		public override void Deinitialize()
+		{
+			music.Stop();
 		}
 	}
 }

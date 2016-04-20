@@ -147,6 +147,8 @@
     <Content Include="ProjectBueno-Release\Content\healthBar.png" />
     <Content Include="ProjectBueno-Release\Content\hudBackground.png" />
     <Content Include="ProjectBueno-Release\Content\OutlineShader.fx" />
+    <Content Include="ProjectBueno-Release\Content\patternfin.wav" />
+    <Content Include="ProjectBueno-Release\Content\pauseMusic.wav" />
     <Content Include="ProjectBueno-Release\Content\pauseScreen.png" />
     <Content Include="ProjectBueno-Release\Content\pauseScreenHelp.png" />
     <Content Include="ProjectBueno-Release\Content\plStand.png" />
@@ -158,6 +160,7 @@
     <Content Include="Icon.ico" />
     <Content Include="ProjectBueno-Release\Content\startMenu.png" />
     <Content Include="ProjectBueno-Release\Content\startMenuHelp.png" />
+    <Content Include="ProjectBueno-Release\Content\tiktok.wav" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="ProjectBueno-Release\Content\Content.mgcb" />

@@ -33,3 +33,15 @@
 /processorParam:Quality=Best
 /build:tiktok.wav
 
+#begin patternfin.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:patternfin.wav
+
+#begin pauseMusic.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:pauseMusic.wav
+
