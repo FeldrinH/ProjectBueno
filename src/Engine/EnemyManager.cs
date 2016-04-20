@@ -22,7 +22,7 @@ namespace ProjectBueno.Engine
 			foreach (string fileName in Directory.GetFiles("Content/Enemies/", "*.json"))
 			{
 				JObject data = JObject.Parse(File.ReadAllText(fileName));
-				enemies.Add(new Enemy(data)); //For testing. Replace with reflection.
+				enemies.Add(new Enemy(data, Path.GetFileNameWithoutExtension(fileName))); //For testing. Replace with reflection.
 			}
 		}
 

@@ -20,13 +20,13 @@ namespace ProjectBueno.Game.Enemies
 			WALKING
 		}
 
-		public Enemy(JObject data) : base(Vector2.Zero, null) //Template enemy constructor
+		public Enemy(JObject data, string ID) : base(Vector2.Zero, null) //Template enemy constructor
 		{
 			JObject stats = (JObject)data["Stats"];
 
 			loadTextures((JObject)data["Animations"]);
 
-			id = (string)data["id"];
+			id = ID;
 
 			health = (float)stats["Health"];
 			speed = (float)stats["Speed"];
@@ -80,6 +80,18 @@ namespace ProjectBueno.Game.Enemies
 		protected static readonly float barDistance;
 		protected static readonly Random random;
 
+		public virtual Enemy SpawnMemcopy(Vector2 pos, GameHandler game) //For EnemyManager, to be overridden to use derived constructor.
+		{
+			Enemy enemy = (Enemy)MemberwiseClone();
+			enemy.game = null;
+			enemy.pos = Vector2.Zero;
+			enemy.textures = new List<AnimatedTexture>();
+			foreach (AnimatedTexture tex in textures)
+			{
+				enemy.textures.Add(new AnimatedTexture(tex));
+			}
+			return enemy;
+		}
 		//Spawn new enemy using current enemy as a template.
 		public virtual Enemy Spawn(Vector2 pos, GameHandler game) //For EnemyManager, to be overridden to use derived constructor.
 		{
@@ -154,11 +166,6 @@ namespace ProjectBueno.Game.Enemies
 			{
 				loadTexture((JObject)animData[st.ToString()]);
 			}
-		}
-
-		public void loadTextures(List<AnimatedTexture> animData)
-		{
-			
 		}
 
 		public override void Draw()

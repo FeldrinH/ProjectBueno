@@ -166,7 +166,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="ProjectBueno-Release\Content\Config.json" />
-    <None Include="ProjectBueno-Release\Content\EnemyTest.json" />
     <None Include="ProjectBueno-Release\Content\Player.json" />
     <None Include="ProjectBueno-Release\Content\Skills.json" />
     <None Include="ProjectBueno-Release\Content\SkillTree.json" />

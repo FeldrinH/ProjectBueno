@@ -1,0 +1,32 @@
+{
+	"Stats" : {
+		"Width" : 3, //Collision box width
+		"Height" : 9, //Collision box height
+		"Health" : 100.0,
+		"Speed" : 0.35, //Speed in pixels/tick
+		"Damage" : 10,
+		"HitForce" : 6 //Speed of knockback in pixels/tick
+	},
+	"Animations" : {
+		"WALKING" : {
+			"Texture" : "enmDesertWalk",
+			"Width" : 5,
+			"Height" : 9,
+			"xOffset" : -1,
+			"UP" : { "Frames" : 4, "Speed" : 0.15 },
+			"DOWN" : { "Frames" : 4, "Speed" : 0.15 },
+			"LEFT" : { "Frames" : 4, "Speed" : 0.15 },
+			"RIGHT" : { "Frames" : 4, "Speed" : 0.15 }
+		},
+		"STANDING" : {
+			"Texture" : "enmDesertStand",
+			"Width" : 5,
+			"Height" : 9,
+			"xOffset" : -1,
+			"UP" : { "Frames" : 1, "Speed" : 0.0 },
+			"DOWN" : { "Frames" : 1, "Speed" : 0.0 },
+			"LEFT" : { "Frames" : 1, "Speed" : 0.0 },
+			"RIGHT" : { "Frames" : 1, "Speed" : 0.0 }
+		}
+	}
+}

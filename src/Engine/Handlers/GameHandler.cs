@@ -351,7 +351,7 @@ namespace ProjectBueno.Engine
 			}
 			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
 			{
-				player.target = getEntityAtPos(posFromScreenPos(Main.newMouseState.Position.ToVector2())) ?? player.target;
+				player.target = getEntityAtPos(posFromScreenPos(Main.newMouseState.Position.ToVector2()));
 				//Console.WriteLine("Mouse:" + Main.newMouseState.Position);
 			}
 

@@ -9,7 +9,7 @@
 	},
 	"Animations" : {
 		"WALKING" : {
-			"Texture" : "plWalk",
+			"Texture" : "enmColdWalk",
 			"Width" : 5,
 			"Height" : 9,
 			"xOffset" : -1,
@@ -19,7 +19,7 @@
 			"RIGHT" : { "Frames" : 4, "Speed" : 0.15 }
 		},
 		"STANDING" : {
-			"Texture" : "plStand",
+			"Texture" : "enmColdStand",
 			"Width" : 5,
 			"Height" : 9,
 			"xOffset" : -1,
