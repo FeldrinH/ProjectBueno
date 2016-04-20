@@ -30,6 +30,7 @@ namespace ProjectBueno.Game.Enemies
 
 			health = (float)stats["Health"];
 			speed = (float)stats["Speed"];
+			speedDeviation = (double)stats["SpeedDeviation"];
 			size = new Vector2((float)stats["Width"], (float)stats["Height"]);
 			damage = (float)stats["Damage"];
 			hitForce = (float)stats["HitForce"];
@@ -50,7 +51,7 @@ namespace ProjectBueno.Game.Enemies
 			id = data.id;
 
 			health = data.health;
-			speed = data.speed;
+			speed = data.speed + (float)(random.NextDouble() * 2.0 * data.speedDeviation - data.speedDeviation);
 			size = data.size;
 			damage = data.damage;
 			hitForce = data.hitForce;
@@ -79,6 +80,8 @@ namespace ProjectBueno.Game.Enemies
 		protected static readonly Vector2 barSize;
 		protected static readonly float barDistance;
 		protected static readonly Random random;
+
+		protected double speedDeviation;
 
 		public virtual Enemy SpawnMemcopy(Vector2 pos, GameHandler game) //For EnemyManager, to be overridden to use derived constructor.
 		{
