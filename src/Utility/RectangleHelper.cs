@@ -20,9 +20,9 @@ namespace ProjectBueno.Utility
 			return rect;
 		}
 
-		public static Rectangle Scale(this Rectangle rect, float scale)
+		public static Rectangle Scale(this Rectangle rect, int scale)
 		{
-			return new Rectangle(rect.X, rect.Y, (int)(rect.Width * scale), rect.Height);
+			return new Rectangle(rect.X * scale, rect.Y * scale, rect.Width * scale, rect.Height * scale);
 		}
 
 		public static Rectangle ScaleSize(this Rectangle rect, float scale)

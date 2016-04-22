@@ -38,6 +38,8 @@ namespace ProjectBueno.Engine
 			terrain.generateChunkMap();
 			terrain.processBiome();
 
+			Screen = new TextScreen(Main.content.Load<Texture2D>("welcomeScreen"));
+			
 			//selectedEnemy = new AnimatedTexture(Main.content.Load<Texture2D>("selectedTargetTest"),2,1.0f/30,14,16);
 			//selectedEnemySize = new Vector2(selectedEnemy.w, selectedEnemy.h);
 			//loadedChunks = new List<List<List<Tiles>>>();
@@ -84,6 +86,8 @@ namespace ProjectBueno.Engine
 			hudKpPos = new Vector2((float)data["x"], (float)data["y"] - 1.0f);
 		}
 
+		public TextScreen Screen;
+
 		protected static Texture2D hudBackground;
 
 		protected static readonly Vector2 hudKpPos;
@@ -109,6 +113,7 @@ namespace ProjectBueno.Engine
 		public Matrix screenMatrix;
 
 		protected Matrix hudScale;
+		protected Matrix textScale;
 
 		protected bool drawDebug;
 
@@ -192,6 +197,7 @@ namespace ProjectBueno.Engine
 			screenShift = new Vector2((float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Width - (player.size.X * screenScale)) * 0.5), (float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Height - (player.size.Y * screenScale)) * 0.5));
 			screenMatrix = Matrix.CreateScale(screenScale) * Matrix.CreateTranslation(new Vector3(screenShift, 0.0f));
 
+			textScale = Matrix.CreateScale((float)Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio);
 			hudScale = Matrix.CreateScale((float)Math.Round(0.5 * Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio, MidpointRounding.AwayFromZero));
 
 			alphaTest = new AlphaTestEffect(Main.graphicsManager.GraphicsDevice)
@@ -267,7 +273,7 @@ namespace ProjectBueno.Engine
 				Main.spriteBatch.End();
 
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, drawStencil, null, outlineShader, matrixCache);
-				player.target.DrawOutline(Color.Red);
+				player.target.DrawOutline(player.target.isAlly ? Color.Lime : Color.Red);
 				Main.spriteBatch.End();
 
 				//selectedEnemy.incrementAnimation();
@@ -296,121 +302,98 @@ namespace ProjectBueno.Engine
 				terrain.drawChunkMap(player.pos);
 				Main.spriteBatch.End();
 			}
+
+			if (Screen != null)
+			{
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, textScale);
+				Screen.Draw();
+				Main.spriteBatch.End();
+			}
 		}
 
 		public void Update()
 		{
-			if (Main.newKeyState.IsKeyDown(Keys.Up) && !Main.oldKeyState.IsKeyDown(Keys.Up))
+			if (Screen == null)
 			{
-				screenScale *= 2.0f;
-				windowResize();
-			}
-			if (Main.newKeyState.IsKeyDown(Keys.Down) && !Main.oldKeyState.IsKeyDown(Keys.Down))
-			{
-				screenScale *= 0.5f;
-				windowResize();
-			}
-
-			if (Main.newKeyState.IsKeyDown(Keys.Enter) && !Main.oldKeyState.IsKeyDown(Keys.Enter))
-			{
-				terrain.clearChunks();
-				terrain.generateChunkMap();
-				terrain.processBiome();
-			}
-
-			if (Main.newKeyState.IsKeyDown(Keys.K) && !Main.oldKeyState.IsKeyDown(Keys.K))
-			{
-				entities.Clear();
-			}
-
-			while (entities.Count < 10)
-			{
-				entities.Add(EnemyManager.SpawnEnemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
-			}
-
-			projectiles.RemoveAll(item => item.toRemove);
-			entities.RemoveAll(item => item.isDead);
-
-			player.Update();
-
-			if (doUpdate)
-			{
-				for (int i = 0; i < projectiles.Count; i++)
+				if (Main.newKeyState.IsKeyDown(Keys.Up) && !Main.oldKeyState.IsKeyDown(Keys.Up))
 				{
-					projectiles[i].Update();
+					screenScale *= 2.0f;
+					windowResize();
 				}
-				foreach (var ent in entities)
+				if (Main.newKeyState.IsKeyDown(Keys.Down) && !Main.oldKeyState.IsKeyDown(Keys.Down))
 				{
-					ent.Update();
+					screenScale *= 0.5f;
+					windowResize();
 				}
-			}
 
-			if (player.target != null && player.target.isDead)
-			{
-				player.target = null;
-			}
-			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
-			{
-				player.target = getEntityAtPos(posFromScreenPos(Main.newMouseState.Position.ToVector2()));
-				//Console.WriteLine("Mouse:" + Main.newMouseState.Position);
-			}
+				if (Main.newKeyState.IsKeyDown(Keys.Enter) && !Main.oldKeyState.IsKeyDown(Keys.Enter))
+				{
+					terrain.clearChunks();
+					terrain.generateChunkMap();
+					terrain.processBiome();
+				}
 
-			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
-			{
-				Main.handler = new SkillHandler(this, player);
-			}
-			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
-			{
-				Main.handler = new PauseHandler(this);
-			}
+				if (Main.newKeyState.IsKeyDown(Keys.K) && !Main.oldKeyState.IsKeyDown(Keys.K))
+				{
+					entities.Clear();
+				}
 
-			if (Main.newKeyState.IsKeyDown(Keys.C) && !Main.oldKeyState.IsKeyDown(Keys.C))
-			{
-				drawDebug = !drawDebug;
-			}
+				while (entities.Count < 10)
+				{
+					entities.Add(EnemyManager.SpawnEnemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
+				}
 
-			/*Stopwatch s1 = new Stopwatch();
-			s1.Start();
-			if (ppChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X + Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT)) ||
-				mmChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y - Terrain.CHUNK_SHIFT)) ||
-				mpChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT)) ||
-				pmChunk != Terrain.getChunkFromPos(new Vector2(player.pos.X + Terrain.CHUNK_SHIFT, player.pos.Y - Terrain.CHUNK_SHIFT)) )
-			{
-				ppChunk = Terrain.getChunkFromPos(new Vector2(player.pos.X + Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT));
-				mmChunk = Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y - Terrain.CHUNK_SHIFT));
-				mpChunk = Terrain.getChunkFromPos(new Vector2(player.pos.X - Terrain.CHUNK_SHIFT, player.pos.Y + Terrain.CHUNK_SHIFT));
-				pmChunk = Terrain.getChunkFromPos(new Vector2(player.pos.X + Terrain.CHUNK_SHIFT, player.pos.Y - Terrain.CHUNK_SHIFT));
-				loadedChunks.Clear();
-				if (mmChunk == ppChunk)
+				projectiles.RemoveAll(item => item.toRemove);
+				entities.RemoveAll(item => item.isDead);
+
+				player.Update();
+
+				if (doUpdate)
 				{
-					loadedChunks.Add(terrain.getChunk(mmChunk));
+					for (int i = 0; i < projectiles.Count; i++)
+					{
+						projectiles[i].Update();
+					}
+					foreach (var ent in entities)
+					{
+						ent.Update();
+					}
 				}
-				else if (mpChunk == mmChunk)
+
+				if (player.target != null && player.target.isDead)
 				{
-					loadedChunks.Add(terrain.getChunk(mmChunk));
-					loadedChunks.Add(terrain.getChunk(pmChunk));
+					player.target = null;
 				}
-				else if (pmChunk == mmChunk)
+				if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
 				{
-					loadedChunks.Add(terrain.getChunk(mmChunk));
-					loadedChunks.Add(terrain.getChunk(mpChunk));
+					player.target = getEntityAtPos(posFromScreenPos(Main.newMouseState.Position.ToVector2()));
+					//Console.WriteLine("Mouse:" + Main.newMouseState.Position);
 				}
-				else
+
+				if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 				{
-					loadedChunks.Add(terrain.getChunk(ppChunk));
-					loadedChunks.Add(terrain.getChunk(mmChunk));
-					loadedChunks.Add(terrain.getChunk(mpChunk));
-					loadedChunks.Add(terrain.getChunk(pmChunk));
+					Main.handler = new SkillHandler(this, player);
 				}
-				s1.Stop();
-				Console.WriteLine("Check: " + s1.ElapsedTicks);
+				if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
+				{
+					Main.handler = new PauseHandler(this);
+				}
+
+				if (Main.newKeyState.IsKeyDown(Keys.C) && !Main.oldKeyState.IsKeyDown(Keys.C))
+				{
+					drawDebug = !drawDebug;
+				}
+
 			}
-			s1.Stop();*/
+			else
+			{
+				Screen.Update(this);
+			}
 		}
 
 		public void Initialize()
 		{
-			if(!doUpdate)
+			if (!doUpdate)
 			{
 				clockTick.Play();
 			}
