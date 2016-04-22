@@ -49,6 +49,9 @@ namespace ProjectBueno.Engine
 		public const float widthMult = (float)xRatio / yRatio;
 		public const float heightMult = (float)yRatio / xRatio;
 
+		public static int maxWidth;
+		public static int maxHeight;
+
 		private static Rectangle oldClientBounds;
 		public static bool graphicsDirty;
 
@@ -89,7 +92,7 @@ namespace ProjectBueno.Engine
 		{
 			if (window.ClientBounds.Width != 0)
 			{
-				if(windowForm.WindowState == FormWindowState.Maximized)
+				if (windowForm.WindowState == FormWindowState.Maximized)
 				{
 					WindowMaximized();
 				}
@@ -102,11 +105,45 @@ namespace ProjectBueno.Engine
 				{
 					graphicsManager.PreferredBackBufferWidth = window.ClientBounds.Width;
 					graphicsManager.PreferredBackBufferHeight = (int)(window.ClientBounds.Width * heightMult);
+
+					/*if ((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / xRatio < (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / yRatio)
+					{
+						maxWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+						maxHeight = (int)(maxWidth * heightMult);
+					}
+					else
+					{
+						maxHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+						maxWidth = (int)(maxHeight * widthMult);
+					}
+
+					if (graphicsManager.PreferredBackBufferWidth > maxWidth || graphicsManager.PreferredBackBufferHeight > maxHeight)
+					{
+						graphicsManager.PreferredBackBufferWidth = maxWidth;
+						graphicsManager.PreferredBackBufferHeight = maxHeight;
+					}*/
 				}
 				else if (oldClientBounds.Height != window.ClientBounds.Height && graphicsManager.PreferredBackBufferHeight != window.ClientBounds.Height)
 				{
 					graphicsManager.PreferredBackBufferHeight = window.ClientBounds.Height;
 					graphicsManager.PreferredBackBufferWidth = (int)(window.ClientBounds.Height * widthMult);
+
+					/*if ((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / xRatio < (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / yRatio)
+					{
+						maxWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+						maxHeight = (int)(maxWidth * heightMult);
+					}
+					else
+					{
+						maxHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+						maxWidth = (int)(maxHeight * widthMult);
+					}
+
+					if (graphicsManager.PreferredBackBufferWidth > maxWidth || graphicsManager.PreferredBackBufferHeight > maxHeight)
+					{
+						graphicsManager.PreferredBackBufferWidth = maxWidth;
+						graphicsManager.PreferredBackBufferHeight = maxHeight;
+					}*/
 				}
 				oldClientBounds = window.ClientBounds;
 				
@@ -213,7 +250,7 @@ namespace ProjectBueno.Engine
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			if (graphicsDirty)
+			//if (graphicsDirty)
 			{
 				graphicsManager.ApplyChanges();
 				graphicsDirty = false;
