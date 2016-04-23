@@ -40,10 +40,11 @@ namespace ProjectBueno.Engine.World
 		Cold,
 		Solid
 	}
-	public static class TileConverter {
+	public static class TileConverter
+	{
 		public static Biome ToBiome(this Tile tile)
 		{
-			return tile < Tile.Desert ? Biome.Forest : tile < Tile.Cold ? Biome.Desert : tile < Tile.Cold ? Biome.Cold : Biome.Solid ; 
+			return tile < Tile.Desert ? Biome.Forest : tile < Tile.Cold ? Biome.Desert : tile < Tile.Cold ? Biome.Cold : Biome.Solid;
 		}
 	}
 	public class Terrain
@@ -60,6 +61,8 @@ namespace ProjectBueno.Engine.World
 		protected static readonly int[] yShift = { -1, -1, -1, 0, 0, 1, 1, 1 };
 		protected static readonly int[] xSide = { 0, 0, -1, 1 };
 		protected static readonly int[] ySide = { -1, 1, 0, 0 };
+
+		public static readonly float[] biomeSpeeds;
 
 		public static Texture2D terrainTex;
 		public static Texture2D treeTex;

@@ -46,7 +46,7 @@ namespace ProjectBueno.Game.Entities
 		public Vector2 size { get; protected set; }
 		public Vector2 knockback { get; protected set; }
 		public int damageCooldown { get; protected set; }
-		public float speed { get; protected set; }
+		public float[] speeds { get; protected set; }
 		protected float health;
 		public float maxHealth { get; protected set; }
 		public float maxHealthMult { get; protected set; }
@@ -203,8 +203,6 @@ namespace ProjectBueno.Game.Entities
 			{
 				knockback = Vector2.Zero;
 			}
-
-			curTexture.incrementAnimation();
 		}
 		public virtual void Draw()
 		{

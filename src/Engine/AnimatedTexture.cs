@@ -39,11 +39,11 @@ namespace ProjectBueno.Engine
 			curFrame = 0.0f;
 		}
 
-		public AnimatedTexture(Texture2D texture, int frameCount, float speed, int w, int h, int hShift=0, float xOffset=0.0f, float yOffset=0.0f)
+		public AnimatedTexture(Texture2D texture, int frameCount, float speed, int w, int h, int hShift = 0, float xOffset = 0.0f, float yOffset = 0.0f)
 		{
 			this.texture = texture;
 			this.hShift = hShift * h;
-			this.offset = new Vector2(xOffset,yOffset);
+			this.offset = new Vector2(xOffset, yOffset);
 			this.w = w;
 			this.h = h;
 			this.curFrame = 0.0f;
@@ -65,6 +65,14 @@ namespace ProjectBueno.Engine
 		public Rectangle getCurFrame()
 		{
 			return new Rectangle(w * (int)curFrame, hShift, w, h);
+		}
+		public void incrementAnimation(float mult)
+		{
+			curFrame += speed * mult;
+			if (curFrame >= maxFrame)
+			{
+				curFrame -= maxFrame;
+			}
 		}
 		public void incrementAnimation()
 		{

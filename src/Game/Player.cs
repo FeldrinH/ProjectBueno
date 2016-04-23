@@ -32,7 +32,8 @@ namespace ProjectBueno.Game.Entities
 			//Console.WriteLine(s1.ElapsedMilliseconds);
 
 			health = (float)stats["Health"];
-			speed = (float)stats["Speed"];
+			var speedList = stats["Speed"];
+			speeds = new[] { (float)speedList["Forest"], (float)speedList["Desert"], (float)speedList["Cold"], (float)speedList["Forest"] };
 			size = new Vector2((float)stats["Width"], (float)stats["Height"]);
 
 			state = (int)States.STANDING;
@@ -67,6 +68,7 @@ namespace ProjectBueno.Game.Entities
 
 			base.Update();
 
+			float speed = speeds[(int)game.terrain.getTileAtPos(pos).ToBiome()];
 			float totalSpeed = Main.newKeyState.IsKeyDown(Keys.LeftShift) ? Terrain.BLOCK_SIZE * Terrain.TILESIZE : speed;
 			Vector2 totalMove = new Vector2();
 			if (Main.newKeyState.IsKeyDown(Keys.W))
@@ -127,13 +129,18 @@ namespace ProjectBueno.Game.Entities
 					game.doUpdate = true;
 					hasCastBurst = false;
 				}
-
+				else
+				{
+					speed = 0.0f;
+				}
 			}
 			else
 			{
 				state = (int)States.STANDING;
 			}
-			
+
+			curTexture.incrementAnimation(speed);
+
 
 			if (Main.newKeyState.IsKeyDown(Keys.D1)/* && !Main.oldKeyState.IsKeyDown(Keys.D1)*/)
 			{

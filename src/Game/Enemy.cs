@@ -9,6 +9,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectBueno.Utility;
 using ProjectBueno.Game.Entities;
+using ProjectBueno.Engine.World;
 
 namespace ProjectBueno.Game.Enemies
 {
@@ -29,7 +30,8 @@ namespace ProjectBueno.Game.Enemies
 			id = ID;
 
 			health = (float)stats["Health"];
-			speed = (float)stats["Speed"];
+			var speedList = stats["Speed"];
+			speeds = new[] { (float)speedList["Forest"], (float)speedList["Desert"], (float)speedList["Cold"], (float)speedList["Solid"] };
 			speedDeviation = (double)stats["SpeedDeviation"];
 			size = new Vector2((float)stats["Width"], (float)stats["Height"]);
 			damage = (float)stats["Damage"];
@@ -51,7 +53,7 @@ namespace ProjectBueno.Game.Enemies
 			id = data.id;
 
 			health = data.health;
-			speed = data.speed + (float)(random.NextDouble() * 2.0 * data.speedDeviation - data.speedDeviation);
+			speeds = Array.ConvertAll(data.speeds, speed => speed + (float)(random.NextDouble() * 2.0 * data.speedDeviation - data.speedDeviation));
 			size = data.size;
 			damage = data.damage;
 			hitForce = data.hitForce;
@@ -111,7 +113,7 @@ namespace ProjectBueno.Game.Enemies
 		{
 			if (isAlly)
 			{
-				speed = game.player.speed;
+				speeds = game.player.speeds;
 				if (target == game.player)
 				{
 					target = null;
@@ -138,11 +140,16 @@ namespace ProjectBueno.Game.Enemies
 			}
 
 			Vector2 totalMove = Vector2.Zero;
+
 			if (target != null)
 			{
+				float speed = speeds[(int)game.terrain.getTileAtPos(pos).ToBiome()];
+
 				totalMove = target.pos - pos;
 				totalMove.Normalize();
 				totalMove *= speed;
+
+				curTexture.incrementAnimation(speed);
 			}
 
 			moveDir(totalMove);

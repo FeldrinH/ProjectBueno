@@ -3,7 +3,7 @@
 		"Width" : 3, //Collision box width
 		"Height" : 9, //Collision box height
 		"Health" : 100.0,
-		"Speed" : 0.35, //Speed in pixels/tick
+		"Speed" : { "Forest" : 0.35, "Desert" : 0.1, "Cold" : 0.1, "Solid" : 0.1 }, //Speed in pixels/tick
 		"SpeedDeviation" : 0.04,
 		"Damage" : 10,
 		"HitForce" : 6 //Speed of knockback in pixels/tick
@@ -14,10 +14,10 @@
 			"Width" : 5,
 			"Height" : 9,
 			"xOffset" : -1,
-			"UP" : { "Frames" : 4, "Speed" : 0.15 },
-			"DOWN" : { "Frames" : 4, "Speed" : 0.15 },
-			"LEFT" : { "Frames" : 4, "Speed" : 0.15 },
-			"RIGHT" : { "Frames" : 4, "Speed" : 0.15 }
+			"UP" : { "Frames" : 4, "Speed" : 0.375 },
+			"DOWN" : { "Frames" : 4, "Speed" : 0.375 },
+			"LEFT" : { "Frames" : 4, "Speed" : 0.375 },
+			"RIGHT" : { "Frames" : 4, "Speed" : 0.375 }
 		},
 		"STANDING" : {
 			"Texture" : "enmColdStand",
