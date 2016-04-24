@@ -44,7 +44,7 @@ namespace ProjectBueno.Engine.World
 	{
 		public static Biome ToBiome(this Tile tile)
 		{
-			return tile < Tile.Desert ? Biome.Forest : tile < Tile.Cold ? Biome.Desert : tile < Tile.Cold ? Biome.Cold : Biome.Solid;
+			return tile < Tile.Desert ? Biome.Forest : tile < Tile.Cold ? Biome.Desert : tile < Tile.Sea ? Biome.Cold : Biome.Solid;
 		}
 	}
 	public class Terrain

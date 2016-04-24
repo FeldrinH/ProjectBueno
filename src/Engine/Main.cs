@@ -106,7 +106,7 @@ namespace ProjectBueno.Engine
 					graphicsManager.PreferredBackBufferWidth = window.ClientBounds.Width;
 					graphicsManager.PreferredBackBufferHeight = (int)(window.ClientBounds.Width * heightMult);
 
-					/*if ((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / xRatio < (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / yRatio)
+					if ((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / xRatio < (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / yRatio)
 					{
 						maxWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
 						maxHeight = (int)(maxWidth * heightMult);
@@ -121,14 +121,14 @@ namespace ProjectBueno.Engine
 					{
 						graphicsManager.PreferredBackBufferWidth = maxWidth;
 						graphicsManager.PreferredBackBufferHeight = maxHeight;
-					}*/
+					}
 				}
 				else if (oldClientBounds.Height != window.ClientBounds.Height && graphicsManager.PreferredBackBufferHeight != window.ClientBounds.Height)
 				{
 					graphicsManager.PreferredBackBufferHeight = window.ClientBounds.Height;
 					graphicsManager.PreferredBackBufferWidth = (int)(window.ClientBounds.Height * widthMult);
 
-					/*if ((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / xRatio < (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / yRatio)
+					if ((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / xRatio < (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / yRatio)
 					{
 						maxWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
 						maxHeight = (int)(maxWidth * heightMult);
@@ -143,7 +143,7 @@ namespace ProjectBueno.Engine
 					{
 						graphicsManager.PreferredBackBufferWidth = maxWidth;
 						graphicsManager.PreferredBackBufferHeight = maxHeight;
-					}*/
+					}
 				}
 				oldClientBounds = window.ClientBounds;
 				
@@ -250,7 +250,7 @@ namespace ProjectBueno.Engine
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			//if (graphicsDirty)
+			if (graphicsDirty)
 			{
 				graphicsManager.ApplyChanges();
 				graphicsDirty = false;
