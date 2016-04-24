@@ -3,7 +3,7 @@
 		"Width" : 3, //Collision box width
 		"Height" : 9, //Collision box height
 		"Health" : 100.0,
-		"Speed" : { "Forest" : 0.8, "Desert" : 0.6, "Cold" : 0.4 } //Speed in pixels/tick
+		"Speed" : { "Forest" : 0.75, "Desert" : 0.6, "Cold" : 0.4 } //Speed in pixels/tick
 	},
 	"Animations" : {
 		"WALKING" : {
@@ -11,10 +11,10 @@
 			"Width" : 5,
 			"Height" : 9,
 			"xOffset" : -1,
-			"UP" : { "Frames" : 4, "Speed" : 0.375 },
-			"DOWN" : { "Frames" : 4, "Speed" : 0.375 },
-			"LEFT" : { "Frames" : 4, "Speed" : 0.375 },
-			"RIGHT" : { "Frames" : 4, "Speed" : 0.375 }
+			"UP" : { "Frames" : 4, "Speed" : 0.25 },
+			"DOWN" : { "Frames" : 4, "Speed" : 0.25 },
+			"LEFT" : { "Frames" : 4, "Speed" : 0.25 },
+			"RIGHT" : { "Frames" : 4, "Speed" : 0.25 }
 		},
 		"STANDING" : {
 			"Texture" : "plStand",
