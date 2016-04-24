@@ -147,6 +147,10 @@ namespace ProjectBueno.Game.Enemies
 
 				totalMove = target.pos - pos;
 				totalMove.Normalize();
+				if (float.IsNaN(totalMove.X))
+				{
+					totalMove = Vector2.Zero;
+				}
 				totalMove *= speed;
 
 				curTexture.incrementAnimation(speed);
