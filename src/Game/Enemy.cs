@@ -143,7 +143,7 @@ namespace ProjectBueno.Game.Enemies
 
 			if (target != null)
 			{
-				float speed = speeds[(int)game.terrain.getTileAtPos(pos).ToBiome()];
+				float speed = speeds[(int)game.terrain.getTileAtPos(pos+size).ToBiome()];
 
 				totalMove = target.pos - pos;
 				totalMove.Normalize();

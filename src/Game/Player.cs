@@ -68,7 +68,7 @@ namespace ProjectBueno.Game.Entities
 
 			base.Update();
 
-			float speed = speeds[(int)game.terrain.getTileAtPos(pos).ToBiome()];
+			float speed = speeds[(int)game.terrain.getTileAtPos(pos+size).ToBiome()];
 			float totalSpeed = Main.newKeyState.IsKeyDown(Keys.LeftShift) ? Terrain.BLOCK_SIZE * Terrain.TILESIZE : speed;
 			Vector2 totalMove = new Vector2();
 			if (Main.newKeyState.IsKeyDown(Keys.W))
