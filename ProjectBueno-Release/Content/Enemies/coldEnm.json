@@ -3,8 +3,8 @@
 		"Width" : 3, //Collision box width
 		"Height" : 9, //Collision box height
 		"Health" : 100.0,
-		"Speed" : { "Forest" : 0.1, "Desert" : 0.1, "Cold" : 0.35, "Solid" : 0.1 }, //Speed in pixels/tick
-		"SpeedDeviation" : 0.04,
+		"Speed" : { "Forest" : 0.2, "Desert" : 0.2, "Cold" : 0.7, "Solid" : 0.2 }, //Speed in pixels/tick
+		"SpeedDeviation" : 0.05,
 		"Damage" : 10,
 		"HitForce" : 6 //Speed of knockback in pixels/tick
 	},

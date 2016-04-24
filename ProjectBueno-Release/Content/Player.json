@@ -3,7 +3,7 @@
 		"Width" : 3, //Collision box width
 		"Height" : 9, //Collision box height
 		"Health" : 100.0,
-		"Speed" : { "Forest" : 0.4, "Desert" : 0.3, "Cold" : 0.2 } //Speed in pixels/tick
+		"Speed" : { "Forest" : 0.8, "Desert" : 0.6, "Cold" : 0.4 } //Speed in pixels/tick
 	},
 	"Animations" : {
 		"WALKING" : {
