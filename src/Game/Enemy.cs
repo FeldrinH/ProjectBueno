@@ -111,7 +111,7 @@ namespace ProjectBueno.Game.Enemies
 
 		public int GetSpawnChance(GameHandler game)
 		{
-			return game.terrain.getTileAtPos(game.player.pos).ToBiome() == spawnBiome ? 1 : 0;
+			return game.terrain.getTileAtPos(game.player.pos+game.player.size).ToBiome() == spawnBiome ? 1 : 0;
 		}
 
 

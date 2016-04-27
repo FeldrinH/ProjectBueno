@@ -35,11 +35,10 @@ namespace ProjectBueno.Engine
 
 			terrain = new Terrain();
 
-			terrain.generateChunkMap();
-			terrain.processBiome();
+			terrain.Generate(player.pos,player.size);
 
 			Screen = new TextScreen(Main.content.Load<Texture2D>("welcomeScreen"));
-			
+
 			//selectedEnemy = new AnimatedTexture(Main.content.Load<Texture2D>("selectedTargetTest"),2,1.0f/30,14,16);
 			//selectedEnemySize = new Vector2(selectedEnemy.w, selectedEnemy.h);
 			//loadedChunks = new List<List<List<Tiles>>>();
@@ -206,6 +205,14 @@ namespace ProjectBueno.Engine
 			};
 		}
 
+		public void AddEntity(Entity ent)
+		{
+			if (ent != null)
+			{
+				entities.Add(ent);
+			}
+		}
+
 		public void Draw()
 		{
 			Matrix matrixCache = Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f)) * screenMatrix;
@@ -328,9 +335,7 @@ namespace ProjectBueno.Engine
 
 				if (Main.newKeyState.IsKeyDown(Keys.Enter) && !Main.oldKeyState.IsKeyDown(Keys.Enter))
 				{
-					terrain.clearChunks();
-					terrain.generateChunkMap();
-					terrain.processBiome();
+					terrain.Generate(player.pos, player.size);
 				}
 
 				if (Main.newKeyState.IsKeyDown(Keys.K) && !Main.oldKeyState.IsKeyDown(Keys.K))
@@ -338,9 +343,9 @@ namespace ProjectBueno.Engine
 					entities.Clear();
 				}
 
-				while (entities.Count < 10)
+				if (entities.Count < 10)
 				{
-					entities.Add(EnemyManager.SpawnEnemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
+					AddEntity(EnemyManager.SpawnEnemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
 				}
 
 				projectiles.RemoveAll(item => item.toRemove);

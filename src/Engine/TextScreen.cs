@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace ProjectBueno.Engine
 
 		public void Update(GameHandler game)
 		{
-			if (Main.newKeyState.GetPressedKeys().Except(Main.oldKeyState.GetPressedKeys()).Any())
+			if (Main.newMouseState.RightButton == ButtonState.Pressed || Main.newMouseState.LeftButton == ButtonState.Pressed || Main.newKeyState.GetPressedKeys().Except(Main.oldKeyState.GetPressedKeys()).Any())
 			{
 				game.Screen = null;
 			}

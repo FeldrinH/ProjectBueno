@@ -98,6 +98,22 @@ namespace ProjectBueno.Engine.World
 
 		protected Random random = new Random();
 
+
+		public void Generate(Vector2 pos, Vector2 size)
+		{
+			do
+			{
+				clearChunks();
+				generateChunkMap();
+			} while (isColliding(pos, size));
+			processBiome();
+			clearChunks();
+
+			Console.WriteLine("Total land count: " + (xSize * ySize - seaCount));
+			Console.WriteLine("Land count: " + tileCount);
+			Console.WriteLine("Filled land count: " + (xSize * ySize - seaCount - tileCount));
+		}
+
 		public Tile getTileAtPos(Vector2 pos)
 		{
 			Point coords = getChunkFromPos(pos);
@@ -453,10 +469,6 @@ namespace ProjectBueno.Engine.World
 			}
 
 			fillForest();
-
-			Console.WriteLine("Total land count: " + (xSize * ySize - seaCount));
-			Console.WriteLine("Land count: " + tileCount);
-			Console.WriteLine("Filled land count: " + (xSize * ySize - seaCount - tileCount));
 		}
 
 		public void processBiome()

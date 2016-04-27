@@ -38,6 +38,10 @@ namespace ProjectBueno.Engine
 			{
 				totalChance += enemy.GetSpawnChance(game);
 			}
+			if (totalChance == 0)
+			{
+				return null;
+			}
 			int enemyNum = random.Next(totalChance);
 			totalChance = 0;
 			foreach (Enemy enemy in enemies)
