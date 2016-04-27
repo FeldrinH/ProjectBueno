@@ -6,7 +6,8 @@
 		"Speed" : { "Forest" : 0.2, "Desert" : 0.7, "Cold" : 0.2, "Solid" : 0.2 }, //Speed in pixels/tick
 		"SpeedDeviation" : 0.05,
 		"Damage" : 10,
-		"HitForce" : 6 //Speed of knockback in pixels/tick
+		"HitForce" : 6, //Speed of knockback in pixels/tick
+		"Biome" : "Desert"
 	},
 	"Animations" : {
 		"WALKING" : {

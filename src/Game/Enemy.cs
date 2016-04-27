@@ -37,6 +37,8 @@ namespace ProjectBueno.Game.Enemies
 			damage = (float)stats["Damage"];
 			hitForce = (float)stats["HitForce"];
 
+			spawnBiome = (Biome)Enum.Parse(typeof(Biome), (string)stats["Biome"]);
+
 			state = (int)States.STANDING;
 			dir = Dir.DOWN;
 
@@ -58,6 +60,8 @@ namespace ProjectBueno.Game.Enemies
 			damage = data.damage;
 			hitForce = data.hitForce;
 
+			spawnBiome = data.spawnBiome;
+
 			state = (int)States.STANDING;
 			dir = Dir.DOWN;
 
@@ -75,6 +79,8 @@ namespace ProjectBueno.Game.Enemies
 
 		public float damage { get; protected set; }
 		public float hitForce { get; protected set; }
+
+		public Biome spawnBiome;
 
 		public Entity target;
 
@@ -105,7 +111,7 @@ namespace ProjectBueno.Game.Enemies
 
 		public int GetSpawnChance(GameHandler game)
 		{
-			return 1; //For testing. Change later.
+			return game.terrain.getTileAtPos(game.player.pos).ToBiome() == spawnBiome ? 1 : 0;
 		}
 
 
@@ -143,7 +149,7 @@ namespace ProjectBueno.Game.Enemies
 
 			if (target != null)
 			{
-				float speed = speeds[(int)game.terrain.getTileAtPos(pos+size).ToBiome()];
+				float speed = speeds[(int)game.terrain.getTileAtPos(pos + size).ToBiome()];
 
 				totalMove = target.pos - pos;
 				totalMove.Normalize();
