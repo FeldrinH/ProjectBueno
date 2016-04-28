@@ -44,6 +44,25 @@ namespace ProjectBueno.Game.Entities
 			loadSkills(JArray.Parse(File.ReadAllText("Content/Skills.json")), JObject.Parse(File.ReadAllText("Content/SkillTree.json")));
 		}
 
+		private Biome _curBiome;
+		public Biome curBiome
+		{
+			get { return _curBiome; }
+			protected set
+			{
+				if (value != _curBiome)
+				{
+					Console.WriteLine("CURBIOME " + game.doUpdate);
+
+					if (game.doUpdate)
+					{
+						game.curMusic = GameHandler.biomeMusic[(int)value];
+					}
+					_curBiome = value;
+				}
+			}
+		}
+
 		protected bool moveHorizontal;
 		public List<Skill> skills { get; protected set; }
 		public List<SpellContainer> spells { get; protected set; }
@@ -68,7 +87,9 @@ namespace ProjectBueno.Game.Entities
 
 			base.Update();
 
-			float speed = speeds[(int)game.terrain.getTileAtPos(pos+size).ToBiome()];
+			curBiome = game.terrain.getTileAtPos(pos + size).ToBiome();
+
+			float speed = speeds[(int)curBiome];
 			float totalSpeed = Main.newKeyState.IsKeyDown(Keys.LeftShift) ? Terrain.BLOCK_SIZE * Terrain.TILESIZE : speed;
 			Vector2 totalMove = new Vector2();
 			if (Main.newKeyState.IsKeyDown(Keys.W))
@@ -104,7 +125,7 @@ namespace ProjectBueno.Game.Entities
 				}
 			}
 
-			game.doUpdate = false;
+			bool doUpdate = false;
 			if (totalMove != Vector2.Zero)
 			{
 				state = (int)States.WALKING;
@@ -126,7 +147,7 @@ namespace ProjectBueno.Game.Entities
 				if (!game.terrain.isColliding(pos + totalMove, size) || Main.newKeyState.IsKeyDown(Keys.LeftShift))
 				{
 					pos += totalMove;
-					game.doUpdate = true;
+					doUpdate = true;
 					hasCastBurst = false;
 				}
 				else
@@ -138,6 +159,7 @@ namespace ProjectBueno.Game.Entities
 			{
 				state = (int)States.STANDING;
 			}
+			game.doUpdate = doUpdate;
 
 			curTexture.incrementAnimation(speed);
 

@@ -105,9 +105,8 @@ namespace ProjectBueno.Engine.World
 			{
 				clearChunks();
 				generateChunkMap();
+				processBiome();
 			} while (isColliding(pos, size));
-			processBiome();
-			clearChunks();
 
 			Console.WriteLine("Total land count: " + (xSize * ySize - seaCount));
 			Console.WriteLine("Land count: " + tileCount);

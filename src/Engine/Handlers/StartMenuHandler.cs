@@ -17,7 +17,7 @@ namespace ProjectBueno.Engine
 		{
 			background = Main.content.Load<Texture2D>("startMenu");
 
-			music = Main.content.Load<SoundEffect>("patternfin").CreateInstance();
+			music = Main.content.Load<SoundEffect>("startMusic").CreateInstance();
 			music.IsLooped = true;
 
 			buttons = new List<IButton>() { new TextMoveButton(new GameHandler(), (JObject)Main.Config["startBtn"]), new TextMoveButton(new HelpMenuHandler(this, "backBtnStart"), (JObject)Main.Config["helpBtn"],true), new QuitButton((JObject)Main.Config["quitBtn"]) };
