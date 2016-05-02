@@ -215,6 +215,7 @@
 			"class" : "ShapeBurst",	
 			"projCount" : 10000,
 			"radius" : 50,
+			"arcScale" : 1.5,
 			"name" : "Burst",
 			"desc" : "Surround your-\nself with a\nmighty burst.",
 			"textureNum" : 12

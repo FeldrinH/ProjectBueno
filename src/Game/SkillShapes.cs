@@ -55,11 +55,14 @@ namespace ProjectBueno.Game.Spells
 		{
 			partCount = (int)skill["projCount"];
 			radSquared = (float)skill["radius"] * (float)skill["radius"];
+			arcRadSquared = radSquared * (float)skill["arcScale"] * (float)skill["arcScale"];
 			cooldownMult = (int)skill["cooldownMult"];
+			arcCount = 1;
 		}
 
 		protected int partCount;
 		protected float radSquared;
+		protected float arcRadSquared;
 		protected int cooldownMult;
 		private static Random random = new Random(); //For testing
 
@@ -70,7 +73,7 @@ namespace ProjectBueno.Game.Spells
 
 		public override Projectile generateProjectiles(Vector2 pos, Spell spell, GameHandler game, Entity target, Entity owner)
 		{
-			ProjectileBurst projReturn = new ProjectileBurst(spell, game, target, owner, pos, radSquared);
+			ProjectileBurst projReturn = new ProjectileBurst(spell, game, target, owner, pos, spell.arcCount == 0 ? radSquared : arcRadSquared);
 			Vector2 vecSpeed;
 			for (int i = 0; i < partCount; i++)
 			{
