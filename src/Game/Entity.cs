@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using ProjectBueno.Engine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectBueno.Game.Entities
 {
@@ -179,6 +180,25 @@ namespace ProjectBueno.Game.Entities
 			{
 				textures.Add(new AnimatedTexture(loadedTex, (int)anim[dr.ToString()]["Frames"], (float)anim[dr.ToString()]["Speed"], w, h, (int)dr, xOffset, yOffset));
 			}
+		}
+
+		public Entity GetClosest(IEnumerable<Entity> entities)
+		{ 
+			Entity closest = null;
+			float minDist = float.MaxValue;
+			float curDist;
+
+			foreach (var ent in entities)
+			{
+				curDist = (pos - ent.pos).LengthSquared();
+				if (curDist < minDist)
+				{
+					minDist = curDist;
+					closest = ent;
+				}
+			}
+
+			return closest;
 		}
 
 		///<summary>

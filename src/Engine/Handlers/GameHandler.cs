@@ -381,14 +381,16 @@ namespace ProjectBueno.Engine
 					AddEntity(EnemyManager.SpawnEnemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
 				}
 
+				//Console.Write(projectiles.Count + " ");
 				projectiles.RemoveAll(item => item.toRemove);
+				//Console.WriteLine(projectiles.Count);
 				entities.RemoveAll(item => item.isDead);
 
 				player.Update();
 
 				if (doUpdate)
 				{
-					for (int i = 0; i < projectiles.Count; i++)
+					for (int i = projectiles.Count-1; i >= 0; i--)
 					{
 						projectiles[i].Update();
 					}

@@ -137,8 +137,7 @@ namespace ProjectBueno.Game.Enemies
 		{
 			if (isAlly && (target == null || target.isDead || target.isAlly))
 			{
-				var targetList = game.entities.FindAll(ent => !ent.isAlly);
-				target = targetList.Count == 0 ? null : targetList[random.Next(targetList.Count)];
+				target = GetClosest(game.entities.Where(ent => !ent.isAlly));
 			}
 			else if (target == null)
 			{

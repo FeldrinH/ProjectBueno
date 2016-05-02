@@ -11,7 +11,7 @@ namespace ProjectBueno.Game.Spells
 {
 	class ProjectileBall : Projectile
 	{
-		public ProjectileBall(Spell spell, GameHandler game, Entity target, Vector2 pos, Vector2 speed) : base(spell, game, target)
+		public ProjectileBall(Spell spell, GameHandler game, Entity target, Entity owner, Vector2 pos, Vector2 speed) : base(spell, game, target, owner)
 		{
 			this.pos = pos;
 			this.speed = speed;

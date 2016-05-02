@@ -14,13 +14,24 @@ namespace ProjectBueno.Game.Spells
 			this.modMid = modMid;
 			this.modTop = modTop;
 			this.modBottom = modBottom;
+
 			if (shape == null || modMid == null || modTop == null || modBottom == null)
 			{
 				cooldown = -1;
 			}
 			else
 			{
+				if (ContainsID("PropArcing"))
+				{
+					arcCount = shape.arcCount;
+				}
+				else
+				{
+					arcCount = 0;
+				}
+
 				cooldown = shape.modCooldown(modMid.modCooldown(modTop.modCooldown(modBottom.modCooldown(0))));
+
 				Console.WriteLine(this);
 			}
 		}
@@ -33,6 +44,11 @@ namespace ProjectBueno.Game.Spells
 		public bool Contains(Skill test)
 		{
 			return (test != null) && (shape == test || modMid == test || modTop == test || modBottom == test);
+		}
+
+		public bool ContainsID(string id)
+		{
+			return shape?.id == id || modMid?.id == id || modTop?.id == id || modBottom?.id == id;
 		}
 
 		public float getDamage(Entity target)
@@ -60,6 +76,7 @@ namespace ProjectBueno.Game.Spells
 		public readonly SkillProp modTop;
 		public readonly SkillProp modBottom;
 		public readonly int cooldown;
+		public readonly int arcCount;
 	}
 
 	public class SpellContainer //Wrapper for player spells
@@ -111,7 +128,7 @@ namespace ProjectBueno.Game.Spells
 		public Projectile createProjectile(Vector2 pos, GameHandler game, Entity target)
 		{
 			game.player.lastCast = spell;
-			return spell.shape.generateProjectiles(pos, spell, game, target);
+			return spell.shape.generateProjectiles(pos, spell, game, target, game.player);
 		}
 
 		public bool onPlaceClick(float mouseX, float mouseY, ref Skill curHeld)

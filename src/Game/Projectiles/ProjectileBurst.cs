@@ -12,7 +12,7 @@ namespace ProjectBueno.Game.Spells
 {
 	class ProjectileBurst : Projectile
 	{
-		public ProjectileBurst(Spell spell, GameHandler game, Entity target, Vector2 origin, float radSquared) : base(spell, game, target) //Add target
+		public ProjectileBurst(Spell spell, GameHandler game, Entity target, Entity owner, Vector2 origin, float radSquared) : base(spell, game, target, owner) //Add target
 		{
 			this.origin = origin;
 			this.radSquared = radSquared;
