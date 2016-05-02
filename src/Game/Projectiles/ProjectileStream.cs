@@ -49,7 +49,7 @@ namespace ProjectBueno.Game.Spells
 					if (!entity.isAlly && entity != owner && entity.checkCollision(origin + dir * mult, size))
 					{
 						colTarget = entity;
-						colPos = origin + dir * mult;
+						colPos = origin + dir * (mult + COLLISION_INTERVAL);
 
 						return mult;
 					}

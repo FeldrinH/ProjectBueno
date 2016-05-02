@@ -145,7 +145,7 @@ namespace ProjectBueno.Engine
 					{
 						value.Resume();
 					}
-					
+
 					_curMusic = value;
 				}
 			}
@@ -165,7 +165,7 @@ namespace ProjectBueno.Engine
 					}
 					else
 					{
-						curMusic = clockTick; 
+						curMusic = clockTick;
 					}
 					_doUpdate = value;
 				}
@@ -381,22 +381,25 @@ namespace ProjectBueno.Engine
 					AddEntity(EnemyManager.SpawnEnemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
 				}
 
-				//Console.Write(projectiles.Count + " ");
-				projectiles.RemoveAll(item => item.toRemove);
-				//Console.WriteLine(projectiles.Count);
-				entities.RemoveAll(item => item.isDead);
+				player.Move();
+
+				if (doUpdate)
+				{
+					projectiles.RemoveAll(item => item.toRemove);
+					entities.RemoveAll(item => item.isDead);
+				}
 
 				player.Update();
 
 				if (doUpdate)
 				{
-					for (int i = projectiles.Count-1; i >= 0; i--)
-					{
-						projectiles[i].Update();
-					}
 					foreach (var ent in entities)
 					{
 						ent.Update();
+					}
+					for (int i = 0; i < projectiles.Count; i++)
+					{
+						projectiles[i].Update();
 					}
 				}
 

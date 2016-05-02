@@ -78,15 +78,8 @@ namespace ProjectBueno.Game.Entities
 
 		public Entity target;
 
-		public override void Update()
+		public void Move()
 		{
-			if (cooldown > 0 && game.doUpdate)
-			{
-				cooldown--;
-			}
-
-			base.Update();
-
 			curBiome = game.terrain.getTileAtPos(pos + size).ToBiome();
 
 			float speed = speeds[(int)curBiome];
@@ -162,7 +155,16 @@ namespace ProjectBueno.Game.Entities
 			game.doUpdate = doUpdate;
 
 			curTexture.incrementAnimation(speed);
+		}
 
+		public override void Update()
+		{
+			if (cooldown > 0 && game.doUpdate)
+			{
+				cooldown--;
+			}
+
+			base.Update();
 
 			if (Main.newKeyState.IsKeyDown(Keys.D1)/* && !Main.oldKeyState.IsKeyDown(Keys.D1)*/)
 			{
