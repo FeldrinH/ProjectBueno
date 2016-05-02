@@ -91,18 +91,6 @@ namespace ProjectBueno.Game.Enemies
 
 		protected double speedDeviation;
 
-		public virtual Enemy SpawnMemcopy(Vector2 pos, GameHandler game) //For EnemyManager, to be overridden to use derived constructor.
-		{
-			Enemy enemy = (Enemy)MemberwiseClone();
-			enemy.game = null;
-			enemy.pos = Vector2.Zero;
-			enemy.textures = new List<AnimatedTexture>();
-			foreach (AnimatedTexture tex in textures)
-			{
-				enemy.textures.Add(new AnimatedTexture(tex));
-			}
-			return enemy;
-		}
 		//Spawn new enemy using current enemy as a template.
 		public virtual Enemy Spawn(Vector2 pos, GameHandler game) //For EnemyManager, to be overridden to use derived constructor.
 		{

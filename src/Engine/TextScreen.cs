@@ -23,7 +23,7 @@ namespace ProjectBueno.Engine
 
 		public void Update(GameHandler game)
 		{
-			if (Main.newMouseState.RightButton == ButtonState.Pressed || Main.newMouseState.LeftButton == ButtonState.Pressed || Main.newKeyState.GetPressedKeys().Except(Main.oldKeyState.GetPressedKeys()).Any())
+			if ((Main.newMouseState.RightButton == ButtonState.Pressed && Main.oldMouseState.RightButton == ButtonState.Released) || (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released) || Main.newKeyState.GetPressedKeys().Except(Main.oldKeyState.GetPressedKeys()).Any())
 			{
 				game.Screen = null;
 			}
