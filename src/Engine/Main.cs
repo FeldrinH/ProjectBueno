@@ -21,15 +21,19 @@ namespace ProjectBueno.Engine
 		public static ContentManager content { get; private set; }
 		public static GameWindow window { get; private set; }
 		private static IHandler _handler;
-		public static IHandler handlerBP { //Bypass Initialize and Deinitialize
-			set {
+		public static IHandler handlerBP
+		{ //Bypass Initialize and Deinitialize
+			set
+			{
 				value.windowResize();
 				_handler = value;
 			}
 		}
-		public static IHandler handler {
+		public static IHandler handler
+		{
 			get { return _handler; }
-			set {
+			set
+			{
 				_handler?.Deinitialize();
 				value.Initialize();
 				value.windowResize();
@@ -66,6 +70,12 @@ namespace ProjectBueno.Engine
 
 		public Main()
 		{
+			AppDomain.CurrentDomain.UnhandledException += OnException;
+
+			//var output = new StreamWriter("Output.log", false);
+			//output.AutoFlush = true;
+			//Console.SetOut(output);
+
 			graphicsManager = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = true }; //Bad workaround
 			content = Content; //Bad workaround
 			window = Window; //Bad workaround
@@ -86,6 +96,22 @@ namespace ProjectBueno.Engine
 		static Main()
 		{
 			Config = JObject.Parse(File.ReadAllText("Content/Config.json"));
+		}
+
+		private static void OnException(object sender, UnhandledExceptionEventArgs e)
+		{
+			var Error = new StreamWriter("Crash-" + DateTime.Now.ToString("dd.MM.yyyy-HH.mm.ss") + ".log", false);
+
+			Exception ex = (Exception)e.ExceptionObject;
+
+			Error.WriteLine(ex);
+			if (ex.InnerException != null)
+			{
+				Error.WriteLine();
+				Error.WriteLine(ex.InnerException);
+			}
+
+			Error.Flush();
 		}
 
 		private void WindowSizeChanged(object sender, EventArgs e)
@@ -146,7 +172,7 @@ namespace ProjectBueno.Engine
 					}
 				}
 				oldClientBounds = window.ClientBounds;
-				
+
 				if (handler != null)
 				{
 					handler.windowResize();
@@ -167,7 +193,7 @@ namespace ProjectBueno.Engine
 				viewport.Height = (int)(window.ClientBounds.Width * heightMult);
 				viewport.Y = (window.ClientBounds.Height - viewport.Height) / 2;
 			}
-			else 
+			else
 			{
 				viewport.Width = (int)(window.ClientBounds.Height * widthMult);
 				viewport.X = (window.ClientBounds.Width - viewport.Width) / 2;
