@@ -99,7 +99,7 @@ namespace ProjectBueno.Game.Enemies
 
 		public int GetSpawnChance(GameHandler game)
 		{
-			return game.terrain.getTileAtPos(game.player.pos+game.player.size).ToBiome() == spawnBiome ? 1 : 0;
+			return game.terrain.getTileAtPos(game.player.pos + game.player.size).ToBiome() == spawnBiome ? 1 : 0;
 		}
 
 
@@ -127,7 +127,7 @@ namespace ProjectBueno.Game.Enemies
 			{
 				target = GetClosest(game.entities.Where(ent => !ent.isAlly));
 			}
-			else if (target == null)
+			else if (!isAlly && (target == null || !target.isAlly))
 			{
 				target = game.player;
 			}

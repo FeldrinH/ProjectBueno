@@ -67,13 +67,7 @@ namespace ProjectBueno.Game.Entities
 			}
 		}
 
-		public bool isDead
-		{
-			get
-			{
-				return health <= 0.0f;
-			}
-		}
+		public bool isDead { get { return health <= 0.0f; } }
 
 		protected const int DAMAGECOOLDOWN = 5;
 		protected const float KNOCKBACKDAMPENING = 0.75f;
@@ -125,17 +119,28 @@ namespace ProjectBueno.Game.Entities
 		{
 			return pos.X + size.X > entPos.X && entPos.X + entSize.X > pos.X && pos.Y + size.Y > entPos.Y && entPos.Y + entSize.Y > pos.Y;
 		}
-		public virtual void dealDamage(float amount, Vector2 direction, int dmgCooldown)
+		public void dealDamage(float amount, Vector2 direction, int dmgCooldown)
 		{
-			if (damageCooldown <= 0)
+			if (damageCooldown <= 0 && !isDead)
 			{
-				knockback += direction;
-				health -= amount;
-				damageCooldown = dmgCooldown;
+				dealDamageRaw(amount, direction, dmgCooldown);
+				if (isDead) //If the enemy died due to dealDamageRaw(), call onDeath()
+				{
+					onDeath();
+				}
 			}
 		}
+		protected virtual void dealDamageRaw(float amount, Vector2 direction, int dmgCooldown)
+		{
+			knockback += direction;
+			health -= amount;
+			damageCooldown = dmgCooldown;
+		}
 
-#warning Enemy method onPlayerCollide() in Entity class. To move.
+		public virtual void onDeath()
+		{
+		}
+
 		public abstract void onTargetCollide(Entity target);
 
 		public void moveDir(Vector2 vec)
@@ -183,7 +188,7 @@ namespace ProjectBueno.Game.Entities
 		}
 
 		public Entity GetClosest(IEnumerable<Entity> entities)
-		{ 
+		{
 			Entity closest = null;
 			float minDist = float.MaxValue;
 			float curDist;
