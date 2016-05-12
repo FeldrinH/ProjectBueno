@@ -6,7 +6,7 @@
 		"heal" : 5,
 		"control" : 10,
 		"id" : "PropMana",
-		"class" : "SkillProp",
+		"class" : "SkillMod",
 		"name" : "Mana",
 		"desc" : "Plain energy\nthat protects.",
 		"bought" : true,
@@ -19,7 +19,7 @@
 			"damage" : 10,
 			"cooldown" :  4,
 			"id" : "PropDestruction",
-			"class" : "SkillProp",
+			"class" : "SkillMod",
 			"name" : "Destruction",
 			"desc" : "Inflict damage\non your foes.",
 			"textureNum" : 2
@@ -31,7 +31,7 @@
 				"living" : { "damage" : 15 },
 				"cooldown" : 2,
 				"id" : "PropBurning",
-				"class" : "PropPrejudice",
+				"class" : "ModPrejudice",
 				"name" : "Burning",
 				"desc" : "Deal more damage\nagainst living\nenemies.",
 				"textureNum" : 6
@@ -42,7 +42,7 @@
 					"cost" : 400,
 					"cooldown" : 4,
 					"id" : "PropArcing",
-					"class" : "SkillProp",
+					"class" : "SkillMod",
 					"name" : "Arcing",
 					"desc" : "Make your spells\narc three times.",
 					"textureNum" : 14
@@ -54,7 +54,7 @@
 						"damage" : 100,
 						"cooldown" : 10,
 						"id" : "PropEradication",
-						"class" : "SkillProp",
+						"class" : "SkillMod",
 						"name" : "Eradication",
 						"desc" : "Deal massive\ndamage.",
 						"textureNum" : 17
@@ -66,7 +66,7 @@
 				"robots" : { "damage" : 15 },
 				"cooldown" : 2,
 				"id" : "PropShocking",
-				"class" : "PropPrejudice",
+				"class" : "ModPrejudice",
 				"name" : "Shocking",
 				"desc" : "Deal more damage\nagainst machine-\nry.",
 				"textureNum" : 5
@@ -80,7 +80,7 @@
 			"control" : 20,
 			"cooldown" : 4,
 			"id" : "PropControl",
-			"class" : "SkillProp",
+			"class" : "SkillMod",
 			"name" : "Control",
 			"desc" : "Take control of\na foe.",
 			"textureNum" : 3
@@ -92,7 +92,7 @@
 				"living" : { "control" : 30 },
 				"cooldown" : 2,
 				"id" : "PropInfluence",
-				"class" : "PropPrejudice",
+				"class" : "ModPrejudice",
 				"name" : "Infulence",
 				"desc" : "Take control of\nflesh.",
 				"textureNum" : 8
@@ -104,7 +104,7 @@
 					"control" : 40,
 					"cooldown" : 4,
 					"id" : "PropTakeover",
-					"class" : "SkillProp",
+					"class" : "SkillMod",
 					"name" : "Takeover",
 					"desc" : "Take control of\neverything.",
 					"textureNum" : 15
@@ -116,7 +116,7 @@
 						"control" : 100,
 						"cooldown" : 10,
 						"id" : "PropSlavery",
-						"class" : "SkillProp",
+						"class" : "SkillMod",
 						"name" : "Slavery",
 						"desc" : "Everything will\nserve you.",
 						"textureNum" : 18
@@ -128,7 +128,7 @@
 				"robots" : { "control" : 30 },
 				"cooldown": 2,
 				"id" : "PropTinkering",
-				"class" : "PropPrejudice",
+				"class" : "ModPrejudice",
 				"name" : "Tinkering",
 				"desc" : "Take control of\nmachinery.",
 				"textureNum" : 7
@@ -141,7 +141,7 @@
 			"heal" : 20,
 			"cooldown" : 4,
 			"id" : "PropHealing",
-			"class" : "SkillProp",
+			"class" : "SkillMod",
 			"name" : "Healing",
 			"desc" : "Heal your allies.",
 			"textureNum" : 4
@@ -153,7 +153,7 @@
 				"robots" : { "heal" : 30 },
 				"cooldown" : 2,
 				"id" : "PropEngineer",
-				"class" : "PropPrejudice",
+				"class" : "ModPrejudice",
 				"name" : "Engineer",
 				"desc" : "More healing for\nmachinery.",
 				"textureNum" : 9
@@ -164,7 +164,7 @@
 					"cost" : 400,
 					"cooldown" : 4,
 					"id" : "PropRebound",
-					"class" : "SkillProp",
+					"class" : "SkillMod",
 					"name" : "Rebound",
 					"desc" : "Gain life based\non effects grant-\ned.",
 					"textureNum" : 16
@@ -175,7 +175,7 @@
 						"cost" : 900,
 						"cooldown" : 10,
 						"id" : "PropHarmony",
-						"class" : "SkillProp",
+						"class" : "SkillMod",
 						"name" : "Harmony",
 						"desc" : "Effects of the\nspell affect all\nallies.",
 						"textureNum" : 19
@@ -187,7 +187,7 @@
 				"cooldown" : 2,
 				"living" : { "heal" : 30 },
 				"id" : "PropMedic",
-				"class" : "PropPrejudice",
+				"class" : "ModPrejudice",
 				"name" : "Medic",
 				"desc" : "More healing for\nliving allies.",
 				"textureNum" : 10

@@ -4,9 +4,9 @@ using ProjectBueno.Game.Entities;
 namespace ProjectBueno.Game.Spells
 {
 	//Concrete Properties and Modifiers
-	public class SkillProp : Skill
+	public class SkillMod : Skill
 	{
-		public SkillProp(JObject skill) : base(skill)
+		public SkillMod(JObject skill) : base(skill)
 		{
 			damageAdd = (float?)skill["damage"] ?? 0.0f;
 			healAdd = (float?)skill["heal"] ?? 0.0f;
@@ -18,9 +18,9 @@ namespace ProjectBueno.Game.Spells
 		public int controlAdd;
 	}
 
-	public class PropPrejudice : SkillProp
+	public class ModPrejudice : SkillMod
 	{
-		public PropPrejudice(JObject skill) : base(skill)
+		public ModPrejudice(JObject skill) : base(skill)
 		{
 			if (skill["robots"] != null)
 			{

@@ -73,8 +73,6 @@ namespace ProjectBueno.Game.Spells
 		protected static readonly float forsaleHighlight = 0.2f;
 		protected static readonly float boughtHighlight = 0.4f;
 
-		public static Skill Empty { get; private set; }
-
 		public void unlockDeps()
 		{
 			foreach (var skill in dependants)

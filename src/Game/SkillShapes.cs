@@ -11,12 +11,13 @@ namespace ProjectBueno.Game.Spells
 	{
 		protected SkillShape(JObject skill) : base(skill)
 		{
-#warning To load
+			#warning To load
 			potencyMult = (float?)skill["potencyMult"] ?? 1.0f;
 			arcCount = (int?)skill["ArcCount"] ?? 2;
 			dmgCooldown = 15;
 		}
-		public AnimatedTexture projTexture;
+
+		//public AnimatedTexture projTexture;
 		public float potencyMult;
 		public int dmgCooldown;
 		public int arcCount;
