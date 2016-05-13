@@ -11,15 +11,19 @@ namespace ProjectBueno.Game.Spells
 {
 	class ProjectileBall : Projectile
 	{
-		public ProjectileBall(Spell spell, GameHandler game, Entity target, Entity owner, Vector2 pos, Vector2 speed) : base(spell, game, target, owner)
+		public ProjectileBall(Spell spell, GameHandler game, Entity target, Entity owner, Vector2 pos, Vector2 direction, float speed) : base(spell, game, target, owner)
 		{
 			this.pos = pos;
 			this.speed = speed;
+			moveSpeed = direction * speed;
 			lifetime = TIMEOUT;
+			lastCollide = null;
 		}
 
 		protected Vector2 pos;
-		protected Vector2 speed;
+		protected float speed;
+		protected Vector2 moveSpeed;
+		protected Entity lastCollide;
 
 		public override bool toRemove
 		{
@@ -39,19 +43,27 @@ namespace ProjectBueno.Game.Spells
 			--lifetime;
 			foreach (var entity in game.entities)
 			{
-				if (!entity.isAlly && entity.checkCollision(pos, size))
+				if (!entity.isAlly && entity != lastCollide && entity.checkCollision(pos, size))
 				{
-					Vector2 pushback = speed;
-					pushback.Normalize();
-					pushback *= 5.0f; //To load
-					entity.dealDamage(spell.getDamage(entity), pushback, spell.shape.dmgCooldown);
+					entity.dealDamage(spell.getDamage(entity), Vector2.Normalize(moveSpeed) * 5f, spell.shape.dmgCooldown);
 					entity.control += spell.getControl(entity);
 					entity.updateState();
-					lifetime = 0;
+
+					if (arcCount <= 0)
+					{
+						lifetime = 0;
+					}
+					else
+					{
+						target = entity.GetClosest(game.entities.Where(ent => !ent.isAlly));
+						moveSpeed = Vector2.Normalize(target.pos - pos) * speed;
+					}
+					arcCount -= 1;
+
 					break;
 				}
 			}
-			pos += speed;
+			pos += moveSpeed;
 
 			projTexture.incrementAnimation();
 		}

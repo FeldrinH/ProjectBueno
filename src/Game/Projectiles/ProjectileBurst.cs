@@ -68,10 +68,7 @@ namespace ProjectBueno.Game.Spells
 					{
 						if (entity.canDamage)
 						{
-							Vector2 knockback = projSpeed[i];
-							knockback.Normalize();
-							knockback *= 5.0f;
-							entity.dealDamage(spell.getDamage(entity), knockback, spell.shape.dmgCooldown);
+							entity.dealDamage(spell.getDamage(entity), Vector2.Normalize(projSpeed[i]) * 5f, spell.shape.dmgCooldown);
 							entity.control += spell.getControl(entity);
 							entity.updateState();
 						}

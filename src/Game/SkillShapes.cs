@@ -11,9 +11,9 @@ namespace ProjectBueno.Game.Spells
 	{
 		protected SkillShape(JObject skill) : base(skill)
 		{
-			#warning To load
+#warning To load
 			potencyMult = (float?)skill["potencyMult"] ?? 1.0f;
-			arcCount = (int?)skill["ArcCount"] ?? 2;
+			arcCount = (int?)skill["ArcCount"] ?? 0;
 			dmgCooldown = 15;
 		}
 
@@ -46,7 +46,7 @@ namespace ProjectBueno.Game.Spells
 				dir = game.posFromScreenPos(Main.newMouseState.Position.ToVector2()) - pos;//dir = game.player.dir.Vector();
 			}
 			dir.Normalize();
-			return new ProjectileBall(spell, game, target, owner, pos, dir * speed);
+			return new ProjectileBall(spell, game, target, owner, pos, dir, speed);
 		}
 	}
 

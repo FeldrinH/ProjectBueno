@@ -7,13 +7,13 @@ namespace ProjectBueno.Game.Spells
 {
 	public abstract class Projectile
 	{
-		public Projectile(Spell spell,GameHandler game, Entity target, Entity owner)
+		public Projectile(Spell spell, GameHandler game, Entity target, Entity owner)
 		{
 			this.spell = spell;
 			this.game = game;
 			this.target = target;
 			this.owner = owner;
-			this.arcCount = spell.arcCount;
+			arcCount = spell.arcCount;
 			size = new Vector2(4.0f, 4.0f); //To load
 			projTexture = new AnimatedTexture(Main.content.Load<Texture2D>("flyingProj"), 3, 0.5f, 4, 4); //To load/implement
 		}

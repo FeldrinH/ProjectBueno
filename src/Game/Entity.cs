@@ -196,7 +196,7 @@ namespace ProjectBueno.Game.Entities
 			foreach (var ent in entities)
 			{
 				curDist = (pos - ent.pos).LengthSquared();
-				if (curDist < minDist)
+				if (curDist < minDist && ent != this)
 				{
 					minDist = curDist;
 					closest = ent;

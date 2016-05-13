@@ -78,17 +78,14 @@ namespace ProjectBueno.Game.Spells
 			{
 				if (colTarget.canDamage)
 				{
-					Vector2 knockback = colTarget.pos - owner.pos;
-					knockback.Normalize();
-					knockback *= 5.0f;
-					colTarget.dealDamage(spell.getDamage(colTarget), knockback, spell.shape.dmgCooldown);
+					colTarget.dealDamage(spell.getDamage(colTarget), Vector2.Normalize(colTarget.pos - owner.pos) * 5f, spell.shape.dmgCooldown);
 					colTarget.control += spell.getControl(colTarget);
 					colTarget.updateState();
 				}
 
 				if (arcCount > 0)
 				{
-					Entity arcTarget = colTarget.GetClosest(game.entities.Where(ent => !ent.isAlly && ent != colTarget));
+					Entity arcTarget = colTarget.GetClosest(game.entities.Where(ent => !ent.isAlly));
 					if (arcTarget != null)
 					{
 						Projectile proj = spell.shape.generateProjectiles(colPos, spell, game, arcTarget, colTarget);
