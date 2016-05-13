@@ -38,7 +38,7 @@ namespace ProjectBueno.Game.Spells
 
 		public override string ToString()
 		{
-			return cooldown < 0 ? "Uncastable spell" : string.Format("Cooldown: {0}s\nDamage: {1}\nHeal: {2}\nControl: {3}",cooldown/60.0f,getDamage(null),getHeal(null),getControl(null));
+			return cooldown < 0 ? "Uncastable spell" : string.Format("Cooldown: {0}, Damage: {1}, Heal: {2}, Control: {3}{4}", cooldown / 60f, getDamage(null), getHeal(null), getControl(null), arcCount > 0 ? ", Arcing" : "");
 		}
 
 		public bool Contains(Skill test)
@@ -68,7 +68,7 @@ namespace ProjectBueno.Game.Spells
 
 		public void doEffect() //Some arguments or stuff???
 		{
-			#warning Might be needed?
+#warning Might be needed?
 		}
 
 		public readonly SkillShape shape;
@@ -84,7 +84,7 @@ namespace ProjectBueno.Game.Spells
 		public SpellContainer(Player player)
 		{
 			this.player = player;
-			spell = new Spell(null,null,null,null);
+			spell = new Spell(null, null, null, null);
 			arrowTexture = Main.content.Load<Texture2D>("Arrows");
 		}
 
@@ -224,7 +224,7 @@ namespace ProjectBueno.Game.Spells
 			}
 			if (spell.modElement != null)
 			{
-				if(spell.modElement.DrawHightlight(modMidBounds, mouseX, mouseY))
+				if (spell.modElement.DrawHightlight(modMidBounds, mouseX, mouseY))
 				{
 					returnSkill = spell.modElement;
 				}
@@ -235,7 +235,7 @@ namespace ProjectBueno.Game.Spells
 			}
 			if (spell.modTop != null)
 			{
-				if(spell.modTop.DrawHightlight(modTopBounds, mouseX, mouseY))
+				if (spell.modTop.DrawHightlight(modTopBounds, mouseX, mouseY))
 				{
 					returnSkill = spell.modTop;
 				}
@@ -246,7 +246,7 @@ namespace ProjectBueno.Game.Spells
 			}
 			if (spell.modBottom != null)
 			{
-				if(spell.modBottom.DrawHightlight(modBottomBounds, mouseX, mouseY))
+				if (spell.modBottom.DrawHightlight(modBottomBounds, mouseX, mouseY))
 				{
 					returnSkill = spell.modBottom;
 				}
@@ -271,7 +271,7 @@ namespace ProjectBueno.Game.Spells
 			return returnSkill;
 		}
 
-		public void DrawArrow(Rectangle rect,float mouseX, float mouseY)
+		public void DrawArrow(Rectangle rect, float mouseX, float mouseY)
 		{
 			if (rect.Contains(mouseX, mouseY))
 			{
