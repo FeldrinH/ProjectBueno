@@ -26,6 +26,7 @@ namespace ProjectBueno.Engine
 			if ((Main.newMouseState.RightButton == ButtonState.Pressed && Main.oldMouseState.RightButton == ButtonState.Released) || (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released) || Main.newKeyState.GetPressedKeys().Except(Main.oldKeyState.GetPressedKeys()).Any())
 			{
 				game.Screen = null;
+				//game.Initialize();
 			}
 		}
 
