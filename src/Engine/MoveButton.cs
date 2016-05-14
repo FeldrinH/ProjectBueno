@@ -40,11 +40,11 @@ namespace ProjectBueno.Engine
 			{
 				if (bypass)
 				{
-					Main.handlerBP = moveTo;
+					Main.HandlerBP = moveTo;
 				}
 				else
 				{
-					Main.handler = moveTo;
+					Main.Handler = moveTo;
 				}
 			}
 		}

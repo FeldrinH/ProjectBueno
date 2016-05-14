@@ -18,10 +18,10 @@ namespace ProjectBueno.Engine
 
 		public abstract void Update();
 
-		public virtual void windowResize()
+		public virtual void WindowResize()
 		{
-			screenScale = Matrix.CreateScale((float)Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio);
-			downscale = (float)Main.xRatio / Main.graphicsManager.GraphicsDevice.Viewport.Width;
+			screenScale = Matrix.CreateScale((float)Main.Viewport.Width / Main.xRatio);
+			downscale = (float)Main.xRatio / Main.Viewport.Width;
 		}
 
 		public virtual void Initialize()

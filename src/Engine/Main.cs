@@ -21,26 +21,34 @@ namespace ProjectBueno.Engine
 		public static ContentManager content { get; private set; }
 		public static GameWindow window { get; private set; }
 		private static IHandler _handler;
-		public static IHandler handlerBP
-		{ //Bypass Initialize and Deinitialize
+
+		/// <summary>Assign to this to change current <see cref="IHandler"/> and bypass <see cref="IHandler.Initialize()"/> and <see cref="IHandler.Deinitialize()"/></summary>
+		public static IHandler HandlerBP
+		{
 			set
 			{
-				value.windowResize();
+				value.WindowResize();
 				_handler = value;
 			}
 		}
-		public static IHandler handler
+
+		/// <summary>Assign to this to change current <see cref="IHandler"/></summary>
+		public static IHandler Handler
 		{
 			get { return _handler; }
 			set
 			{
 				_handler?.Deinitialize();
 				value.Initialize();
-				value.windowResize();
+				value.WindowResize();
 				_handler = value;
 			}
 		}
 
+		/// <summary>Main class singleton to access non-static members.</summary>
+		public static Viewport Viewport { get { return graphicsManager.GraphicsDevice.Viewport; } }
+
+		/// <summary>Main class singleton to access non-static members.</summary>
 		public static Main self { get; private set; }
 
 		public static KeyboardState oldKeyState { get; private set; }
@@ -173,9 +181,9 @@ namespace ProjectBueno.Engine
 				}
 				oldClientBounds = window.ClientBounds;
 
-				if (handler != null)
+				if (Handler != null)
 				{
-					handler.windowResize();
+					Handler.WindowResize();
 				}
 				graphicsDirty = true;
 			}
@@ -206,7 +214,7 @@ namespace ProjectBueno.Engine
 		protected override void OnExiting(object sender, EventArgs args)
 		{
 			//base.OnExiting(sender, args);
-			handler?.Deinitialize();
+			Handler?.Deinitialize();
 			if (exiting != null)
 			{
 				exiting(sender, args);
@@ -228,7 +236,7 @@ namespace ProjectBueno.Engine
 			WindowSizeChanged(null, null);
 
 			EnemyManager.Initialize();
-			handler = new StartMenuHandler();
+			Handler = new StartMenuHandler();
 		}
 
 		/// <summary>

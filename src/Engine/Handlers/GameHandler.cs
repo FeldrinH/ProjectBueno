@@ -224,17 +224,17 @@ namespace ProjectBueno.Engine
 			Main.exiting -= onExitSave;
 		}
 
-		public void windowResize()
+		public void WindowResize()
 		{
-			screenShift = new Vector2((float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Width - (player.size.X * screenScale)) * 0.5), (float)Math.Floor((Main.graphicsManager.GraphicsDevice.Viewport.Height - (player.size.Y * screenScale)) * 0.5));
+			screenShift = new Vector2((float)Math.Floor((Main.Viewport.Width - (player.size.X * screenScale)) * 0.5), (float)Math.Floor((Main.Viewport.Height - (player.size.Y * screenScale)) * 0.5));
 			screenMatrix = Matrix.CreateScale(screenScale) * Matrix.CreateTranslation(new Vector3(screenShift, 0.0f));
 
-			textScale = Matrix.CreateScale((float)Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio);
-			hudScale = Matrix.CreateScale((float)Math.Round(0.5 * Main.graphicsManager.GraphicsDevice.Viewport.Width / Main.xRatio, MidpointRounding.AwayFromZero));
+			textScale = Matrix.CreateScale((float)Main.Viewport.Width / Main.xRatio);
+			hudScale = Matrix.CreateScale((float)Math.Round(0.5 * Main.Viewport.Width / Main.xRatio, MidpointRounding.AwayFromZero));
 
 			alphaTest = new AlphaTestEffect(Main.graphicsManager.GraphicsDevice)
 			{
-				Projection = Matrix.CreateOrthographicOffCenter(0, Main.graphicsManager.GraphicsDevice.Viewport.Width, Main.graphicsManager.GraphicsDevice.Viewport.Height, 0, 0, 1)
+				Projection = Matrix.CreateOrthographicOffCenter(0, Main.Viewport.Width, Main.Viewport.Height, 0, 0, 1)
 			};
 		}
 
@@ -358,12 +358,12 @@ namespace ProjectBueno.Engine
 				if (Main.newKeyState.IsKeyDown(Keys.Up) && !Main.oldKeyState.IsKeyDown(Keys.Up))
 				{
 					screenScale *= 2.0f;
-					windowResize();
+					WindowResize();
 				}
 				if (Main.newKeyState.IsKeyDown(Keys.Down) && !Main.oldKeyState.IsKeyDown(Keys.Down))
 				{
 					screenScale *= 0.5f;
-					windowResize();
+					WindowResize();
 				}
 
 				if (Main.newKeyState.IsKeyDown(Keys.Enter) && !Main.oldKeyState.IsKeyDown(Keys.Enter))
@@ -415,11 +415,11 @@ namespace ProjectBueno.Engine
 
 				if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 				{
-					Main.handler = new SkillHandler(this, player);
+					Main.Handler = new SkillHandler(this, player);
 				}
 				if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
 				{
-					Main.handler = new PauseHandler(this);
+					Main.Handler = new PauseHandler(this);
 				}
 
 				if (Main.newKeyState.IsKeyDown(Keys.C) && !Main.oldKeyState.IsKeyDown(Keys.C))

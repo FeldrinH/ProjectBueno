@@ -89,7 +89,7 @@ namespace ProjectBueno.Engine
 			}
 			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
 			{
-				Main.handler = game;
+				Main.Handler = game;
 			}
 		}
 	}

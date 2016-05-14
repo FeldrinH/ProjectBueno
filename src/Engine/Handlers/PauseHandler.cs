@@ -56,7 +56,7 @@ namespace ProjectBueno.Engine
 
 			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
 			{
-				Main.handler = game;
+				Main.Handler = game;
 			}
 		}
 

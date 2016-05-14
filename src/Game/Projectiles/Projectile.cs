@@ -27,7 +27,7 @@ namespace ProjectBueno.Game.Spells
 		protected AnimatedTexture projTexture;
 		protected int lifetime;
 		protected Vector2 size;
-		public int arcCount;
+		public int arcCount; //Automatically assigned in base constructor
 
 		protected Spell spell;
 		protected GameHandler game;

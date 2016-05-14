@@ -45,7 +45,7 @@ namespace ProjectBueno.Engine
 			if (game != null && Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
 			{
 				returnButton.moveTo.Deinitialize();
-				Main.handler = game;
+				Main.Handler = game;
 			}
 		}
 	}

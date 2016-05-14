@@ -30,7 +30,7 @@ namespace ProjectBueno.Engine
 		{
 			if (bounds.Contains(mouseX, mouseY))
 			{
-				Main.handler.Deinitialize();
+				Main.Handler.Deinitialize();
 				Main.self.Exit();
 			}
 		}
