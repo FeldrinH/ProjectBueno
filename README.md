@@ -12,7 +12,6 @@ Project Bueno the - Currently in alpha
 * P - Pause/Unpause
 * **In spell creation menu:**
 	* Left Mouse Button - Buy skill / Pick up skill / Place skill in spell / Clear picked up skill (when clicking on empty space) / Remove skill from spell (when clicking with no picked up spell)
-	* Right Mouse Button - 
 * **Debug Controls:**
 	* M - Show Minimap
 	* K - Clear all enemies
