@@ -107,11 +107,12 @@ namespace ProjectBueno.Game.Enemies
 		{
 			if (isAlly)
 			{
-				speeds = game.player.speeds;
+				speeds = Array.ConvertAll(speeds, speed => speed * 1.25f);
 				if (target == game.player)
 				{
 					target = null;
 				}
+				game.player.knowledgePoints += 10;
 			}
 		}
 
