@@ -15,6 +15,7 @@ Project Bueno the - Currently in alpha
 * **Debug Controls:**
 	* M - Show Minimap
 	* K - Clear all enemies
+	* K (In spell menu) - Set KP to 10000
 	* C - Toggle collision box drawing
 	* Left Shift - Increase speed to 60 blocks/s (60 pixels/s on minimap) and ignore collision with sea
 	* Up Arrow - Double the zoom level

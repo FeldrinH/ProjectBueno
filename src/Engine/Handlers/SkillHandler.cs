@@ -91,6 +91,10 @@ namespace ProjectBueno.Engine
 			{
 				Main.Handler = game;
 			}
+			if (Main.newKeyState.IsKeyDown(Keys.K) && !Main.oldKeyState.IsKeyDown(Keys.K))
+			{
+				game.player.knowledgePoints = 10000;
+			}
 		}
 	}
 }
