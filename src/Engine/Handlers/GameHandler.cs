@@ -43,7 +43,7 @@ namespace ProjectBueno.Engine
 
 			drawDebug = false;
 
-			Screen = new TextScreen(Main.content.Load<Texture2D>("welcomeScreen"));
+			//Screen = new TextScreen(Main.content.Load<Texture2D>("welcomeScreen"));
 
 			//selectedEnemy = new AnimatedTexture(Main.content.Load<Texture2D>("selectedTargetTest"),2,1.0f/30,14,16);
 			//selectedEnemySize = new Vector2(selectedEnemy.w, selectedEnemy.h);
@@ -93,7 +93,7 @@ namespace ProjectBueno.Engine
 			hudKpPos = new Vector2((float)data["x"], (float)data["y"] - 1.0f);
 		}
 
-		public TextScreen Screen;
+		//public TextScreen Screen;
 
 		protected static Texture2D hudBackground;
 
@@ -343,18 +343,18 @@ namespace ProjectBueno.Engine
 				Main.spriteBatch.End();
 			}
 
-			if (Screen != null)
+			/*if (Screen != null)
 			{
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, textScale);
 				Screen.Draw();
 				Main.spriteBatch.End();
-			}
+			}*/
 		}
 
 		public void Update()
 		{
-			if (Screen == null)
-			{
+			//if (Screen == null)
+			//{
 				if (Main.newKeyState.IsKeyDown(Keys.Up) && !Main.oldKeyState.IsKeyDown(Keys.Up))
 				{
 					screenScale *= 2.0f;
@@ -427,11 +427,11 @@ namespace ProjectBueno.Engine
 					drawDebug = !drawDebug;
 				}
 
-			}
-			else
-			{
-				Screen.Update(this);
-			}
+			//}
+			//else
+			//{
+			//	Screen.Update(this);
+			//}
 		}
 
 		public void Initialize()
