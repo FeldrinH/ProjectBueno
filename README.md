@@ -1,8 +1,8 @@
 # Project Bueno
 Project Bueno the - Currently in alpha
 #### [Latest Compile](https://www.dropbox.com/sh/tylckc25tfdv41r/AAB4olM2lmImcnB-SQHdBNc7a?dl=1)
-#### [Todo List](DesignUndone.txt)
-#### [Design](https://www.dropbox.com/s/ci4adh4dlwas6gk/Design.txt?dl=0)
+#### [Todo List](ToDo.txt)
+#### [Design](https://www.dropbox.com/s/ci4adh4dlwas6gk/Design.txt?raw=1)
 
 ## How to play
 ####Controls: 
