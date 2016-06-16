@@ -250,7 +250,7 @@ namespace ProjectBueno.Engine
 		{
 			Matrix matrixCache = Matrix.CreateTranslation(new Vector3(-player.pos, 0.0f)) * screenMatrix;
 
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, matrixCache);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, Main.AliasedRasterizer, null, matrixCache);
 
 			//int xRight = Math.Min((int)((player.pos.X + Main.window.ClientBounds.Width * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.xSize);
 			//int yBottom = Math.Min((int)((player.pos.Y + Main.window.ClientBounds.Height * screenScaleInv * 0.5f) * Tile.TILEMULT) + 2, Terrain.ySize);
@@ -308,11 +308,11 @@ namespace ProjectBueno.Engine
 			{
 				alphaTest.World = matrixCache;
 
-				Main.spriteBatch.Begin(SpriteSortMode.Deferred, blendTransparent, SamplerState.PointClamp, maskStencil, null, alphaTest, matrixCache);
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, blendTransparent, SamplerState.PointClamp, maskStencil, Main.AliasedRasterizer, alphaTest, matrixCache);
 				player.target.DrawRaw();
 				Main.spriteBatch.End();
 
-				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, drawStencil, null, outlineShader, matrixCache);
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, drawStencil, Main.AliasedRasterizer, outlineShader, matrixCache);
 				player.target.DrawOutline(player.target.isAlly ? Color.Lime : Color.Red);
 				Main.spriteBatch.End();
 
@@ -323,7 +323,7 @@ namespace ProjectBueno.Engine
 
 			//HUD
 
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, hudScale);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, Main.AliasedRasterizer, null, hudScale);
 
 			Main.spriteBatch.Draw(hudBackground, Vector2.Zero, Color.White);
 
@@ -338,7 +338,7 @@ namespace ProjectBueno.Engine
 
 			if (Main.newKeyState.IsKeyDown(Keys.M))
 			{
-				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, Main.AliasedRasterizer);
 				terrain.drawChunkMap(player.pos);
 				Main.spriteBatch.End();
 			}
@@ -355,77 +355,77 @@ namespace ProjectBueno.Engine
 		{
 			//if (Screen == null)
 			//{
-				if (Main.newKeyState.IsKeyDown(Keys.Up) && !Main.oldKeyState.IsKeyDown(Keys.Up))
-				{
-					screenScale *= 2.0f;
-					WindowResize();
-				}
-				if (Main.newKeyState.IsKeyDown(Keys.Down) && !Main.oldKeyState.IsKeyDown(Keys.Down))
-				{
-					screenScale *= 0.5f;
-					WindowResize();
-				}
+			if (Main.newKeyState.IsKeyDown(Keys.Up) && !Main.oldKeyState.IsKeyDown(Keys.Up))
+			{
+				screenScale *= 2.0f;
+				WindowResize();
+			}
+			if (Main.newKeyState.IsKeyDown(Keys.Down) && !Main.oldKeyState.IsKeyDown(Keys.Down))
+			{
+				screenScale *= 0.5f;
+				WindowResize();
+			}
 
-				if (Main.newKeyState.IsKeyDown(Keys.Enter) && !Main.oldKeyState.IsKeyDown(Keys.Enter))
-				{
-					terrain.Generate(player.pos, player.size);
-				}
+			if (Main.newKeyState.IsKeyDown(Keys.Enter) && !Main.oldKeyState.IsKeyDown(Keys.Enter))
+			{
+				terrain.Generate(player.pos, player.size);
+			}
 
-				if (Main.newKeyState.IsKeyDown(Keys.K) && !Main.oldKeyState.IsKeyDown(Keys.K))
-				{
-					entities.Clear();
-				}
+			if (Main.newKeyState.IsKeyDown(Keys.K) && !Main.oldKeyState.IsKeyDown(Keys.K))
+			{
+				entities.Clear();
+			}
 
-				if (entities.Count < 10)
-				{
-					AddEntity(EnemyManager.SpawnEnemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
-				}
+			if (entities.Count < 10)
+			{
+				AddEntity(EnemyManager.SpawnEnemy(player.pos + AngleVector.Vector(random.NextDouble() * 360.0) * 500.0f, this));
+			}
 
-				player.Move();
+			player.Move();
 
-				if (doUpdate)
-				{
-					projectiles.RemoveAll(item => item.toRemove);
-					entities.RemoveAll(item => item.isDead);
-				}
+			if (doUpdate)
+			{
+				projectiles.RemoveAll(item => item.toRemove);
+				entities.RemoveAll(item => item.isDead);
+			}
 
-				player.Update();
+			player.Update();
 
-				if (doUpdate)
+			if (doUpdate)
+			{
+				foreach (var ent in entities)
 				{
-					foreach (var ent in entities)
-					{
-						ent.Update();
-					}
-					for (int i = 0; i < projectiles.Count; i++)
-					{
-						projectiles[i].Update();
-					}
+					ent.Update();
 				}
+				for (int i = 0; i < projectiles.Count; i++)
+				{
+					projectiles[i].Update();
+				}
+			}
 
-				if (player.target != null && player.target.isDead)
-				{
-					player.target = null;
-				}
-				if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
-				{
-					player.target = getEntityAtPos(posFromScreenPos(Main.newMouseState.Position.ToVector2()));
-					//Console.WriteLine("Mouse:" + Main.newMouseState.Position);
-				}
+			if (player.target != null && player.target.isDead)
+			{
+				player.target = null;
+			}
+			if (Main.newMouseState.LeftButton == ButtonState.Pressed && Main.oldMouseState.LeftButton == ButtonState.Released)
+			{
+				player.target = getEntityAtPos(posFromScreenPos(Main.newMouseState.Position.ToVector2()));
+				//Console.WriteLine("Mouse:" + Main.newMouseState.Position);
+			}
 
-				if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
-				{
-					Main.Handler = new SkillHandler(this, player);
-				}
-				if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
-				{
-					Main.Handler = new PauseHandler(this);
-				}
+			if (Main.newKeyState.IsKeyDown(Keys.Back) && !Main.oldKeyState.IsKeyDown(Keys.Back))
+			{
+				Main.Handler = new SkillHandler(this, player);
+			}
+			if (Main.newKeyState.IsKeyDown(Keys.P) && !Main.oldKeyState.IsKeyDown(Keys.P))
+			{
+				Main.Handler = new PauseHandler(this);
+			}
 
-				if (Main.newKeyState.IsKeyDown(Keys.C) && !Main.oldKeyState.IsKeyDown(Keys.C))
-				{
-					drawDebug = !drawDebug;
-				}
+			if (Main.newKeyState.IsKeyDown(Keys.C) && !Main.oldKeyState.IsKeyDown(Keys.C))
+			{
+				drawDebug = !drawDebug;
+			}
 
 			//}
 			//else

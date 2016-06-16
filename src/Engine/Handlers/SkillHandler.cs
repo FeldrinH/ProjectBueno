@@ -40,7 +40,7 @@ namespace ProjectBueno.Engine
 			float mouseX = Main.newMouseState.X * downscale;
 			float mouseY = Main.newMouseState.Y * downscale;
 			Skill drawHeldText = curHeld;
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, screenScale);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, Main.AliasedRasterizer, null, screenScale);
 			Main.spriteBatch.Draw(background, Vector2.Zero, Color.White);
 			foreach (Skill skillButton in player.skills)
 			{

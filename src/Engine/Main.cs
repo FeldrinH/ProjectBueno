@@ -73,6 +73,7 @@ namespace ProjectBueno.Engine
 
 		public static Texture2D boxel { get; private set; }
 		public static SpriteFont retroFont { get; private set; }
+		public static readonly RasterizerState AliasedRasterizer;
 
 		public static event EventHandler<EventArgs> exiting;
 
@@ -95,15 +96,19 @@ namespace ProjectBueno.Engine
 			//TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 5.0);
 			newKeyState = Keyboard.GetState();
 			newMouseState = Mouse.GetState();
+			graphicsManager.PreferMultiSampling = false;
 			graphicsManager.PreferredBackBufferWidth = xRatio * 5;
 			graphicsManager.PreferredBackBufferHeight = yRatio * 5;
 			oldClientBounds = window.ClientBounds;
+
 			self = this; //Bad workaround
 		}
 
 		static Main()
 		{
 			Config = JObject.Parse(File.ReadAllText("Content/Config.json"));
+
+			AliasedRasterizer = new RasterizerState() { MultiSampleAntiAlias = false };
 		}
 
 		private static void OnException(object sender, UnhandledExceptionEventArgs e)
