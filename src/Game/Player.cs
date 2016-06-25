@@ -112,7 +112,6 @@ namespace ProjectBueno.Game.Entities
 				}
 			}
 
-			bool doUpdate = false;
 			if (totalMove != Vector2.Zero)
 			{
 				state = (int)States.WALKING;
@@ -134,7 +133,6 @@ namespace ProjectBueno.Game.Entities
 				if (!game.terrain.isColliding(pos + totalMove, size) || Main.newKeyState.IsKeyDown(Keys.LeftShift))
 				{
 					pos += totalMove;
-					doUpdate = true;
 					hasCastBurst = false;
 				}
 				else
@@ -146,14 +144,13 @@ namespace ProjectBueno.Game.Entities
 			{
 				state = (int)States.STANDING;
 			}
-			game.doUpdate = doUpdate;
 
 			curTexture.incrementAnimation(speed);
 		}
 
 		public override void Update()
 		{
-			if (cooldown > 0 && game.doUpdate)
+			if (cooldown > 0)
 			{
 				cooldown--;
 			}

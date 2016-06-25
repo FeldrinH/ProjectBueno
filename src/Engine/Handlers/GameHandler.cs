@@ -68,8 +68,6 @@ namespace ProjectBueno.Engine
 			{
 				Projection = Matrix.CreateOrthographicOffCenter(0, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferWidth, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferHeight, 0, 0, 1)
 			};
-
-			doUpdate = false;
 		}
 
 		static GameHandler()
@@ -114,8 +112,6 @@ namespace ProjectBueno.Engine
 		protected Matrix textScale;
 
 		protected bool drawDebug;
-
-		public bool doUpdate;
 
 		protected static Effect outlineShader;
 		protected static DepthStencilState maskStencil, drawStencil;
@@ -328,25 +324,21 @@ namespace ProjectBueno.Engine
 
 			player.Move();
 
-			if (doUpdate)
-			{
-				projectiles.RemoveAll(item => item.toRemove);
-				entities.RemoveAll(item => item.isDead);
-			}
+			projectiles.RemoveAll(item => item.toRemove);
+			entities.RemoveAll(item => item.isDead);
 
 			player.Update();
 
-			if (doUpdate)
+
+			foreach (var ent in entities)
 			{
-				foreach (var ent in entities)
-				{
-					ent.Update();
-				}
-				for (int i = 0; i < projectiles.Count; i++)
-				{
-					projectiles[i].Update();
-				}
+				ent.Update();
 			}
+			for (int i = 0; i < projectiles.Count; i++)
+			{
+				projectiles[i].Update();
+			}
+
 
 			if (player.target != null && player.target.isDead)
 			{
