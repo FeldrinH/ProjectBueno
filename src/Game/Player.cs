@@ -52,12 +52,6 @@ namespace ProjectBueno.Game.Entities
 			{
 				if (value != _curBiome)
 				{
-					Console.WriteLine("CURBIOME " + game.doUpdate);
-
-					if (game.doUpdate)
-					{
-						game.curMusic = GameHandler.biomeMusic[(int)value];
-					}
 					_curBiome = value;
 				}
 			}

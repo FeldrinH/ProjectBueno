@@ -32,15 +32,6 @@ namespace ProjectBueno.Engine
 			hudCooldownTexture = Main.content.Load<Texture2D>("cooldownBar");
 			hudBackground = Main.content.Load<Texture2D>("hudBackground");
 
-			biomeMusic = new[] { Main.content.Load<SoundEffect>("startMusic").CreateInstance(), Main.content.Load<SoundEffect>("pauseMusic").CreateInstance(), Main.content.Load<SoundEffect>("ColdMusic").CreateInstance(), Main.content.Load<SoundEffect>("startMusic").CreateInstance() };
-			foreach (var music in biomeMusic)
-			{
-				music.IsLooped = true;
-			}
-			clockTick = Main.content.Load<SoundEffect>("tiktok").CreateInstance();
-			clockTick.IsLooped = true;
-			_curMusic = clockTick;
-
 			drawDebug = false;
 
 			//Screen = new TextScreen(Main.content.Load<Texture2D>("welcomeScreen"));
@@ -78,7 +69,7 @@ namespace ProjectBueno.Engine
 				Projection = Matrix.CreateOrthographicOffCenter(0, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferWidth, Main.graphicsManager.GraphicsDevice.PresentationParameters.BackBufferHeight, 0, 0, 1)
 			};
 
-			_doUpdate = false;
+			doUpdate = false;
 		}
 
 		static GameHandler()
@@ -124,53 +115,7 @@ namespace ProjectBueno.Engine
 
 		protected bool drawDebug;
 
-		private SoundEffectInstance _curMusic;
-
-		public static SoundEffectInstance[] biomeMusic;
-		protected static SoundEffectInstance clockTick;
-		public SoundEffectInstance curMusic
-		{
-			get { return _curMusic; }
-			set
-			{
-				if (value != _curMusic)
-				{
-					_curMusic.Pause();
-
-					if (value.State == SoundState.Stopped || value == clockTick)
-					{
-						value.Play();
-					}
-					else
-					{
-						value.Resume();
-					}
-
-					_curMusic = value;
-				}
-			}
-		}
-
-		protected bool _doUpdate;
-		public bool doUpdate
-		{
-			get { return _doUpdate; }
-			set
-			{
-				if (_doUpdate != value)
-				{
-					if (value)
-					{
-						curMusic = biomeMusic[(int)player.curBiome];
-					}
-					else
-					{
-						curMusic = clockTick;
-					}
-					_doUpdate = value;
-				}
-			}
-		}
+		public bool doUpdate;
 
 		protected static Effect outlineShader;
 		protected static DepthStencilState maskStencil, drawStencil;
@@ -436,12 +381,10 @@ namespace ProjectBueno.Engine
 
 		public void Initialize()
 		{
-			curMusic.Play();
 		}
 
 		public void Deinitialize()
 		{
-			curMusic.Pause();
 		}
 	}
 }

@@ -27,27 +27,9 @@
 /processorParam:DebugMode=Auto
 /build:OutlineShader.fx
 
-#begin tiktok.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:tiktok.wav
-
-#begin pauseMusic.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:pauseMusic.wav
-
 #begin ColdMusic.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:ColdMusic.wav
-
-#begin startMusic.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:startMusic.wav
 

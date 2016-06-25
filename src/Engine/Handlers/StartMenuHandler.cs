@@ -17,13 +17,8 @@ namespace ProjectBueno.Engine
 		{
 			background = Main.content.Load<Texture2D>("startMenu");
 
-			music = Main.content.Load<SoundEffect>("startMusic").CreateInstance();
-			music.IsLooped = true;
-
 			buttons = new List<IButton>() { new TextMoveButton(new GameHandler(), (JObject)Main.Config["startBtn"]/*, true*/), new TextMoveButton(new HelpMenuHandler(this, "backBtnStart"), (JObject)Main.Config["helpBtn"], true), new QuitButton((JObject)Main.Config["quitBtn"]) };
 		}
-
-		protected SoundEffectInstance music;
 
 		protected List<IButton> buttons;
 
@@ -53,16 +48,6 @@ namespace ProjectBueno.Engine
 					btn.OnClick(mouseX, mouseY);
 				}
 			}
-		}
-
-		public override void Initialize()
-		{
-			music.Play();
-		}
-
-		public override void Deinitialize()
-		{
-			music.Stop();
 		}
 	}
 }
